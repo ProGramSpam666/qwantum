@@ -12,6 +12,8 @@ print("-----------EK-----------")
 print(ek.size)
 print("-----------CK-----------")
 print(ck.size)
+print("----------OBck--------")
+print()
  
 
 
@@ -20,7 +22,6 @@ print(ck.size)
 
 #Fix plane-waves (N_G dependent) and vary the number of k-point (N_k) and check change of band structure (depending on ek) 
 # AND the eigenenergies (ek) at the gamma point
-
 
 #Investigate how specific number of plane waves (REMEMBER: up to cutoff N_G) used can 
  
