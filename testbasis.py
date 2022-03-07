@@ -18,7 +18,23 @@ def determineOptimalBasis(N_G, N_b, N_k, sb, ck, potential):
         optimalBasis = ckNEW
     return optimalBasis
 
-    
+def testckfunc(N_G, N_k, N_b, potential):
+    ck = solveSchroedinger1(N_G,N_k,N_b,potential)
+    for i in range(N_b):
+        new = ck[:, 0, i]
+        return new   
+
+def testckfunc2(N_G, N_k, N_b, potential):
+    ck = solveSchroedinger1(N_G,N_k,N_b,potential)
+    for i in range(N_b):
+        new = ck[:, i]
+        return new       
+
+
+
+
+
+
 
 
 
