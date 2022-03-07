@@ -4,7 +4,10 @@ from quantum.utils import kinetic
 
 def fillmatrix(ik, N_G, N_k, potential):  # matrix we want to fill with Hamiltonian
     """
-    ik -> 
+    ik -> integer 
+    N_G -> integer - number of plane waves
+    N_K -> integer - arbritrary num
+    potential -> Potential object
     return M -> matrix filled with hamiltonian
     """
     a = potential.parms["lattice"]

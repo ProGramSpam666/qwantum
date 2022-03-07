@@ -1,6 +1,6 @@
 from quantum.schrodinger import solveSchrodinger
-from quantum.schrodinger import solveSchroedinger1
 from quantum import potential as pt
+import quantum.potential as pt
 
 pf = pt.PotentialFactory()
 pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
@@ -12,9 +12,6 @@ print("-----------EK-----------")
 print(ek.size)
 print("-----------CK-----------")
 print(ck.size)
-print("----------OBck--------")
-print()
- 
 
 
 #Take note how band structure and eigenenergies at the gamma point change when you fix the number of k-points (N_k)
@@ -25,3 +22,7 @@ print()
 
 #Investigate how specific number of plane waves (REMEMBER: up to cutoff N_G) used can 
  
+from quantum.matrix import fillmatrix
+
+matrix = fillmatrix(2,2,2,ptl)
+print(matrix)
