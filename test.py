@@ -1,4 +1,4 @@
-""" from quantum.schrodinger import solveSchrodinger
+from quantum.schrodinger import solveSchrodinger
 from quantum.schrodinger import solveSchroedinger1
 from quantum import potential as pt
 
@@ -12,7 +12,7 @@ print("-----------EK-----------")
 print(ek.size)
 print("-----------CK-----------")
 print(ck.size)
- """
+ 
 
 
 #Take note how band structure and eigenenergies at the gamma point change when you fix the number of k-points (N_k)
