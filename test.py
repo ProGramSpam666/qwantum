@@ -1,7 +1,9 @@
 from quantum.schrodinger import solveSchrodinger
 from quantum.schrodinger import solveSchroedinger1
+from quantum.optimalbasis import OptimalBasisNEW
 from quantum import potential as pt
-from testbasis import testckfunc, testckfunc2, testcktilda1, testcktildafinal, combineckfunc
+from testbasis import testckfunc, testckfunc2, testcktilda1, testcktildafinal, testingOB_bi
+from testbasis import testingckTilda
 
 pf = pt.PotentialFactory()
 pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
@@ -26,9 +28,8 @@ print(testckfunc(3, 50, 4, ptl)) #arguments = (N_G, N_k, N_b, potential)
 print("---------TESTck[:, i]----------")
 print(testckfunc2(3, 50, 4, ptl))
 
-print("--------TESTckcombine-------")
-print(combineckfunc(3, 50, 4, ptl))
-
+print("--------TESTckcombine-------") #-------TESTGOAT-------- being printed
+print(testingOB_bi(3, 50, 4, ptl)) #printing (7,4) => N_G*N_k
 
 print("-------TESTckTilda[:, l, i]---------")
 ckTilda1 = testcktilda1(3, 50, 4, ptl)
@@ -43,14 +44,12 @@ print(ckTildafinal.size)
 print("------TEST")
 print()
 
-
-#Take note how band structure and eigenenergies at the gamma point change when you fix the number of k-points (N_k)
-#and change the number of plane-waves (N_G dependent) in the basis set expansion ()
-
-#Investigate how specific number of plane waves (REMEMBER: up to cutoff N_G) used can 
-
 from quantum.matrix import fillmatrix
 
 matrix = fillmatrix(2,2,2,ptl)
 print(matrix)
+
+print(OptimalBasisNEW(5, 4, 100, ck, 10, ptl))
+
+print(testingckTilda(3, 50, ck, 4, ptl ))
 
