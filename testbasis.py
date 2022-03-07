@@ -18,6 +18,8 @@ def determineOptimalBasis(N_G, N_b, N_k, sb, ck, potential):
         optimalBasis = ckNEW
     return optimalBasis
 
+    
+
 
 
 
