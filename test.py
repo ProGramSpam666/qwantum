@@ -1,5 +1,6 @@
 from quantum.schrodinger import solveSchrodinger
-from quantum import potential as pt
+from quantum.schrodinger import solveSchroedinger1
+from testbasis import testckfunc, testckfunc2
 import quantum.potential as pt
 
 pf = pt.PotentialFactory()
@@ -12,7 +13,10 @@ print("-----------EK-----------")
 print(ek.size)
 print("-----------CK-----------")
 print(ck.size)
-
+print("----------TESTck[:, 0, i]--------")
+print(testckfunc(3, 50, 4, ptl))
+print("---------TESTck[:, i]----------")
+print(testckfunc2(3, 50, 4, ptl))
 
 
 #Take note how band structure and eigenenergies at the gamma point change when you fix the number of k-points (N_k)
@@ -21,9 +25,8 @@ print(ck.size)
 #Fix plane-waves (N_G dependent) and vary the number of k-point (N_k) and check change of band structure (depending on ek) 
 # AND the eigenenergies (ek) at the gamma point
 
-
 #Investigate how specific number of plane waves (REMEMBER: up to cutoff N_G) used can 
- 
+
 from quantum.matrix import fillmatrix
 
 matrix = fillmatrix(2,2,2,ptl)
