@@ -3,22 +3,6 @@ from quantum.schrodinger import solveSchrodinger
 from quantum.schrodinger import solveSchroedinger1
 from quantum.optimalbasis import OptimalBasis
 
-
-def determineBasis(N_G, N_b, N_k, ck, potential):
-    [ek,ck] = solveSchrodinger(N_G,N_k,N_b,potential)
-    for i in range(N_b):
-        basis = ck
-    return basis
-
-
-def determineOptimalBasis(N_G, N_b, N_k, sb, ck, potential):
-    ck = solveSchrodinger(N_G,N_k,N_b,potential)
-    ckNEW = OptimalBasis(sb, N_b, N_k, ck)
-    for sb in range(N_b):
-        optimalBasis = ckNEW
-    return optimalBasis
-
-
 #checking form 
 def testckfunc(N_G, N_k, N_b, potential):
     N = N_b
@@ -33,6 +17,7 @@ def testckfunc2(N_G, N_k, N_b, potential):
     for i in range(N):
         new = ck[:, i]
         return new
+
 
 #testing applicability of first for loop
 def combineckfunc(N_G, N_k, N_b, potential):
@@ -66,6 +51,8 @@ def testcktildafinal(N_G, N_k, N_b, potential):
             for j in range(N):
                 ckTilda[:, l , i] -= OB_bi[:,j]*(np.dot(OB_bi[:,j], ck[:, l , i]))
     return ckTilda
+
+
 
 #
 """ def testallck(N_G, N_k, N_b, potential):
