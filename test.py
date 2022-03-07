@@ -1,33 +1,55 @@
 from quantum.schrodinger import solveSchrodinger
 from quantum.schrodinger import solveSchroedinger1
-from testbasis import testckfunc, testckfunc2
-import quantum.potential as pt
+from quantum.optimalbasis import OptimalBasisNEW
+from quantum import potential as pt
+from testbasis import testckfunc, testckfunc2, testcktilda1, testcktildafinal, testingOB_bi
+from testbasis import testingckTilda
 
 pf = pt.PotentialFactory()
 pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
 ptparms = { "lattice" : 2, "depth" : 1, "width" :0.1 }
 ptl = pf.createPotential("sech", ptparms)
 
+
 ek,ck = solveSchrodinger(10,100,5,ptl)
 print("-----------EK-----------")
 print(ek.size)
+
+
 print("-----------CK-----------")
 print(ck.size)
+
+print("---------------TESTshapeck----------")
+print(ck.shape)
+
 print("----------TESTck[:, 0, i]--------")
-print(testckfunc(3, 50, 4, ptl))
+print(testckfunc(3, 50, 4, ptl)) #arguments = (N_G, N_k, N_b, potential)
+
 print("---------TESTck[:, i]----------")
 print(testckfunc2(3, 50, 4, ptl))
 
+print("--------TESTckcombine-------") #-------TESTGOAT-------- being printed
+print(testingOB_bi(3, 50, 4, ptl)) #printing (7,4) => N_G*N_k
 
-#Take note how band structure and eigenenergies at the gamma point change when you fix the number of k-points (N_k)
-#and change the number of plane-waves (N_G dependent) in the basis set expansion ()
+print("-------TESTckTilda[:, l, i]---------")
+ckTilda1 = testcktilda1(3, 50, 4, ptl)
+print(testcktilda1(3, 50, 4, ptl))
+print(ckTilda1.size)
 
-#Fix plane-waves (N_G dependent) and vary the number of k-point (N_k) and check change of band structure (depending on ek) 
-# AND the eigenenergies (ek) at the gamma point
+print("TESTcktilda[:, l , i]final--------")
+ckTildafinal = testcktildafinal(3, 50, 4, ptl)
+print(testcktildafinal(3, 50, 4, ptl))
+print(ckTildafinal.size)
 
-#Investigate how specific number of plane waves (REMEMBER: up to cutoff N_G) used can 
+print("------TEST")
+print()
 
 from quantum.matrix import fillmatrix
 
 matrix = fillmatrix(2,2,2,ptl)
 print(matrix)
+
+print(OptimalBasisNEW(5, 4, 100, ck, 10, ptl))
+
+print(testingckTilda(3, 50, ck, 4, ptl ))
+

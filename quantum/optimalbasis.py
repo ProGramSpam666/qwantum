@@ -3,6 +3,7 @@ from math import sqrt
 from quantum.schrodinger import solveSchrodinger
 from quantum.schrodinger import solveSchroedinger1
 
+
 def OptimalBasis(sb, N_b, N_k, ck): 
     
     OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype= np.complex_)
@@ -10,15 +11,12 @@ def OptimalBasis(sb, N_b, N_k, ck):
 
     N = N_b 
     for i in range(N_b): 
-        ck[:, 0, i] = OB_bi[:, i]
-        #OB_bi[:, i] = ck[:, 0, i] 
-     
+        OB_bi[:, i] = ck[:, 0, i] 
     for l in range(1, N_k):
         for i in range(N_b):
             ckTilda[:, l, i] = ck[:, l , i]
             for j in range(N):
                 ckTilda[:, l , i] -= OB_bi[:,j]*(np.dot(OB_bi[:,j], ck[:, l , i])) 
-                       
         Np = N
         for i in range(N_b):
             for j in range(Np, N):
@@ -27,11 +25,11 @@ def OptimalBasis(sb, N_b, N_k, ck):
                 if alpha >= sb:
                     N += 1
                     OB_bi[:,N] = ckTilda[:,l,i] / sqrt(alpha)
-    
     print(N_b*N_k, N)
     bi_out = np.zeros((np.shape(ck)[0], N))
     bi_out[:, :] = OB_bi[:, 0:N]
     return bi_out
+
 
 def OptimalBasisNEW(sb, N_b, N_k, OBck, N_G, potential): 
     

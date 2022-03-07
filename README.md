@@ -5,7 +5,6 @@ N_b = number of bands considering (think y direction)
 N_k = number of k points (think discretization x direction)
 N = energy levels
 
-
 ek = eigenenergies (eigenvalues)
 ck = eigenfunctions (wavefunctions)
 
