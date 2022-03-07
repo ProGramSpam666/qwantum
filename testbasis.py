@@ -29,6 +29,8 @@ def combineckfunc(N_G, N_k, N_b, potential):
         print(ck[:,0, i].shape)
     return ck
 
+    
+
 
 #checking cktilda
 def testcktilda1(N_G, N_k, N_b, potential):
