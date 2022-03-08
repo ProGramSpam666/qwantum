@@ -1,4 +1,4 @@
-
+from quantum import potential as pt
 
 class PotentialTester:
     ## CONSTRUCTOR
@@ -18,7 +18,7 @@ class PotentialTester:
 
     ## GENERATORS
     def generateSechPotential(self):
-        self.addSechType()
+        self.addSechType
         return self.pf.createPotential("sech", self.ptparms)
 
 
@@ -30,3 +30,4 @@ print(sechPotential)
 
 
     
+##########################   FUCK AT CRAIC ##############################
