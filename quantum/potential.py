@@ -32,6 +32,8 @@ class PotentialFactory:
 
 # ----------------------  GENERATORS  ------------------------------ 
 ### SECH
+
+
 def sechpotGenerator(parms):
         a = parms["lattice"]
         a0 = parms["width"]
@@ -44,6 +46,7 @@ def sechpotGenerator(parms):
                         U = U - 1/np.cosh((x-n*a)/a0) #potential v(x)
                 return x,v0*U
         return pot 
+        
 
 ### sech fourtier transform
 def sechFTGenerator(parms):

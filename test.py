@@ -1,9 +1,11 @@
+from quantum import optimalbasis
 from quantum.schrodinger import solveSchrodinger
 from quantum.schrodinger import solveSchroedinger1
-from quantum.optimalbasis import OptimalBasisNEW
+from quantum.optimalbasis import OptimalBasis
 from quantum import potential as pt
 from testbasis import testckfunc, testckfunc2, testcktilda1, testcktildafinal, testingOB_bi
-from testbasis import testingckTilda
+from testbasis import testingckTilda, test
+from quantum.matrix import fillmatrix
 
 pf = pt.PotentialFactory()
 pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
@@ -14,7 +16,6 @@ ptl = pf.createPotential("sech", ptparms)
 ek,ck = solveSchrodinger(10,100,5,ptl)
 print("-----------EK-----------")
 print(ek.size)
-
 
 print("-----------CK-----------")
 print(ck.size)
@@ -28,7 +29,7 @@ print(testckfunc(3, 50, 4, ptl)) #arguments = (N_G, N_k, N_b, potential)
 print("---------TESTck[:, i]----------")
 print(testckfunc2(3, 50, 4, ptl))
 
-print("--------TESTckcombine-------") #-------TESTGOAT-------- being printed
+print("--------TESTOB_bi-------") #-------TEST-------- being printed
 print(testingOB_bi(3, 50, 4, ptl)) #printing (7,4) => N_G*N_k
 
 print("-------TESTckTilda[:, l, i]---------")
@@ -44,12 +45,16 @@ print(ckTildafinal.size)
 print("------TEST")
 print()
 
-from quantum.matrix import fillmatrix
-
 matrix = fillmatrix(2,2,2,ptl)
 print(matrix)
 
-print(OptimalBasisNEW(5, 4, 100, ck, 10, ptl))
-
+print("---------")
 print(testingckTilda(3, 50, ck, 4, ptl ))
+
+print("-----------OB-------------")
+
+print(test())
+
+
+
 

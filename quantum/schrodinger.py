@@ -28,3 +28,5 @@ def solveSchroedinger1(N_G,N_k,N_b,potential):#iterates k-point by k-point
         return ck
 
 
+
+
