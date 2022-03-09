@@ -4,8 +4,7 @@ from quantum.schrodinger import solveSchrodinger
 from quantum.schrodinger import solveSchroedinger1
 
 #function to perform gram schmidt orthonormalization algorithm
-def OptimalBasis(sb, N_b, N_k, ck): 
-    
+def optimalBasis(sb, N_b, N_k, ck): 
     
     OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
     ckTilda = np.zeros(np.shape(ck), dtype= np.complex_)
@@ -35,7 +34,7 @@ def OptimalBasis(sb, N_b, N_k, ck):
     bi_out[:, :] = OB_bi[:, 0:N]
     return bi_out
 
-def optimalbasiswithoutinspection(sb ,N_k, N_b, ck):
+def optimalBasisWithoutInspection(sb ,N_k, N_b, ck):
     OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
     N = N_b
     for i in range(N_b):
