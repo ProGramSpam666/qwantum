@@ -245,6 +245,25 @@ def newoptimalbasistest():
     print(ck.size)
 
 
+def loopSbOptimalBasis():
+    N_G = 11
+    N_b = 5
+    N_k = 100
+    pf = pt.PotentialFactory()
+    pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
+    ptparms = { "lattice" : 2, "depth" : 1, "width" :1 }
+    ptl = pf.createPotential("sech", ptparms )
+    ek, ck = solveSchrodinger(N_G,N_k,N_b,ptl)
+    for sb in(1, 0.1, 0.001, 0.0001, 0.00001):
+        bi_out = optimalbasiswithoutinspection(sb, N_k, N_b, ck)
+    print("-------------------bi_out------------------")
+    print(bi_out)
+    print("--------------------ck----------------------")
+    print(ck)
+    print("-------------------bi_out size-------------------")
+    print(bi_out.size)
+    print("------------------ck size----------------------")
+    print(ck.size)    
 
 
 
