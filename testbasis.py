@@ -78,7 +78,7 @@ def testcktildafinal(N_G, N_k, N_b, potential):
     return ckTilda
 
 
-
+# investigating workings of optimal basis
 def investigateOptimalBasis(sb, N_G ,N_k, N_b, potential):
     ek, ck = solveSchrodinger(N_G,N_k,N_b,potential)
     print("--------------------size ek--------------")
@@ -219,7 +219,37 @@ def investigateOptimalBasis(sb, N_G ,N_k, N_b, potential):
     print(bi_out.size)
     print("------------------------size N_b*N_k------------------")
     print(N_b*N_k)
+    print("------------------------- ck size----------------------------")
+    print(ck.size)
     #return bi_out
+
+
+def optimalbasiswithoutinspection(sb ,N_k, N_b, ck):
+    OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
+    N = N_b
+    for i in range(N_b):
+        OB_bi[:, i] = ck[:, 0, i]
+    ckTilda = np.zeros(np.shape(ck), dtype= np.complex_)
+    for l in range(1, N_k): 
+        for i in range(N_b): 
+            ckTilda[:, l, i] = ck[:, l , i]       
+            for j in range(N):
+                ckTilda[:, l , i] -= OB_bi[:,j]*(np.dot(OB_bi[:,j], ck[:, l , i]))
+        Np = N-1
+        ckTildaPrime = np.zeros(np.shape(ck), dtype= np.complex_)
+        for i in range(N_b):
+            for j in range(Np, N):
+                ckTildaPrime[:, l, i] -= OB_bi[:, j]*(np.dot(OB_bi[:,j], ck[:, l , i]))
+                alpha = np.dot(ckTildaPrime[:, l, i], ckTildaPrime[:, l ,i])
+                if alpha >= sb:
+                    N += 1
+                    print(N)
+                    OB_bi[:,N] = ckTildaPrime[:,l,i] / sqrt(alpha) 
+
+    bi_out = np.zeros((np.shape(ck)[0], N))
+    bi_out[:, :] = OB_bi[:, 0:N]
+    print(bi_out.size)
+    return bi_out
 
 
 #investigate optimal basis test 1
@@ -245,7 +275,7 @@ def test2():
     N_G = 8
     N_b = 5
     N_k = 70
-    sb = 0.1
+    sb = 1
     pf = pt.PotentialFactory()
     pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
     ptparms = { "lattice" : 2, "depth" : 1, "width" :0.1 }
@@ -260,10 +290,10 @@ def test2():
 
 #optimal basis test - USED
 def optimalbasistest():
-    N_G = 8
-    N_b = 5
-    N_k = 70
-    sb = 0.05
+    N_G = 11
+    N_b = 7
+    N_k = 100
+    sb = 0.1
     pf = pt.PotentialFactory()
     pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
     ptparms = { "lattice" : 2, "depth" : 1, "width" :1 }
@@ -272,6 +302,33 @@ def optimalbasistest():
     print("------------compare obtain to N_b*N_k-------------")
     print(obtain)
     print(N_b*N_k)
+
+
+def newoptimalbasistest():
+    N_G = 11
+    N_b = 7
+    N_k = 100
+    sb = 0.0001
+    pf = pt.PotentialFactory()
+    pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
+    ptparms = { "lattice" : 2, "depth" : 1, "width" :1 }
+    ptl = pf.createPotential("sech", ptparms )
+    ek, ck = solveSchrodinger(N_G,N_k,N_b,ptl)
+    bi_out = optimalbasiswithoutinspection(sb, N_k, N_b, ck)
+    print("-------------------bi_out------------------")
+    print(bi_out)
+    print("--------------------ck----------------------")
+    print(ck)
+    print("-------------------bi_out size-------------------")
+    print(bi_out.size)
+    print("------------------ck size----------------------")
+    print(ck.size)
+
+
+
+
+
+
 
 
 
