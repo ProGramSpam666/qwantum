@@ -6,8 +6,10 @@ from quantum.schrodinger import solveSchroedinger1
 #function to perform gram schmidt orthonormalization algorithm
 def OptimalBasis(sb, N_b, N_k, ck): 
     
-    OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype= np.complex_)
+    
+    OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
     ckTilda = np.zeros(np.shape(ck), dtype= np.complex_)
+    ckTildaPrime = np.zeros(np.shape(ck), dtype= np.complex_)
 
     N = N_b #set N = number of bands (N_b) to be considered
     for i in range(N_b): #running over bands
@@ -16,23 +18,24 @@ def OptimalBasis(sb, N_b, N_k, ck):
         for i in range(N_b): #while running over bands
             ckTilda[:, l, i] = ck[:, l , i] #set ckTilda to vectors = 
             for j in range(N):
-                ckTilda[:, l , i] -= OB_bi[:,j]*(np.dot(OB_bi[:,j], ck[:, l , i])) 
+                ckTilda[:, l , i] -= OB_bi[:,j]*(np.dot(OB_bi[:,j], ck[:, l , i])) #subtract from the orignal vectors the projection onto the N_b basis vectors built from all k-point 
 
         Np = N-1
         for i in range(N_b):
             for j in range(Np, N):
-                ckTilda[:, l, i] -= OB_bi[:, j]*(np.dot(OB_bi[:,j], ck[:, l , i]))
-                alpha = np.dot(ckTilda[:, l, i], ckTilda[:, l ,i])
+                ckTildaPrime[:, l, i] -= OB_bi[:, j]*(np.dot(OB_bi[:,j], ck[:, l , i]))
+                alpha = np.dot(ckTildaPrime[:, l, i], ckTildaPrime[:, l ,i])
                 if alpha >= sb:
                     N += 1
                     print(N)
-                    OB_bi[:,N] = ckTilda[:,l,i] / sqrt(alpha)
-
+                    OB_bi[:,N] = ckTildaPrime[:,l,i] / sqrt(alpha)
 
     print(sb,N_b*N_k, N)
     bi_out = np.zeros((np.shape(ck)[0], N))
     bi_out[:, :] = OB_bi[:, 0:N]
     return bi_out
+
+
 
 
 
