@@ -2,7 +2,7 @@ import numpy as np
 from math import sqrt 
 from quantum.schrodinger import solveSchrodinger
 from quantum.schrodinger import solveSchroedinger1
-from quantum.optimalbasis import OptimalBasis
+from quantum.optimalbasis import optimalbasiswithoutinspection
 from quantum.potential import PotentialFactory as pf
 from quantum import potential as pt
 
@@ -224,91 +224,11 @@ def investigateOptimalBasis(sb, N_G ,N_k, N_b, potential):
     #return bi_out
 
 
-def optimalbasiswithoutinspection(sb ,N_k, N_b, ck):
-    OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
-    N = N_b
-    for i in range(N_b):
-        OB_bi[:, i] = ck[:, 0, i]
-    ckTilda = np.zeros(np.shape(ck), dtype= np.complex_)
-    for l in range(1, N_k): 
-        for i in range(N_b): 
-            ckTilda[:, l, i] = ck[:, l , i]       
-            for j in range(N):
-                ckTilda[:, l , i] -= OB_bi[:,j]*(np.dot(OB_bi[:,j], ck[:, l , i]))
-        Np = N-1
-        ckTildaPrime = np.zeros(np.shape(ck), dtype= np.complex_)
-        for i in range(N_b):
-            for j in range(Np, N):
-                ckTildaPrime[:, l, i] -= OB_bi[:, j]*(np.dot(OB_bi[:,j], ck[:, l , i]))
-                alpha = np.dot(ckTildaPrime[:, l, i], ckTildaPrime[:, l ,i])
-                if alpha >= sb:
-                    N += 1
-                    print(N)
-                    OB_bi[:,N] = ckTildaPrime[:,l,i] / sqrt(alpha) 
-
-    bi_out = np.zeros((np.shape(ck)[0], N))
-    bi_out[:, :] = OB_bi[:, 0:N]
-    print(bi_out.size)
-    return bi_out
-
-
-#investigate optimal basis test 1
-def test1():
-    N_G = 8
-    N_b = 5
-    N_k = 100
-    pf = pt.PotentialFactory()
-    pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
-    ptparms = { "lattice" : 2, "depth" : 1, "width" :0.1 }
-    ptl = pf.createPotential("sech", ptparms ) 
-    for sb in (0.1, 0.001, 0.0001, 0.00001, 0.0000001):
-        obtain = investigateOptimalBasis(sb, N_G, N_k, N_b, ptl)
-        print("-----------------obtain----------------------")
-        print(obtain)
-        print("---------------obtain size--------------------")
-        print(obtain.size)
-        print("--------------------shape obtain---------------------")
-        print(np.shape(obtain))
-
-#investigate optimal basis test 2
-def test2():
-    N_G = 8
-    N_b = 5
-    N_k = 70
-    sb = 1
-    pf = pt.PotentialFactory()
-    pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
-    ptparms = { "lattice" : 2, "depth" : 1, "width" :0.1 }
-    ptl = pf.createPotential("sech", ptparms )
-    obtain = investigateOptimalBasis(sb, N_G, N_k, N_b, ptl)
-    print("-----------------obtain----------------------")
-    print(obtain)
-    print("---------------obtain size--------------------")
-    print(obtain.size)
-    print("--------------------shape obtain---------------------")
-    print(np.shape(obtain))
-
-#optimal basis test - USED
-def optimalbasistest():
-    N_G = 11
-    N_b = 7
-    N_k = 100
-    sb = 0.1
-    pf = pt.PotentialFactory()
-    pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
-    ptparms = { "lattice" : 2, "depth" : 1, "width" :1 }
-    ptl = pf.createPotential("sech", ptparms )
-    obtain = investigateOptimalBasis(sb, N_G, N_k, N_b, ptl)
-    print("------------compare obtain to N_b*N_k-------------")
-    print(obtain)
-    print(N_b*N_k)
-
-
 def newoptimalbasistest():
     N_G = 11
-    N_b = 7
+    N_b = 5
     N_k = 100
-    sb = 0.0001
+    sb = 0.0000001
     pf = pt.PotentialFactory()
     pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
     ptparms = { "lattice" : 2, "depth" : 1, "width" :1 }
@@ -323,6 +243,9 @@ def newoptimalbasistest():
     print(bi_out.size)
     print("------------------ck size----------------------")
     print(ck.size)
+
+
+
 
 
 
