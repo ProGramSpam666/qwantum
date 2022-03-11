@@ -17,7 +17,3 @@ print(investigateOptimalBasis(0.1, 8 ,100, 5, ptl))
 
 #print(loopSbOptimalBasis())
 
-
-
-
-
