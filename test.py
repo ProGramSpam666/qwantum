@@ -1,6 +1,6 @@
 from quantum import optimalbasis
 from quantum.schrodinger import solveSchrodinger
-from quantum.optimalbasis import OptimalBasis
+from quantum.optimalbasis import optimalBasis
 from quantum import potential as pt
 from testbasis import investigateOptimalBasis, newoptimalbasistest, loopSbOptimalBasis
 from quantum.matrix import fillmatrix

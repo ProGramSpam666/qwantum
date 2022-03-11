@@ -25,13 +25,12 @@ def optimalBasis(sb, N_b, N_k, ck):
                 alpha = np.dot(ckTildaPrime[:, l, i], ckTildaPrime[:, l ,i])
                 if alpha >= sb:
                     N += 1
-                    print(N)
-                    OB_bi[:,N] = ckTildaPrime[:,l,i] / sqrt(alpha)
+                    OB_bi[:,N] = ckTildaPrime[:,l,i] / np.sqrt(alpha)
 
-    print(sb,N_b*N_k, N)
-    bi_out = np.zeros((np.shape(ck)[0], N))
+    bi_out = np.zeros((np.shape(ck)[0], N), dtype=np.complex_)
     bi_out[:, :] = OB_bi[:, 0:N]
     return bi_out
+    
 
 def optimalbasiswithoutinspection(sb ,N_k, N_b, ck):
     OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
