@@ -13,8 +13,8 @@ def plotBand(ek,potential,symbol):
     for ib in range(Nb):
         plt.plot(k,ek[:,ib],symbol)
         
-    plt.show()
-    return 
+    #plt.show()
+    #return 
 
 
 def OBplotBand(ek,potential,symbol):

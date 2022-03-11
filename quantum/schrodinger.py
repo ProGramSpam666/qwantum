@@ -27,6 +27,16 @@ def solveSchroedinger1(N_G,N_k,N_b,potential):#iterates k-point by k-point
         ck[:,ik,0:N_b] = c[:,0:N_b]
         return ck
 
+def solveSchrodingerForEk(N_G,N_k, N_b, potential):
+    ek = np.zeros((N_k,N_b))
+    for ik in range(N_k):
+        M=fillmatrix(ik,N_G,N_k,potential)
+        e=np.linalg.eigvalsh(M)
+        ek[ik,0:N_b] = e[0:N_b]
+    return ek
+
+    
+
 
 
 
