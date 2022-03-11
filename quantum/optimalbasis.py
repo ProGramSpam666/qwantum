@@ -2,10 +2,8 @@ import numpy as np
 from math import sqrt
 
 #function to perform gram schmidt orthonormalization algorithm
-def optimalBasis(sb, N_b, N_k, ck): 
-
-    OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype= np.complex_)
-     
+def optimalBasis(sb, N_b, N_k, ck):     
+    OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
     ckTilda = np.zeros(np.shape(ck), dtype= np.complex_)
     ckTildaPrime = np.zeros(np.shape(ck), dtype= np.complex_)
 
@@ -32,7 +30,7 @@ def optimalBasis(sb, N_b, N_k, ck):
     return bi_out
     
 
-def optimalbasiswithoutinspection(sb ,N_k, N_b, ck):
+def optimalBasisWithoutInspection(sb ,N_k, N_b, ck):
     OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
     N = N_b
     for i in range(N_b):

@@ -11,9 +11,11 @@ ptparms = { "lattice" : 2, "depth" : 1, "width" :1 }
 ptl = pf.createPotential("sech", ptparms)
 ek, ck = solveSchrodinger(8,100,5,ptl)
 
+print(investigateOptimalBasis(0.1, 8 ,100, 5, ptl))
+
 #print(newoptimalbasistest())
 
-print(loopSbOptimalBasis())
+#print(loopSbOptimalBasis())
 
 
 

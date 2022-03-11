@@ -2,7 +2,7 @@ import numpy as np
 from math import sqrt 
 from quantum.schrodinger import solveSchrodinger
 from quantum.schrodinger import solveSchroedinger1
-from quantum.optimalbasis import optimalbasiswithoutinspection
+from quantum.optimalbasis import optimalBasisWithoutInspection
 from quantum.potential import PotentialFactory as pf
 from quantum import potential as pt
 
@@ -223,18 +223,17 @@ def investigateOptimalBasis(sb, N_G ,N_k, N_b, potential):
     print(ck.size)
     #return bi_out
 
-
 def newoptimalbasistest():
     N_G = 11
     N_b = 5
     N_k = 100
-    sb = 0.6
+    sb = 0.1
     pf = pt.PotentialFactory()
     pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
     ptparms = { "lattice" : 2, "depth" : 1, "width" :1 }
     ptl = pf.createPotential("sech", ptparms )
     ek, ck = solveSchrodinger(N_G,N_k,N_b,ptl)
-    bi_out = optimalbasiswithoutinspection(sb, N_k, N_b, ck)
+    bi_out = optimalBasisWithoutInspection(sb, N_k, N_b, ck)
     print("-------------------bi_out------------------")
     print(bi_out)
     print("--------------------ck----------------------")
@@ -244,9 +243,8 @@ def newoptimalbasistest():
     print("------------------ck size----------------------")
     print(ck.size)
 
-
 def loopSbOptimalBasis():
-    N_G = 11
+    N_G = 20
     N_b = 5
     N_k = 100
     pf = pt.PotentialFactory()
@@ -255,7 +253,7 @@ def loopSbOptimalBasis():
     ptl = pf.createPotential("sech", ptparms )
     ek, ck = solveSchrodinger(N_G,N_k,N_b,ptl)
     for sb in(0.6, 0.59, 0.58, 0.57, 0.56, 0.54, 0.53, 0.52, 0.51, 0.5, 0.49, 0.48, 0.47):
-        bi_out = optimalbasiswithoutinspection(sb, N_k, N_b, ck)
+        bi_out = optimalBasisWithoutInspection(sb, N_k, N_b, ck)
     print("-------------------bi_out------------------")
     print(bi_out)
     print("--------------------ck----------------------")
@@ -264,6 +262,15 @@ def loopSbOptimalBasis():
     print(bi_out.size)
     print("------------------ck size----------------------")
     print(ck.size)    
+    print("--------------------shape bi_out------------------")
+    print(np.shape(bi_out))
+    print("-------------------shape ck-----------------------")
+    print(np.shape(ck))
+
+
+
+
+
 
 
 
