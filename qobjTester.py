@@ -59,9 +59,9 @@ class QobjTester(unittest.TestCase):
         self.qobj.setN_B(newN_B)
         self.assertEqual(newN_B, self.qobj.getN_B())
 
-    def test_10_returnCk(self):
-        print("Start returnCk test \n")
-        ck = self.qobj.returnCk()
+    def test_10_getCk(self):
+        print("Start getCk test \n")
+        ck = self.qobj.getCk()
         ek, expected = schrodinger.solveSchrodinger(
             N_G=self.qobj.getN_G(),
             N_k=self.qobj.getN_K(),

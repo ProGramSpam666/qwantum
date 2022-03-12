@@ -13,8 +13,13 @@ def plotBand(ek,potential,symbol):
     for ib in range(Nb):
         plt.plot(k,ek[:,ib],symbol)
         
-    #plt.show()
-    #return 
+    plt.show()
+    return 
+
+
+def plotOptimalBasisSizeAgainstCkSize(optimalBasisSize, ckSize, symbol):
+    plt.plot(optimalBasisSize, ckSize, symbol)
+    plt.show()
 
 
 def OBplotBand(ek,potential,symbol):

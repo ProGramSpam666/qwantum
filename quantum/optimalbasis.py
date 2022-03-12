@@ -20,10 +20,10 @@ def optimalBasis(sb, N_b, N_k, ck):
         for i in range(N_b):
             for j in range(Np, N):
                 ckTildaPrime[:, l, i] -= OB_bi[:, j]*(np.dot(OB_bi[:,j], ck[:, l , i]))
-                alpha = np.dot(ckTildaPrime[:, l, i], ckTildaPrime[:, l ,i])
-                if alpha >= sb:
-                    N += 1
-                    OB_bi[:,N] = ckTildaPrime[:,l,i] / np.sqrt(alpha)
+            alpha = np.dot(ckTildaPrime[:, l, i], ckTildaPrime[:, l ,i])
+            if alpha >= sb:
+                N += 1
+                OB_bi[:,N-1] = ckTildaPrime[:,l,i] / np.sqrt(alpha)
 
     bi_out = np.zeros((np.shape(ck)[0], N), dtype=np.complex_)
     bi_out[:, :] = OB_bi[:, 0:N]
