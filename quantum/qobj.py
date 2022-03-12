@@ -9,8 +9,10 @@ class Qobj:
     __defaultN_K = 100
     __defaultN_B = 5
     __defaultSb = 0.1
-    
 
+    def hello():
+        print("hello")
+    
     # CONSTRUCTOR
     def __init__(self):
         self.setPtParms(self.get__defaultPtParms())
@@ -20,7 +22,6 @@ class Qobj:
         self.setSb(self.get__defaultSb())
         self.setCk()
         
-
     # GETTERS
     def get__defaultPtParms(self):
         return self.__defaultPtParms
@@ -73,15 +74,17 @@ class Qobj:
         self.__init__()
 
     def generateSechPotential(self):
-        return pt.generateSechPotential(self.getPtParms())
+        gsp = pt.generateSechPotential(self.getPtParms())
+        return gsp
 
     def solveSchrodinger(self):
-        return schrodinger.solveSchrodinger(
+        ss =  schrodinger.solveSchrodinger(
             N_G=self.getN_G(),
             N_k=self.getN_K(),
             N_b=self.getN_B(),
             potential=self.getPotential()
             )
+        return ss   
 
     def returnCk(self):
         ek, ck = self.solveSchrodinger()

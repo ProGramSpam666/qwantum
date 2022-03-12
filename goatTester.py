@@ -1,15 +1,31 @@
+from quantum import plot
 from quantum.qobj import Qobj
 import numpy as np
+import matplotlib.pyplot as plt
+from testbasis import effectVaryingSbOnOptimalBasis
 
-qobj = Qobj()
+def testEffect():
+    qobj = Qobj()
+    print("---ck info---")
+    ckv = qobj.getCk()
+    print(ckv.size)
+    print(np.shape(ckv))
+    
+    print("---Default sb---")
+    test1 = qobj.optimalBasis()
+    print(test1.size)
+    print(np.shape(test1))
+    
+    print("---varied sb---")
+    qobj.setSb(0.11) #weirdness occurring between sb= 0.21 - 0.22.  Check default parameters
+    test2 = qobj.optimalBasis()
+    print(test2.size)
+    print(np.shape(test2))
 
-ob1 = qobj.optimalBasis()
-print(ob1.size)
-print(np.shape(ob1))
-qobj.setSb(0.9)
-ob2 = qobj.optimalBasis()
-print(ob2.size)
-print(np.shape(ob2))
+print(effectVaryingSbOnOptimalBasis())
+
+
+
 
 
 

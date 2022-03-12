@@ -21,14 +21,11 @@ def interpolateHamiltonian(sb, OB_bi, kpoints, N_G, N_k, N_b, ck, ik, potential)
     N = N_b
     for i in(Nbasis):
         for j in(Nbasis):
-            print("-----------OB_bi[:, 0]-------------")
-            print(OB_bi[:, 0])
-            print("-----------OB_bi[0, :]-------------")
-            print(OB_bi[0, :])
-            k1[i, j] = sum(2*(OB_bi[:, 0]*Nbasis *OB_bi[0,:]))
-            k0[i, j] = sum(OB_bi[i, j]*(N_G**2)*OB_bi[i, j])
-            termToIntegrate = OB_bi[i, j]*(potential.ft(i-j))*OB_bi[i, j]
-            vloc[i, j] = integrate.quad(termToIntegrate,-N_G, N_G+1)
+            for m in(Gvec(m, a)):
+                k1[i, j] = 2*(OB_bi[m, i]*OB_bi[m,j])*Gvec(m, a)
+                k0[i, j] = OB_bi[m, i]**OB_bi[m, j]*(Gvec(m, a)**2)
+                termToIntegrate = OB_bi[i, j]*(potential.ft(i-j))*OB_bi[i, j]
+                vloc[i, j] = integrate.quad(termToIntegrate,-N_G, N_G+1)
 
     for N_k in kpoints:
         for ig1 in range(-N_G, N_G+1):
@@ -39,3 +36,4 @@ def interpolateHamiltonian(sb, OB_bi, kpoints, N_G, N_k, N_b, ck, ik, potential)
                     M[ig1+N_G, ig2+N_G] = potential.ft(ig2-ig1)
     return M
         
+
