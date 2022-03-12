@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from quantum.qobj import Qobj
 from quantum.utils import kvec, Gvec
-from testbasis import effectVaryingSbOnOptimalBasis
+#from testbasis import effectVaryingSbOnOptimalBasis
 
 def plotBand(ek,potential,symbol):
     a = potential.parms["lattice"]
@@ -83,7 +83,7 @@ def OBplotFun(ik,ek,bi_out,Ncell,Npoints,potential,symbol,shift):
     plt.figure(xSb, ySize) """
 
 
-def plotSbEffect1():
+""" def plotSbEffect1():
     resultListOb = effectVaryingSbOnOptimalBasis()
     for sb in range(1,1000, 10):
         numlist = []
@@ -91,7 +91,7 @@ def plotSbEffect1():
         numlist.append(num)
     xSb = np.array(numlist)
     ySize = resultListOb
-    plt.plot(ySize, xSb)
+    plt.plot(ySize, xSb) """
 
 
 
