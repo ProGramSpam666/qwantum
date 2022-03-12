@@ -19,16 +19,17 @@ def optimalBasis(sb, N_b, N_k, ck):
         Np = N-1
         for i in range(N_b):
             for j in range(Np, N):
-                ckTildaPrime[:, l, i] -= OB_bi[:, j]*(np.dot(OB_bi[:,j], ck[:, l , i]))
-            alpha = np.dot(ckTildaPrime[:, l, i], ckTildaPrime[:, l ,i])
+                ckTilda[:, l, i] -= OB_bi[:, j]*(np.dot(OB_bi[:,j], ck[:, l , i]))
+            alpha = np.dot(ckTilda[:, l, i], ckTilda[:, l ,i])
             if alpha >= sb:
                 N += 1
-                OB_bi[:,N-1] = ckTildaPrime[:,l,i] / np.sqrt(alpha)
+                OB_bi[:,N-1] = ckTilda[:,l,i] / np.sqrt(alpha)
 
     bi_out = np.zeros((np.shape(ck)[0], N), dtype=np.complex_)
     bi_out[:, :] = OB_bi[:, 0:N]
     return bi_out
     
+
 
 def optimalBasisWithoutInspection(sb ,N_k, N_b, ck):
     OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
