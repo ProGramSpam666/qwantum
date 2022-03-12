@@ -5,7 +5,6 @@ from math import sqrt
 def optimalBasis(sb, N_b, N_k, ck):     
     OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
     ckTilda = np.zeros(np.shape(ck), dtype= np.complex_)
-    ckTildaPrime = np.zeros(np.shape(ck), dtype= np.complex_)
 
     N = N_b #set N = number of bands (N_b) to be considered
     for i in range(N_b): #running over bands

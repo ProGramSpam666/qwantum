@@ -1,5 +1,6 @@
 import numpy as np 
 import matplotlib.pyplot as plt
+from quantum import qobj
 from quantum.qobj import Qobj
 from quantum.utils import kvec, Gvec
 from testbasis import effectVaryingSbOnOptimalBasis
@@ -52,65 +53,26 @@ def OBplotFun(ik,ek,bi_out,Ncell,Npoints,potential,symbol,shift):
     plt.show()
     return
 
-""" def plotSbEffect():
-    newlist = effectVaryingSbOnOptimalBasis()
-    for sb in range(1,1000, 10):
-        num = 1/sb
-        for item in newlist:
-            sizevalue = item 
-        plt.plot(num, sizevalue)
-    plt.show     """
-
-""" def plotSbEffect1():
-    qobj = Qobj()
-    ob = qobj.optimalBasis
-    np.size(ob)
-    newlist = effectVaryingSbOnOptimalBasis
-    plt.plot(newlist, ob)
-    """
-
-""" def plotSbEffect1():
-    listUsed = []
-    newlist = effectVaryingSbOnOptimalBasis
-    listUsed.append(newlist)
-    xSb = np.array(range(listUsed))
-    ySize = np.array(listUsed)
-    plt.figure(xSb, ySize) """
-
-
 def plotSbEffect1():
-    resultListOb = effectVaryingSbOnOptimalBasis()
-    for sb in range(1,1000, 10):
-        numlist = []
-        num = 1/sb
-        numlist.append(num)
-    xSb = np.array(numlist)
-    ySize = resultListOb
-    plt.plot(ySize, xSb)
+    sbList = []
+    for sb in range(1,1000,10):
+        sbvalues = 1/sb
+        sbList.append(sbvalues)
+        #print(sbList)
+        sbArray = np.array(sbList)
+        #print(sbArray)
+    #return list of sb values, to plot x coord
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    #now getting corresponding y values
+    sizeArray = effectVaryingSbOnOptimalBasis() 
+    #print(sizeArray)
+    plt.xlabel("Size of Optimal Basis")
+    plt.ylabel("Sb value")
+    plt.plot(sizeArray, sbArray, 'r')
+    plt.show()    
 
 
     
+
+
+     

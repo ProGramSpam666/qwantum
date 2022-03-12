@@ -17,5 +17,3 @@ ek, ck = solveSchrodinger(8,100,5,ptl)
 
 print(plotSbEffect1())
 
-
-

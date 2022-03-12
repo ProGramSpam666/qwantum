@@ -239,26 +239,3 @@ def effectVaryingSbOnOptimalBasis():
     return myresult
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-    
