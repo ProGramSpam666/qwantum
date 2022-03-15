@@ -1,10 +1,6 @@
-from tkinter.messagebox import QUESTION
 import numpy as np 
 import matplotlib.pyplot as plt
-from quantum import qobj
-from quantum.qobj import Qobj
 from quantum.utils import kvec, Gvec
-from testbasis import effectVaryingSbOnOptimalBasisExp
 
 def plotBand(ek,potential,symbol):
     a = potential.parms["lattice"]
@@ -75,13 +71,12 @@ def exponentialSb():
     plt.show()    
 
 
-def plotToFindOptimalSb(qobj, symbol):
-    #qobj = Qobj()
+def plotToFindOptimalSb(symbol):
     myListOb = []
     myListSb = []
     sbValues = np.linspace(0,1,250)
     for s_b in sbValues:
-        qobj.setSb(s_b)
+        
         getOptimalBasis = qobj.optimalBasis()
         sizeOb = getOptimalBasis.size
         myListOb.append(sizeOb)

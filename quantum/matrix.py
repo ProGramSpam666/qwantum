@@ -1,6 +1,5 @@
 import numpy as np
-from sympy import kronecker_product
-from quantum.utils import kinetic, Kronecker
+from quantum.utils import kinetic
 
 
 def fillmatrix(ik, N_G, N_k, potential):  # matrix we want to fill with Hamiltonian

@@ -225,8 +225,7 @@ def investigateOptimalBasis(sb, N_G ,N_k, N_b, potential):
     print(ck.size)
     #return bi_out
 
-def effectVaryingSbOnOptimalBasisExp():
-    qobj = Qobj()
+def effectVaryingSbOnOptimalBasisExp(qobj):
     myList = []
     for sb in range(1,100):
         sb = 1/np.exp(sb)

@@ -1,10 +1,10 @@
-from lib2to3.pgen2.pgen import generate_grammar
 import quantum.potential as pt
 import quantum.schrodinger as schrodinger
 import quantum.optimalbasis as optimalbasis
 import quantum.plot as plot
 
 class Qobj:
+
     # PRIVATE ATRRIBUTES
     __defaultPtParms = { "lattice" : 2, "depth" : 1, "width" :0.1 }
     __defaultN_G = 8
@@ -13,18 +13,9 @@ class Qobj:
     __defaultSb = 0.1
     __defaultPtType = "sech"
     
-
-    def hello():
-        print("hello")
     
     # CONSTRUCTOR
     def __init__(self):
-        """ self.setPtParms(self.get__defaultPtParms())
-        self.setN_G(self.get__defaultN_G())
-        self.setN_K(self.get__defaultN_K())
-        self.setN_B(self.get__defaultN_B())
-        self.setSb(self.get__defaultSb())
-        self.setEkCk() """
         self.parms = {
             "ptParms": self.get__defaultPtParms(),
             "N_G": self.get__defaultN_G(),
@@ -35,8 +26,6 @@ class Qobj:
         }
     
 
-        
-        
     # GETTERS
     def get__defaultPtParms(self):
         return self.__defaultPtParms
@@ -63,7 +52,7 @@ class Qobj:
     def getPtType(self):
         return self.parms["ptType"]
     def getPotential(self):
-        return self.generatePotential(self.parms["ptType"])
+        return self.generatePotential(self.getPtType())
     def getEk(self):
         ek, ck = self.solveSchrodinger()
         del ck
@@ -88,7 +77,12 @@ class Qobj:
         self.parms["N_B"] = N_B
     def setSb(self, sb):
         self.parms["sb"] = sb
-    
+    def setPtType(self, type):
+        typeList = ["sech"]
+        if type not in typeList:
+            raise TypeError("type not in typeList")
+        else:
+            self.parms["ptType"] = type
 
     # METHODS
     def restoreDefaults(self):
@@ -99,11 +93,7 @@ class Qobj:
         if type not in typeList:
             raise TypeError("type not in typeList")
         elif type == "sech":
-            return self.generateSechPotential()
-
-    def generateSechPotential(self):
-        gsp = pt.generateSechPotential(self.getPtParms())
-        return gsp
+            return pt.generateSechPotential(self.getPtParms())
 
     def solveSchrodinger(self):
         ss =  schrodinger.solveSchrodinger(
