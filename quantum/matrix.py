@@ -1,5 +1,6 @@
 import numpy as np
-from quantum.utils import kinetic
+from sympy import kronecker_product
+from quantum.utils import kinetic, Kronecker
 
 
 def fillmatrix(ik, N_G, N_k, potential):  # matrix we want to fill with Hamiltonian
@@ -22,3 +23,6 @@ def fillmatrix(ik, N_G, N_k, potential):  # matrix we want to fill with Hamilton
                 #potential - Outside
     return M
 #No potential component for KE
+
+
+

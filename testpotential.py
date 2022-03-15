@@ -34,9 +34,5 @@ plt.plot(x,Ur,'y-') #Ur=orange, x=blue
 plt.show()
 
 #TEST2 - 
-
-
-
-
-
+ 
 

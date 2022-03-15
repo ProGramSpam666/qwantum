@@ -5,16 +5,15 @@ from math import sqrt
 def optimalBasis(sb, N_b, N_k, ck):     
     OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
     ckTilda = np.zeros(np.shape(ck), dtype= np.complex_)
-    ckTildaPrime = np.zeros(np.shape(ck), dtype= np.complex_)
 
-    N = N_b #set N = number of bands (N_b) to be considered
-    for i in range(N_b): #running over bands
-        OB_bi[:, i] = ck[:, 0, i] #First N basis vectors = basis vectors at given k point
-    for l in range(1, N_k): #running over all k points
-        for i in range(N_b): #while running over bands
-            ckTilda[:, l, i] = ck[:, l , i] #set ckTilda to vectors = 
+    N = N_b
+    for i in range(N_b): 
+        OB_bi[:, i] = ck[:, 0, i] 
+    for l in range(1, N_k): 
+        for i in range(N_b): 
+            ckTilda[:, l, i] = ck[:, l , i] 
             for j in range(N):
-                ckTilda[:, l , i] -= OB_bi[:,j]*(np.dot(OB_bi[:,j], ck[:, l , i])) #subtract from the orignal vectors the projection onto the N_b basis vectors built from all k-point 
+                ckTilda[:, l , i] -= OB_bi[:,j]*(np.dot(OB_bi[:,j], ck[:, l , i])) 
 
         Np = N-1
         for i in range(N_b):
@@ -28,7 +27,33 @@ def optimalBasis(sb, N_b, N_k, ck):
     bi_out = np.zeros((np.shape(ck)[0], N), dtype=np.complex_)
     bi_out[:, :] = OB_bi[:, 0:N]
     return bi_out
+
     
+def optimalBasisGetOBBI(sb, N_b, N_k, ck):     
+    OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
+    ckTilda = np.zeros(np.shape(ck), dtype= np.complex_)
+
+    N = N_b
+    for i in range(N_b): 
+        OB_bi[:, i] = ck[:, 0, i] 
+    for l in range(1, N_k): 
+        for i in range(N_b): 
+            ckTilda[:, l, i] = ck[:, l , i] 
+            for j in range(N):
+                ckTilda[:, l , i] -= OB_bi[:,j]*(np.dot(OB_bi[:,j], ck[:, l , i])) 
+
+        Np = N-1
+        for i in range(N_b):
+            for j in range(Np, N):
+                ckTilda[:, l, i] -= OB_bi[:, j]*(np.dot(OB_bi[:,j], ck[:, l , i]))
+            alpha = np.dot(ckTilda[:, l, i], ckTilda[:, l ,i])
+            if alpha >= sb:
+                N += 1
+                OB_bi[:,N-1] = ckTilda[:,l,i] / np.sqrt(alpha)
+
+    bi_out = np.zeros((np.shape(ck)[0], N), dtype=np.complex_)
+    bi_out[:, :] = OB_bi[:, 0:N]
+    return bi_out
 
 
 def optimalBasisWithoutInspection(sb ,N_k, N_b, ck):

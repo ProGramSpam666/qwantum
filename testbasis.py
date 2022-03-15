@@ -1,5 +1,6 @@
 import numpy as np
 from math import sqrt 
+import matplotlib.pyplot as plt
 from quantum.schrodinger import solveSchrodinger
 from quantum.schrodinger import solveSchroedinger1
 from quantum.optimalbasis import optimalBasisWithoutInspection
@@ -224,18 +225,16 @@ def investigateOptimalBasis(sb, N_G ,N_k, N_b, potential):
     print(ck.size)
     #return bi_out
 
-
-def effectVaryingSbOnOptimalBasis():
+def effectVaryingSbOnOptimalBasisExp():
     qobj = Qobj()
     myList = []
-    for sb in range(1,1000, 10):
-        num = 1/sb
-        for sb in [num]:
-            qobj.setSb(sb)
-            getOptimalBasis = qobj.optimalBasis()
-            sizeOb = getOptimalBasis.size
-            myList.append(sizeOb)
-            myresult = np.array(myList)
+    for sb in range(1,100):
+        sb = 1/np.exp(sb)
+        qobj.setSb(sb)
+        getOptimalBasis = qobj.optimalBasis()
+        sizeOb = getOptimalBasis.size
+        myList.append(sizeOb)
+    myresult = np.array(myList)
     return myresult
 
 
@@ -245,20 +244,3 @@ def effectVaryingSbOnOptimalBasis():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-    

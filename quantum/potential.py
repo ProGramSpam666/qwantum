@@ -58,11 +58,13 @@ def sechFTGenerator(parms):
                 return Ug*v0*pi*a0/a
         return ft #returns Fourier Transform
 
+
 def generateSechPotential(parms):
     pf = PotentialFactory()
     pf.addType("sech", sechpotGenerator, sechFTGenerator)
     ptl = pf.createPotential("sech", parms )
     return ptl
+
 
 ## saw wave
 def sawpotGenerator(parms):
