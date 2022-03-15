@@ -22,7 +22,6 @@ def testEffect():
     print(test2.size)
     print(np.shape(test2))
 
-print(effectVaryingSbOnOptimalBasis())
 
 
 
