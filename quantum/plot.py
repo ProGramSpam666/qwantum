@@ -72,7 +72,25 @@ def plotSbEffect1():
     plt.show()    
 
 
-    
+def plotToFindOptimalSb(qobj, symbol):
+    #qobj = Qobj()
+    myListOb = []
+    myListSb = []
+    sbValues = np.linspace(0,1,250)
+    for s_b in sbValues:
+        qobj.setSb(s_b)
+        getOptimalBasis = qobj.optimalBasis()
+        sizeOb = getOptimalBasis.size
+        myListOb.append(sizeOb)
+        myListSb.append(s_b)
+
+    myresultOb = np.array(myListOb)
+    myresultSb = np.array(myListSb)
+    plt.xlabel("Size of Optimal Basis")
+    plt.ylabel("Sb value")
+    plt.plot(myresultOb, myresultSb, symbol)
+    #plt.show()
 
 
-     
+
+#def plot

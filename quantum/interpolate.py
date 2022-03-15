@@ -35,5 +35,8 @@ def interpolateHamiltonian(sb, OB_bi, kpoints, N_G, N_k, N_b, ck, ik, potential)
                 else:
                     M[ig1+N_G, ig2+N_G] = potential.ft(ig2-ig1)
     return M
-        
+
+
+    
+ 
 
