@@ -77,12 +77,12 @@ class Qobj:
         self.parms["N_B"] = N_B
     def setSb(self, sb):
         self.parms["sb"] = sb
-    def setPtType(self, type):
+    def setPtType(self, ptType):
         typeList = ["sech"]
-        if type not in typeList:
+        if ptType not in typeList:
             raise TypeError("type not in typeList")
         else:
-            self.parms["ptType"] = type
+            self.parms["ptType"] = ptType
 
     # METHODS
     def restoreDefaults(self):
