@@ -1,4 +1,6 @@
 import unittest
+
+from numpy import exp
 from quantum.potential import generateSechPotential
 from quantum.qobj import Qobj
 import quantum.schrodinger as schrodinger
@@ -115,4 +117,17 @@ class QobjTester(unittest.TestCase):
         )
         self.assertEqual(ob.all(), obExp.all())
 
+    def test_15_getPtType(self):
+        print("Start getPtType test \n")
+        expected = self.qobj.get__defaultPtType()
+        result = self.qobj.getPtType()
+        self.assertEqual(expected, result)
+
+
+    def test_15_setPtType(self):
+        print("Start setPtType test \n")
+        expected = "sech"
+        self.qobj.setPtType(expected)
+        result = self.qobj.getPtType()
+        self.assertEqual(expected, result)
 

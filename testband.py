@@ -1,5 +1,6 @@
 import numpy as np
 from quantum import potential as pt
+from quantum.optimalbasis import optimalBasisWithoutInspection
 from quantum.schrodinger import solveSchrodinger
 from quantum.plot import plotBand
 import matplotlib.pyplot as plt
@@ -34,7 +35,6 @@ plot3 = plotBand(ek3,latticeptl3,'y-')
 ek4, ck4 = solveSchrodinger(2, 100, 5, latticeptl2)
 plot4 = plotBand(ek4,latticeptl4,'g-')
 
-plt.show() 
 
 
 

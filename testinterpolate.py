@@ -37,8 +37,8 @@ def getTest():
     ek, ck = solveSchrodinger(N_G,N_k,N_b,ptl)
     del ek
     OB_bi = optimalBasis(sb, N_k, N_b, ck)
-    for ik in range(N_k):
-        newEk = interpolateHamiltonian(sb, OB_bi, kpoints, N_G, N_k, N_b, ck, ik, ptl ) 
+    for ik in range(N_k):                
+        newEk = interpolateHamiltonian(sb, OB_bi, kpoints, N_G, N_k, N_b, ck, ik, ptl ) # func args make no sense
     return newEk
 
 print(getTest())        

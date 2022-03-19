@@ -238,7 +238,7 @@ def effectVaryingSbOnOptimalBasisExp(qobj):
 
 
 
-
+     
 
 
 
