@@ -7,21 +7,18 @@ class Potential:
         self.parms = parms
         self.v = v
         self.ft = ft
-
     def __str__(self):
         return self.name
 
 class PotentialFactory:
     def __init__(self):
         self.potentialList = {}
-
     def addType(self, name, v, ft):
         potential = {
             "V" : v,
             "FourierTransform" : ft
             }
         self.potentialList[name] = potential
-       
     def createPotential(self, name, parms):
         return Potential(
             name,
@@ -29,6 +26,9 @@ class PotentialFactory:
             self.potentialList[name]["V"](parms),
             self.potentialList[name]["FourierTransform"](parms)
             )
+
+
+
 
 # ----------------------  GENERATORS  ------------------------------ 
 ### SECH
@@ -39,11 +39,10 @@ def sechpotGenerator(parms):
         a0 = parms["width"]
         v0 = parms["depth"] 
         def pot(N, m):
-                x = np.linspace(-N*a,N*a,N*m) #m defining our descritization
+                x = np.linspace(-N*a,N*a,N*m) 
                 U = np.zeros(len(x))
-                #define grid
                 for n in range(-N,N+1):
-                        U = U - 1/np.cosh((x-n*a)/a0) #potential v(x)
+                        U = U - 1/np.cosh((x-n*a)/a0)
                 return x,v0*U
         return pot 
         

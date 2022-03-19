@@ -51,7 +51,7 @@ def testingckTilda(N_b, N_k, ck, N_G, potential):
             ckTilda[:, l, i] = ck[:, l , i]
             for j in range(N):
                 ckTilda[:, l , i] -= OB_bi[:,j]*(np.dot(OB_bi[:,j], ck[:, l , i]))
-                return ckTilda
+    return ckTilda
 
 
 #checking cktilda
@@ -239,7 +239,6 @@ def effectVaryingSbOnOptimalBasisExp(qobj):
 
 
      
-
 
 
 
