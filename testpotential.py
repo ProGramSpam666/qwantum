@@ -15,7 +15,13 @@ Ur=np.zeros(len(x))
 a = ptl.parms["lattice"]
 for m in range(-5,5): 
     Ur = Ur + ptl.ft(m) * np.exp(-1j*2*pi*m/a*x)
-plt.plot(x,Ur,'r-') #Ur=orange, x=blue
+plt.plot(x,Ur,'r-')
+plt.xlabel("Brillouin Zone")
+plt.ylabel("***********************************FIX**************************")
+plt.show()
+
+
+
 
 
 pf = pt.PotentialFactory()
@@ -31,7 +37,7 @@ for m in range(-5,5):
 plt.plot(x,Ur,'y-') #Ur=orange, x=blue
 
 
-plt.show()
+
 
 #TEST2 - 
  

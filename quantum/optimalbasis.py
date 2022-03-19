@@ -53,7 +53,7 @@ def optimalBasisGetOBBI(sb, N_b, N_k, ck):
 
     bi_out = np.zeros((np.shape(ck)[0], N), dtype=np.complex_)
     bi_out[:, :] = OB_bi[:, 0:N]
-    return bi_out
+    return OB_bi
 
 
 def optimalBasisWithoutInspection(sb ,N_k, N_b, ck):
