@@ -9,6 +9,5 @@ def kvec(i,a,N):
 def kinetic(i,m,a,N):
         return 0.5*(kvec(i,a,N) - Gvec(m,a))**2 
 
-def Kronecker():
-        return
+
                 

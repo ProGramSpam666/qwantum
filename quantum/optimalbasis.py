@@ -123,4 +123,3 @@ def optimalProductBasis(sp, N_b, N_k, bi_out):
 
 
 
-
