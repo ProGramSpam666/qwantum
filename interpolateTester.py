@@ -51,7 +51,7 @@ class InterpolateTester(unittest.TestCase):
             Npoints=10,
             potential=qobj.getPotential(),
         )
-        print(result)
+        #print(result)
 
 
         
