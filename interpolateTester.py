@@ -4,27 +4,23 @@ import quantum.qobj
 
 class InterpolateTester(unittest.TestCase):
 
-    """ def test_00_calculateVLoc(self):
+    def test_00_calculateVLoc(self):
+        print("--------------------------------------")
         print("Start calculateVLoc test \n")
         qobj = quantum.qobj.Qobj()
         result = quantum.interpolate.calculateVLoc(
             OB_bi=qobj.getOptimalBasis(),
-            N_G=qobj.getN_G(),
-            N_GPrime= 23,
-            N_GPrimePrime=79,
             potential=qobj.getPotential(),
-            Ncell=3,
-            Npoints=10,
         )
-        print(result) """
+        print(result) 
 
-    """ def test_01_calculateK0(self):
+
+    def test_01_calculateK0(self):
         print("Start calculateK0 test \n")
         qobj = quantum.qobj.Qobj()
         res = quantum.interpolate.calculatek0(
             OB_bi=qobj.getOptimalBasis(),
             a = qobj.getPotential().parms["lattice"],
-            m = 10
         )
         print(res)
 
@@ -34,9 +30,9 @@ class InterpolateTester(unittest.TestCase):
         res = quantum.interpolate.calculatek1(
             OB_bi=qobj.getOptimalBasis(),
             a = qobj.getPotential().parms["lattice"],
-            m = 10
         )
-        print(res) """
+        print(res) 
+
 
     def test_02_interpolateHamiltonian(self):
         print("Start interpolateHamiltonian test \n")
@@ -51,7 +47,10 @@ class InterpolateTester(unittest.TestCase):
             Npoints=10,
             potential=qobj.getPotential(),
         )
-        #print(result)
+        print(result)
 
 
-        
+
+
+
+

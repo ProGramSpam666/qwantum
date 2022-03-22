@@ -1,6 +1,7 @@
 import numpy as np 
 from quantum.matrix import fillmatrix
 
+
 def solveSchrodinger(N_G,N_k,N_b,potential):#iterates k-point by k-point
     #e and c are NOT dependent on ik, however, we alter to make e,c k-dependent
     ek = np.zeros((N_k,N_b)) #energy band
