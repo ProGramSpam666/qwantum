@@ -68,10 +68,9 @@ def interpolateHamiltonian(OB_bi, potential, N_G, N_GPrime, N_GPrimePrime, Ncell
         print(OB_bi[i])
     kList = 100
     M = np.zeros((2*N_G+1, 2*N_G+1), dtype=np.complex_)
-    for i in range(-N_G):
-        for j in range(OB_bi.shape[1]):
+    for i in range():
+        for j in range(-N_G, N_G+1):  
             for k in range(kList):
-            
                 if (i == j):
                     M[i+N_G, j+N_G] = 0.5*(k**2 + kList*k1[i,j] + k0[i,j])
                 else:
