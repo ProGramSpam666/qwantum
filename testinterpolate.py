@@ -1,47 +1,60 @@
-from quantum.schrodinger import solveSchrodinger
-from quantum.optimalbasis import optimalBasisWithoutInspection, optimalBasis
-from quantum.interpolate import interpolateHamiltonian
+from quantum.interpolate import interpolateHamiltonian, calculatek0,calculatek1,calculateVLoc
 from quantum import potential as pt
+from quantum.qobj import Qobj
+
+qobj = Qobj()
+#qobj = quantum.qobj.Qobj()
 
 
-""" def getTest():
-    N_G = 11
-    N_b = 5
-    N_k = 100
-    sb = 0.1
-    kpoints = 60
-    pf = pt.PotentialFactory()
-    pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
-    ptparms = { "lattice" : 2, "depth" : 1, "width" :1 }
-    ptl = pf.createPotential("sech", ptparms )
-    ek, ck = solveSchrodinger(N_G,N_k,N_b,ptl)
-    OB_bi = optimalBasisWithoutInspection(sb, N_k, N_b, ck)
-    for ik in range(N_k):
-        newEk = interpolateHamiltonian(sb, OB_bi, kpoints, N_G, N_k, N_b, ck, ik, ptl) 
-    return newEk
+def testCalculateK0():
+    potential = qobj.getPotential()
+    a = potential.parms["lattice"]
+    OB_bi = qobj.getOptimalBasis()
+    result = calculatek0(OB_bi, a)
+    return result
 
-print(getTest())        
- """
 
-#hamiltonianFilledWithEk = 0.5*((kpoints**2)*np.kron(i, j) + (N_k*k1[i, j]) + k0[i, j])
-def getTest():
-    N_G = 11
-    N_b = 5
-    N_k = 100
-    sb = 0.1
-    kpoints = 60
-    pf = pt.PotentialFactory()
-    pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
-    ptparms = { "lattice" : 2, "depth" : 1, "width" :0.1 }
-    ptl = pf.createPotential("sech", ptparms )
-    ek, ck = solveSchrodinger(N_G,N_k,N_b,ptl)
-    del ek
-    OB_bi = optimalBasis(sb, N_k, N_b, ck)
-    for ik in range(N_k):                
-        newEk = interpolateHamiltonian(sb, OB_bi, kpoints, N_G, N_k, N_b, ck, ik, ptl ) # func args make no sense
-    return newEk
+def testCalculateK1():
+    potential = qobj.getPotential()
+    a = potential.parms["lattice"]
+    OB_bi = qobj.getOptimalBasis()
+    result = calculatek1(OB_bi, a)
+    return result
 
-print(getTest())        
+
+def testCalculateVLoc():
+    potential = qobj.getPotential()
+    OB_bi = qobj.getOptimalBasis()
+    result = calculateVLoc(OB_bi, potential)
+    return result 
+
+
+def testInterpolateHamiltonian():
+    potential = qobj.getPotential()
+    OB_bi = qobj.getOptimalBasis()
+    kList = [1,2,3,4,5,6,7,8,9,10]
+    result = interpolateHamiltonian(OB_bi, potential, kList)
+    return result
+
+
+print("------------K0-------------")
+print(testCalculateK0())
+
+print("------------K1-------------")
+print(testCalculateK1())
+
+print("------------VLoc-----------")
+print(testCalculateVLoc())
+
+print("------------Hamiltonian-------")
+print(testInterpolateHamiltonian())
+
+
+
+
+
+
+
 
 
 

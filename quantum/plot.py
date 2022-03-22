@@ -56,28 +56,13 @@ def OBplotFun(ik,ek,bi_out,Ncell,Npoints,potential,symbol,shift):
     return
 
 
-def exponentialSb():
-    sbList = []
-    for sb in range(1,100):
-        sbvalues = 1/np.exp(sb)
-        sbList.append(sbvalues)
-        sbArray = np.array(sbList)
-
-    sizeArray = effectVaryingSbOnOptimalBasisExp() 
-
-    plt.xlabel("Size of Optimal Basis")
-    plt.ylabel("Sb value")
-    plt.plot(sizeArray, sbArray, 'r')
-    plt.show()    
-
-
 def plotToFindOptimalSb(symbol):
     myListOb = []
     myListSb = []
     sbValues = np.linspace(0,1,250)
     for s_b in sbValues:
         
-        getOptimalBasis = qobj.optimalBasis()
+        getOptimalBasis = qobj.optimalBasis() #FIX
         sizeOb = getOptimalBasis.size
         myListOb.append(sizeOb)
         myListSb.append(s_b)
@@ -90,8 +75,3 @@ def plotToFindOptimalSb(symbol):
     #plt.show()
 
 
-
-
-
-
-#def plot
