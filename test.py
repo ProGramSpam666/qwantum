@@ -1,14 +1,15 @@
 import matplotlib.pyplot as plt
 from quantum import optimalbasis
-from quantum.schrodinger import solveSchrodinger
+from quantum.schrodinger import solveSchrodinger, diagonaliseHamiltonian
 from quantum.optimalbasis import optimalBasisGetOBBI
 from quantum import potential as pt
 from testbasis import effectVaryingSbOnOptimalBasisExp
-from quantum.plot import plotToFindOptimalSb
 import numpy as np
 from quantum.qobj import Qobj
 from quantum.interpolate import calculateVLoc
 from quantum.potential import PotentialFactory as pf
+from quantum.optimalbasis import optimalBasis
+
 
 def varyingNbOBPlot():
     i = 0
@@ -16,7 +17,7 @@ def varyingNbOBPlot():
     qobj = Qobj()
     for N_B in range(3, 7):
         qobj.setN_B(N_B)
-        plotToFindOptimalSb(qobj, symbolList[i])
+        sbEffectOnSize(qobj, symbolList[i])
         i += 1
     plt.show()
 
@@ -54,22 +55,76 @@ def getOB_bi():
     return sizevalue
 
 
+def sbEffectOnSize(symbol):
+    qobj = Qobj()
+    myListOb = []
+    myListSb = []
+    sbValues = np.linspace(0,1,250)
+    N_b = qobj.getN_B
+    N_k = qobj.getN_K
+    ck = qobj.getCk
+    for s_b in sbValues:
+        
+        getOptimalBasis = optimalBasis(s_b, N_b, N_k, ck) 
+        sizeOb = getOptimalBasis.size
+        myListOb.append(sizeOb)
+        myListSb.append(s_b)
 
-def testingVLoc():
-    pf = pt.PotentialFactory()
-    pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
-    ptparms = { "lattice" : 2, "depth" : 0.2, "width" : 0.2 }
-    ptl = pf.createPotential("sech", ptparms)
-    obbi = getOB_bi()
-    result = calculateVLoc(obbi, 3,5,7,ptl,3,10)
-    return result
+    myresultOb = np.array(myListOb)
+    myresultSb = np.array(myListSb)
+    plt.xlabel("Size of Optimal Basis")
+    plt.ylabel("Sb value")
+    plt.plot(myresultOb, myresultSb, symbol)
+    plt.show()
+
+
+def sbEffectOnNb():
+    return 
+
+
+
+
+#print(plotToFindOptimalSb('r'))
+
+
+
+
+""" sb, N_b, N_k, ck, symbol
+def testobplot():
+    result1 = plotToFindOptimalSb(0.1)
+    result2 = plotToFindOptimalSb()
+ """
+
+
 
 
 #print(getOB_bi())
-print(testingVLoc())
+#print(testingVLoc())
 
 
 #print(calculateVLoc(3,5,7,ptl,3,10))
 #OB_bi, N_G, N_GPrime, N_GPrimePrime, potential, Ncell, Npoints
 
+
+
+
+
+
+
+
+def testingDiagonaliseHamil():
+    pf = pt.PotentialFactory()
+    pf.addType("sech", pt.sechpotGenerator, pt.sechFTGenerator)
+    ptparms = { "lattice" : 2, "depth" : 0.2, "width" : 0.2 }
+    ptl = pf.createPotential("sech", ptparms)
+    ek, ck = solveSchrodinger(11,70,4,ptl)
+    del ek
+    obbi = optimalBasis(0.1,4,70,ck)
+    N_k = 70
+    result = diagonaliseHamiltonian(obbi,N_k,4,11,ptl)
+    print("----------Optimal Solve Schrodinger Result--------")
+    return result
+
+
+print(testingDiagonaliseHamil())
 

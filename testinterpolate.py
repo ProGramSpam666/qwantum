@@ -32,7 +32,7 @@ def testCalculateVLoc():
 def testInterpolateHamiltonian():
     potential = qobj.getPotential()
     OB_bi = qobj.getOptimalBasis()
-    kList = [1,2,3,4,5,6,7,8,9,10]
+    kList = [1,2,3,4,5]
     result = interpolateHamiltonian(OB_bi, potential, kList)
     return result
 
@@ -54,7 +54,7 @@ print(testInterpolateHamiltonian())
 
 
 
-
+#------------------TEST Diagonalise Hamiltonain-----------------------
 
 
 

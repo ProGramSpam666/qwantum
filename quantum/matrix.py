@@ -28,3 +28,6 @@ def fillmatrix(ik, N_G, N_k, potential):  # matrix we want to fill with Hamilton
 
 
 
+
+
+
