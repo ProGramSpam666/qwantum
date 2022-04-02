@@ -2,10 +2,13 @@ import numpy as np
 from quantum import potential as pt
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 from quantum.optimalbasis import optimalBasisWithoutInspection
 from quantum.schrodinger import solveSchrodinger
 from quantum.plot import plotBand
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 from quantum.interpolate import interpolateHamiltonian
@@ -14,6 +17,9 @@ from quantum.optimalbasis import optimalBasisWithoutInspection, optimalBasis
 from quantum.schrodinger import solveSchrodinger
 from quantum.plot import OBplotBand, plotBand, plotFun
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -202,6 +208,7 @@ latticeptl4 = pf.createPotential("sech", latticeptparms4)
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 #TEST6 - increasing N_b
 
 #band structure (1)
@@ -223,6 +230,8 @@ plot4 = plotBand(ek4,latticeptl4,'g-')
 plt.show()
  """
 =======
+=======
+>>>>>>> Stashed changes
 print("-------------NORMAL---------")
 ek3, ck3 = solveSchrodinger(5, 100, 6, latticeptl2)
 print(ck3)
@@ -247,6 +256,7 @@ print(res.size) """
 
 #band structure (3)
 #plot3 = plotBand(ek3,latticeptl3,'y-')
+<<<<<<< Updated upstream
 
 =======
 print("-------------NORMAL---------")
@@ -273,6 +283,9 @@ print(res.size) """
 
 #band structure (3)
 #plot3 = plotBand(ek3,latticeptl3,'y-')
+
+>>>>>>> Stashed changes
+=======
 
 >>>>>>> Stashed changes
 #band structure (4)
@@ -347,6 +360,9 @@ def optimalBandTest_1():
 #print(optimalBandTest_1())
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

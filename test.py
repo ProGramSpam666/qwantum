@@ -12,6 +12,7 @@ from quantum.potential import PotentialFactory as pf
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 def varyingNbOBPlot():
     i = 0
     symbolList = ["r-", "b-", "g-", "k-", "y-", "p-", "c-"]
@@ -47,6 +48,8 @@ def gettingOptimalSb():
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 
 def getOB_bi():
     pf = pt.PotentialFactory()
@@ -61,6 +64,7 @@ def getOB_bi():
 
 
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 def testingVLoc():
@@ -80,6 +84,8 @@ print(testingVLoc())
 #print(calculateVLoc(3,5,7,ptl,3,10))
 #OB_bi, N_G, N_GPrime, N_GPrimePrime, potential, Ncell, Npoints
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======

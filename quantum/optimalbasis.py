@@ -3,6 +3,11 @@ from math import sqrt
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+from quantum.utils import Gvec
+
+>>>>>>> Stashed changes
 =======
 from quantum.utils import Gvec
 
@@ -26,8 +31,12 @@ def optimalBasis(sb, N_b, N_k, ck):
                 ckTilda[:, l , i] -= OB_bi[:,j]*(np.dot(OB_bi[:,j], ck[:, l , i])) 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
         Np = N-1
+=======
+        Np = N
+>>>>>>> Stashed changes
 =======
         Np = N
 >>>>>>> Stashed changes
