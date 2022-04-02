@@ -2,9 +2,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 from quantum.utils import kvec, Gvec
 
+
+
 def plotBand(ek,potential,symbol):
     a = potential.parms["lattice"]
     [Nk,Nb] = np.shape(ek)
+<<<<<<< Updated upstream
+=======
+    #print([Nk, Nb])
+    #print("--------ek-----------")
+    #print(ek)
+    #print("-------Nk-----")
+    #print(Nk)
+>>>>>>> Stashed changes
     k = np.zeros(Nk)
     
     for ik in range(Nk):
@@ -12,7 +22,12 @@ def plotBand(ek,potential,symbol):
         
     for ib in range(Nb):
         plt.plot(k,ek[:,ib],symbol)
+<<<<<<< Updated upstream
         
+=======
+    plt.ylabel("Energy (ev)")  
+    plt.xlabel("wave vector k")  
+>>>>>>> Stashed changes
     plt.show()
     return 
 
@@ -21,38 +36,48 @@ def plotOptimalBasisSizeAgainstCkSize(optimalBasisSize, ckSize, symbol):
     plt.plot(optimalBasisSize, ckSize, symbol)
     plt.show()
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 def plotFun(ik,ek,ck,Ncell,Npoints,potential,symbol,shift):
     a = potential.parms["lattice"]
     [NG,Nk,Nb] = np.shape(ck)
     N = int(NG/2-1) #check dimension ck
     x, U = potential.v(Ncell, Npoints)
     plt.plot(x,U)
-    
     for ib in range(Nb):
         phi = np.full(len(x),shift*ek[ik,ib]) #shift - bloch?
         #shift allows to adjust to improve visualisation
+<<<<<<< Updated upstream
         
+=======
+>>>>>>> Stashed changes
         for ig in range(NG):
             phi = phi + ck[ig,ik,ib]*np.exp(1j*(kvec(ik,a,Nk)-Gvec(ig-N,a))*x)
         plt.plot(x,phi,symbol)
     plt.show()
     return
 
+<<<<<<< Updated upstream
 def OBplotFun(ik,ek,bi_out,Ncell,Npoints,potential,symbol,shift):
+=======
+
+def OBPlotFun(ik, E, OB_bi, Ncell, Npoints, potential, symbol, shift):
+>>>>>>> Stashed changes
     a = potential.parms["lattice"]
-    [NG,Nk,Nb] = np.shape(bi_out)
-    N = int(NG/2-1) #check dimension ck
+    [NG,Nk,Nb] = np.shape(OB_bi)
+    N = int(NG/2-1) 
     x, U = potential.v(Ncell, Npoints)
     plt.plot(x,U)
-    
     for ib in range(Nb):
-        phi = np.full(len(x),shift*ek[ik,ib]) #shift - bloch?
+        phi = np.full(len(x),shift*E[ik,ib]) #shift - bloch?
         #shift allows to adjust to improve visualisation
-        
         for ig in range(NG):
-            phi = phi + bi_out[ig,ik,ib]*np.exp(1j*(kvec(ik,a,Nk)-Gvec(ig-N,a))*x)
+            phi = phi + OB_bi[ig,ik,ib]*np.exp(1j*(kvec(ik,a,Nk)-Gvec(ig-N,a))*x)
         plt.plot(x,phi,symbol)
     plt.show()
+<<<<<<< Updated upstream
     return
 
 
@@ -74,4 +99,7 @@ def plotToFindOptimalSb(symbol):
     plt.plot(myresultOb, myresultSb, symbol)
     #plt.show()
 
+=======
+    return 
+>>>>>>> Stashed changes
 

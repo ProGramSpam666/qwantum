@@ -1,5 +1,5 @@
 import numpy as np
-from quantum.utils import Gvec
+from quantum.utils import Gvec, kvec
 
 #eq 16, obtain ek, compare with solveschrodinger
 #should be summing over m
@@ -16,32 +16,47 @@ from quantum.utils import Gvec
 #m -> 0,....,2N_G +1 where this is = -N_G -> N_G
 
 
-
-def calculatek0(OB_bi, a):
+def calculatek0(OB_bi, potential):
+    a = potential.parms["lattice"]
     Nbasis = OB_bi.shape[1]
     Ng = OB_bi.shape[0]
     k0 = np.zeros((Nbasis, Nbasis), dtype=np.complex_)
+<<<<<<< Updated upstream
     #k0 = np.zeros(np.shape(OB_bi)[0], np.shape(OB_bi)[1], dtype = np.complex_)
 
     for i in range(Nbasis):
         for j in range(Nbasis): 
             for m in range(0, Ng):
                 k0[i, j] += np.conjugate(OB_bi[m, i])*OB_bi[m, j]*Gvec(m- int((Ng-1)/2), a)
+=======
+    for i in range(Nbasis):
+        for j in range(Nbasis): 
+            for m in range(0, Ng):
+                k0[i, j] += np.conjugate(OB_bi[m, i])*OB_bi[m, j]*Gvec(m- int((Ng-1)/2), a)**2
+    return k0
+>>>>>>> Stashed changes
 
     return k0
 
-def calculatek1(OB_bi, a):
+def calculatek1(OB_bi, potential):
+    a = potential.parms["lattice"]
     Nbasis = OB_bi.shape[1]
     Ng = OB_bi.shape[0]
     k1 = np.zeros((Nbasis, Nbasis), dtype=np.complex_)
     #k1 = np.zeros(np.shape(OB_bi), dtype = np.complex_)
     for i in range(Nbasis):
-        for j in range(Nbasis):    
+        for j in range(Nbasis): 
             for m in range(0,Ng):
+<<<<<<< Updated upstream
                 k1[i, j] += 2*np.conjugate(OB_bi[m, i])*OB_bi[m, j]*Gvec(m- int((Ng-1)/2), a)**2
 
     return k1
 
+=======
+                k1[i, j] += np.conjugate(OB_bi[m, i])*OB_bi[m, j]*Gvec(m- int((Ng-1)/2), a)  
+    return 2*k1  
+   
+>>>>>>> Stashed changes
 
 def calculateVLoc(OB_bi, potential):
     Nbasis = OB_bi.shape[1]
@@ -57,6 +72,7 @@ def calculateVLoc(OB_bi, potential):
     return vloc
 
 
+<<<<<<< Updated upstream
 
 def interpolateHamiltonian(OB_bi, potential, kList):
     Nbasis = OB_bi.shape[1]
@@ -74,19 +90,29 @@ def interpolateHamiltonian(OB_bi, potential, kList):
         a=a
     )
     #kList = [], list of k points, the k you want to interpolate
+=======
+#Interpolating and diagonalising
+def interpolateHamiltonian(OB_bi, kList, k0, k1, VLoc, N):
+    Nbasis = OB_bi.shape[1]
+    E = np.zeros((len(kList), N))
+    ik = 0
+>>>>>>> Stashed changes
     for k in(kList):
         Hk = np.zeros((Nbasis, Nbasis), dtype = np.complex_)
-        Hk[:,:] = 0.5*(k0[:,:] + vLoc[:,:])
         for i in range(Nbasis):
             for j in range(Nbasis):
+<<<<<<< Updated upstream
+=======
+                Hk[i,j] = 0.5*k0[i,j] + VLoc[i,j]
+>>>>>>> Stashed changes
                 if (i == j):
-                    Hk[i,j] += k^2
-                else:
-                    Hk[i,j] += k*k1[i,j]
-
-    return Hk   
-
-
+                    Hk[i ,j] += 0.5*(k**2)
+                Hk[i,j] += 0.5*(k*k1[i,j])
+                print(Hk.shape)
+        ek2 = np.linalg.eigvalsh(Hk)    
+        E[ik,0:N] = ek2[0:N]
+        ik +=1
+    return E #allowed Eigenenergies
 
 
 
