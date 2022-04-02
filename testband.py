@@ -1,16 +1,10 @@
 import numpy as np
 from quantum import potential as pt
-<<<<<<< Updated upstream
-from quantum.optimalbasis import optimalBasisWithoutInspection
-from quantum.schrodinger import solveSchrodinger
-from quantum.plot import plotBand
-=======
 from quantum.interpolate import interpolateHamiltonian
 from quantum.matrix import fillmatrix
 from quantum.optimalbasis import optimalBasisWithoutInspection, optimalBasis
 from quantum.schrodinger import solveSchrodinger
 from quantum.plot import OBplotBand, plotBand, plotFun
->>>>>>> Stashed changes
 import matplotlib.pyplot as plt
 from quantum.qobj import Qobj
 from quantum.utils import kvec
@@ -194,28 +188,6 @@ latticeptl2 = pf.createPotential("sech",latticeptparms2 )
 latticeptl3 = pf.createPotential("sech", latticeptparms3)
 latticeptl4 = pf.createPotential("sech", latticeptparms4)
 
-<<<<<<< Updated upstream
-#TEST6 - increasing N_b
-
-#band structure (1)
-ek1, ck1 = solveSchrodinger(5,100,2,latticeptl1) #N_G,N_k,N_b,potential
-plot1 = plotBand(ek1,latticeptl1,'r-')
-
-#band structure (2)
-ek2, ck2 = solveSchrodinger(5, 100, 4, latticeptl2)
-plot2 = plotBand(ek2, latticeptl2, 'b-')
-
-#band structure (3)
-ek3, ck3 = solveSchrodinger(5, 100, 6, latticeptl2)
-plot3 = plotBand(ek3,latticeptl3,'y-')
-
-#band structure (4)
-ek4, ck4 = solveSchrodinger(5, 100, 8, latticeptl2)
-plot4 = plotBand(ek4,latticeptl4,'g-')
-
-plt.show()
- """
-=======
 print("-------------NORMAL---------")
 ek3, ck3 = solveSchrodinger(5, 100, 6, latticeptl2)
 print(ck3)
@@ -312,7 +284,6 @@ def optimalBandTest_1():
     return plot2
 #print(optimalBandTest_1())
 
->>>>>>> Stashed changes
 
 #QUANTUM OBJECT METHOD OF GETTING OPTIMISED BAND STRUCTURE
 def optimalBandTest_2():

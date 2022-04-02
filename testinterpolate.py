@@ -48,31 +48,6 @@ def testInterpolateHamiltonian():
     N_b = qobj.getN_B()
     potential = qobj.getPotential()
     OB_bi = qobj.getOptimalBasis()
-<<<<<<< Updated upstream
-    kList = [1,2,3,4,5,6,7,8,9,10]
-    result = interpolateHamiltonian(OB_bi, potential, kList)
-    return result
-
-
-print("------------K0-------------")
-print(testCalculateK0())
-
-print("------------K1-------------")
-print(testCalculateK1())
-
-print("------------VLoc-----------")
-print(testCalculateVLoc())
-
-print("------------Hamiltonian-------")
-print(testInterpolateHamiltonian())
-
-
-
-
-
-
-
-=======
     N_k = qobj.getN_K()
     a = potential.parms["lattice"]
     k0 = calculatek0(OB_bi, potential)
@@ -96,7 +71,6 @@ print(testInterpolateHamiltonian())
 
 
 
->>>>>>> Stashed changes
 
 
 
