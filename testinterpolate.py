@@ -49,6 +49,7 @@ def testInterpolateHamiltonian():
     potential = qobj.getPotential()
     OB_bi = qobj.getOptimalBasis()
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     kList = [1,2,3,4,5,6,7,8,9,10]
     result = interpolateHamiltonian(OB_bi, potential, kList)
     return result
@@ -72,6 +73,31 @@ print(testInterpolateHamiltonian())
 
 
 
+=======
+    N_k = qobj.getN_K()
+    a = potential.parms["lattice"]
+    k0 = calculatek0(OB_bi, potential)
+    k1 = calculatek1(OB_bi, potential)
+    VLoc = calculateVLoc(OB_bi, potential)
+    kList = []
+    for i in range(N_k):
+        kList.append(kvec(i,a,N_k))
+    eigenEnergies = interpolateHamiltonian(OB_bi, kList,k0, k1, VLoc, N_b)
+    return eigenEnergies
+#print("-----Interpolate Hamiltonian--------")    
+#print(testInterpolateHamiltonian())    
+
+
+#-----------OPTIMISED METHOD OF OBTAINING INTERPOLATED HAMILTONIAN------
+def testInterpolateHamiltonian():
+    eigenEnergies = qobj.getInterpolateHamiltonian()
+    return eigenEnergies #obtains arrays of eigenenergies for each k point in N_k 
+print("-----Interpolate Hamiltonian--------")    
+print(testInterpolateHamiltonian())  
+
+
+
+>>>>>>> Stashed changes
 =======
     N_k = qobj.getN_K()
     a = potential.parms["lattice"]

@@ -66,6 +66,7 @@ def interpolateHamiltonian(OB_bi, kList, k0, k1, VLoc, N):
         for i in range(Nbasis):
             for j in range(Nbasis):
                 Hk[i,j] = 0.5*k0[i,j] + VLoc[i,j]
+<<<<<<< Updated upstream
                 if (i == j):
                     Hk[i ,j] += 0.5*(k**2)
                 Hk[i,j] += 0.5*(k*k1[i,j])
@@ -135,4 +136,14 @@ def interpolateHamiltonian(OB_bi, kList, k0, k1, VLoc, N):
 
 
 
+=======
+                if (i == j):
+                    Hk[i ,j] += 0.5*(k**2)
+                Hk[i,j] += 0.5*(k*k1[i,j])
+                print(Hk.shape)
+        ek2 = np.linalg.eigvalsh(Hk)    
+        E[ik,0:N] = ek2[0:N]
+        ik +=1
+    return E #allowed Eigenenergies
+>>>>>>> Stashed changes
 

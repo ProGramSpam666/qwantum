@@ -12,6 +12,7 @@ def solveSchrodinger(N_G,N_k,N_b,potential):
     for ik in range(N_k):
         M=fillmatrix(ik,N_G,N_k,potential)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         [e,c]=np.linalg.eigh(M) #because orthogonal basis standard eigenvalue problem
         ek[ik,0:N_b] = e[0:N_b]
         ck[:,ik,0:N_b] = c[:,0:N_b]
@@ -40,6 +41,18 @@ def solveSchrodingerForEk(N_G,N_k, N_b, potential):
 
     
 
+=======
+        print(M.shape)
+        [e,c]=np.linalg.eigh(M)
+
+        #print("--------[e,c]----------") #because orthogonal basis standard eigenvalue problem
+        #print([e,c])
+
+        ek[ik,0:N_b] = e[0:N_b]
+        ck[:,ik,0:N_b] = c[:,0:N_b]
+        
+    return ek,ck
+>>>>>>> Stashed changes
 =======
         print(M.shape)
         [e,c]=np.linalg.eigh(M)
