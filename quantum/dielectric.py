@@ -1,12 +1,3 @@
-<<<<<<< Updated upstream
-
-
-
-def dielectricFunc():
-    return 
-
-
-=======
 import numpy as np
 
 
@@ -23,7 +14,6 @@ def dielectricFunc(N_k, N_b, bi_out, ek, q, w):
                 denominator = w - (ek[nprime, k + q] - ek[n, k]) + 1j
                 Energy = func + numerator/denominator
     return Energy
->>>>>>> Stashed changes
 
 
 

@@ -29,10 +29,6 @@ def plotOptimalBasisSizeAgainstCkSize(optimalBasisSize, ckSize, symbol):
     plt.plot(optimalBasisSize, ckSize, symbol)
     plt.show()
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 def plotFun(ik,ek,ck,Ncell,Npoints,potential,symbol,shift):
     a = potential.parms["lattice"]
     [NG,Nk,Nb] = np.shape(ck)

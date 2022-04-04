@@ -1,26 +1,11 @@
 import numpy as np
 from math import sqrt
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
 from quantum.utils import Gvec
 
->>>>>>> Stashed changes
-=======
-from quantum.utils import Gvec
-
->>>>>>> Stashed changes
-=======
-from quantum.utils import Gvec
-
->>>>>>> Stashed changes
 #function to perform gram schmidt orthonormalization algorithm
 def optimalBasis(sb, N_b, N_k, ck):     
     OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
     ckTilda = np.zeros(np.shape(ck), dtype= np.complex_)
-
     N = N_b
     for i in range(N_b): 
         OB_bi[:, i] = ck[:, 0, i] 
@@ -29,28 +14,14 @@ def optimalBasis(sb, N_b, N_k, ck):
             ckTilda[:, l, i] = ck[:, l , i] 
             for j in range(N):
                 ckTilda[:, l , i] -= OB_bi[:,j]*(np.dot(OB_bi[:,j], ck[:, l , i])) 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-        Np = N-1
-=======
         Np = N
->>>>>>> Stashed changes
-=======
-        Np = N
->>>>>>> Stashed changes
-=======
-        Np = N
->>>>>>> Stashed changes
         for i in range(N_b):
             for j in range(Np, N):
                 ckTilda[:, l, i] -= OB_bi[:, j]*(np.dot(OB_bi[:,j], ck[:, l , i]))
             alpha = np.dot(ckTilda[:, l, i], ckTilda[:, l ,i])
             if alpha >= sb:
                 N += 1
-                OB_bi[:,N-1] = ckTilda[:,l,i] / np.sqrt(alpha)
-
+                OB_bi[:,N-1] = ckTilda[:,l,i] / np.sqrt(alpha)          
     bi_out = np.zeros((np.shape(ck)[0], N), dtype=np.complex_)
     bi_out[:, :] = OB_bi[:, 0:N]
     return bi_out

@@ -5,6 +5,7 @@ from quantum.optimalbasis import optimalBasis
 from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
 from quantum.utils import kvec
 
+
 qobj = Qobj()
 
 def differenceInEigenvalues():
@@ -23,8 +24,7 @@ def differenceInEigenvalues():
     VLoc = calculateVLoc(OB_bi, potential)
     kList = []
     for i in range(N_k):
-        kList.append(kvec(i,a,N_k))
-    print(kList)    
+        kList.append(kvec(i,a,N_k))   
     eigenEnergies = interpolateHamiltonian(OB_bi, kList, k0, k1, VLoc, N_b)
     differenceArray = ek - eigenEnergies
     return differenceArray
@@ -37,7 +37,36 @@ def quantumObjDifferenceInEk():
     difference = oldEk - newEk
     return difference
 
-
 def differenceInVelocity():
     return 
+
+
+
+
+#determining memory usage of methods
+
+
+
+def analyseMemory(): #NO USEFUL INFORMATION
+    ek = qobj.getEk()
+    print("size of ek:", ek.size)
+    print("Memory size of one array element in bytes:", ek.itemsize)
+    print("Memory size of numpy array in bytes:", ek.size * ek.itemsize)
+    print("Memory size of numpy array in bytes:", ek.nbytes)
+    E = qobj.getInterpolateHamiltonian()
+    print("size of ek:", E.size)
+    print("Memory size of one array element in bytes:", E.itemsize)
+    print("Memory size of numpy array in bytes:", E.size * E.itemsize)
+    print("Memory size of numpy array in bytes:", E.nbytes)
+
+
+
+
+
+
+
+
+
+
+
 
