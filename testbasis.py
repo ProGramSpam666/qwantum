@@ -1,6 +1,5 @@
 import numpy as np
 from math import sqrt 
-from quantum.optimalbasis import OB_bix
 from quantum.schrodinger import solveSchrodinger
 from quantum.optimalbasis import optimalBasisWithoutInspection
 from quantum.qobj import Qobj

@@ -1,13 +1,11 @@
 import numpy as np
 from math import sqrt
-
 from quantum.utils import Gvec
 
 #function to perform gram schmidt orthonormalization algorithm
 def optimalBasis(sb, N_b, N_k, ck):     
     OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
     ckTilda = np.zeros(np.shape(ck), dtype= np.complex_)
-
     N = N_b
     for i in range(N_b): 
         OB_bi[:, i] = ck[:, 0, i] 
@@ -23,8 +21,7 @@ def optimalBasis(sb, N_b, N_k, ck):
             alpha = np.dot(ckTilda[:, l, i], ckTilda[:, l ,i])
             if alpha >= sb:
                 N += 1
-                OB_bi[:,N-1] = ckTilda[:,l,i] / np.sqrt(alpha)
-
+                OB_bi[:,N-1] = ckTilda[:,l,i] / np.sqrt(alpha)          
     bi_out = np.zeros((np.shape(ck)[0], N), dtype=np.complex_)
     bi_out[:, :] = OB_bi[:, 0:N]
     return bi_out

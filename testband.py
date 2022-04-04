@@ -4,7 +4,7 @@ from quantum.interpolate import interpolateHamiltonian
 from quantum.matrix import fillmatrix
 from quantum.optimalbasis import optimalBasisWithoutInspection, optimalBasis
 from quantum.schrodinger import solveSchrodinger
-from quantum.plot import OBplotBand, plotBand, plotFun
+from quantum.plot import plotBand, plotFun
 import matplotlib.pyplot as plt
 from quantum.qobj import Qobj
 from quantum.utils import kvec

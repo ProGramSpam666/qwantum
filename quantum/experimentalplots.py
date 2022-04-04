@@ -116,4 +116,6 @@ def sbEffectOnEigenvalues():
     plt.plot(E, myresultSb, 'g')
     plt.show()
     
-
+    
+def differenceInEigenvaluesVsSb():
+    return 

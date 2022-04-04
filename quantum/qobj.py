@@ -7,15 +7,15 @@ import quantum.velocityOp as velocityoperator
 
 class Qobj:
 
-    # PRIVATE ATRRIBUTES
-    __defaultPtParms = { "lattice" : 1, "depth" : 10, "width" :0.1 }
+    # PRIVATE ATRRIBUTEs
+    __defaultPtParms = { "lattice" : 3, "depth" : 10, "width" :0.1 }
     __defaultLatticeConstant = {"lattice" : 2}
     __defaultPotentialDepth = {"depth" : 0.3}
     __defaultPotentialWidth = {"width" : 0.1}
     __defaultN_G = 10
     __defaultN_K = 25
     __defaultN_B = 5
-    __defaultSb = 0.4
+    __defaultSb = 0.000001
     __defaultPtType = "sech"
     
     
