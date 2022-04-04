@@ -12,4 +12,12 @@ ptl = pf.createPotential("sech", ptparms)
 print(plotFun(10,ek,ck,3,10,ptl,'r', 2))
 
 
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+#ik,ek,ck,Ncell,Npoints,potential,symbol,shift
+>>>>>>> Stashed changes
+=======
+#ik,ek,ck,Ncell,Npoints,potential,symbol,shift
+>>>>>>> Stashed changes
+=======
 #ik,ek,ck,Ncell,Npoints,potential,symbol,shift
