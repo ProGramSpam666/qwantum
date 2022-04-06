@@ -11,13 +11,3 @@ ptl = pf.createPotential("sech", ptparms)
 [ek,ck] = solveSchrodinger(5,100,4,ptl)
 print(plotFun(10,ek,ck,3,10,ptl,'r', 2))
 
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-#ik,ek,ck,Ncell,Npoints,potential,symbol,shift
->>>>>>> Stashed changes
-=======
-#ik,ek,ck,Ncell,Npoints,potential,symbol,shift
->>>>>>> Stashed changes
-=======
-#ik,ek,ck,Ncell,Npoints,potential,symbol,shift

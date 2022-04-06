@@ -1,7 +1,16 @@
-from quantum.table import analyseMemory, differenceInEigenvalues, quantumObjDifferenceInEk
+from quantum.qobj import Qobj
+
+qobj = Qobj()
 
 #print(differenceInEigenvalues())
 
 #print(quantumObjDifferenceInEk())
 
-print(analyseMemory())
+
+def tesTT():
+    res = qobj.getDifferenceInEkTable()
+    return res
+print(tesTT())
+
+
+

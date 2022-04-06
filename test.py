@@ -9,6 +9,7 @@ from quantum.qobj import Qobj
 from quantum.interpolate import calculateVLoc
 from quantum.potential import PotentialFactory as pf
 
+qobj = Qobj()
 
 def getOB_bi():
     pf = pt.PotentialFactory()
@@ -21,11 +22,6 @@ def getOB_bi():
     sizevalue = obbi.size
     return sizevalue
 
-qobj = Qobj()
 
-def func():
-    ob = qobj.getOptimalBasis()
-    return ob
-print(func())    
 
 

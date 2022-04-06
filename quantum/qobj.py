@@ -4,18 +4,20 @@ import quantum.optimalbasis as optimalbasis
 import quantum.interpolate as interpolateHamiltonian
 import quantum.utils as utils 
 import quantum.velocityOp as velocityoperator
+import quantum.gettime as getTime
+import quantum.table as Table
 
 class Qobj:
 
     # PRIVATE ATRRIBUTEs
-    __defaultPtParms = { "lattice" : 3, "depth" : 10, "width" :0.1 }
+    __defaultPtParms = { "lattice" : 1, "depth" : 10, "width" :0.1 }
     __defaultLatticeConstant = {"lattice" : 2}
     __defaultPotentialDepth = {"depth" : 0.3}
     __defaultPotentialWidth = {"width" : 0.1}
     __defaultN_G = 10
     __defaultN_K = 25
     __defaultN_B = 5
-    __defaultSb = 0.000001
+    __defaultSb = 0.3
     __defaultPtType = "sech"
     
     
@@ -93,10 +95,17 @@ class Qobj:
         return self.kList()
     def getInterpolateHamiltonian(self):
         return self.interpolateHamiltonian()    
+    def getDifferenceInEkTable(self):
+        return self.differenceEigenvalues()
+    def getEkTimeSolveSchrodinger(self):
+        return self.ekTimeSolveSchrodinger()
+    def getEkTimeInterpolateHamiltonian(self):
+        return self.ekTimeInterpolateHamiltonian() 
+    def getDifferenceTimeForEk(self):
+        return self.differenceTimeForGettingEk()   
     def getVelocityOperator(self):
         return self.velocityOperator()
 
-    
 
     # SETTERS
     def setPtParms(self, ptParms):
@@ -184,6 +193,53 @@ class Qobj:
             N = self.getN_B()
         )
         return interHamil   
+
+    
+    def differenceEigenvalues(self):
+        differenceEk = Table.differenceInEigenvalues(
+            sb  = self.getSb(),
+            N_G = self.getN_G(),
+            N_k = self.getN_K(),
+            N_b = self.getN_B(),
+            potential = self.getPotential(),
+            N = self.getN_B()
+        )
+        return differenceEk
+
+    def ekTimeSolveSchrodinger(self):
+        ekTimeSS = getTime.standardTimeForEk(
+            N_G= self.getN_G(),
+            N_k= self.getN_K(),
+            N_b= self.getN_B(),
+            potential= self.getPotential()
+        )
+        return ekTimeSS
+
+    def ekTimeInterpolateHamiltonian(self):
+        ekTimeIH = getTime.optimisedTimeForEk(
+            OB_bi = self.getOptimalBasis(),
+            kList = self.getKList(),
+            k0 = self.getk0(),
+            k1 = self.getk1(),
+            VLoc = self.getVLoc(),
+            N_b = self.getN_B()
+        )
+        return ekTimeIH    
+
+    def differenceTimeForGettingEk(self):
+        differenceTime = getTime.differenceInTimeForObtainingEk(
+            N_G= self.getN_G(),
+            N_k= self.getN_K(),
+            N_b= self.getN_B(),
+            potential= self.getPotential(),
+            OB_bi = self.getOptimalBasis(),
+            kList = self.getKList(),
+            k0 = self.getk0(),
+            k1 = self.getk1(),
+            VLoc = self.getVLoc(),
+            N = self.getN_B()
+        )
+        return differenceTime
 
     def velocityOperator(self):
         kdvo = velocityoperator.kDepVelOperatorOB(

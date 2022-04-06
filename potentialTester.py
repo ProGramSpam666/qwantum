@@ -29,5 +29,3 @@ sechPotential = potentialTester.generateSechPotential()
 print(sechPotential)
 
 
-    
-##########################   FUCK AT CRAIC ##############################

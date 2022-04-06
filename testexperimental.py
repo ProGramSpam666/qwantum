@@ -1,16 +1,24 @@
 from quantum import potential
-from quantum.experimentalplots import EnergyVsN_G, optimalBasisVsCk, sbEffectOnEigenvalues, sbEffectOnSize, ekVsE
+from quantum.experimentalplots import EnergyVsN_G, optimalBasisVsCk, sbEffectOnEigenvalues 
+from quantum.experimentalplots import sbEffectOnSize, ekVsE, timePlotVaryingSb
 from quantum.plot import plotFun, OBPlotFun
 from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
 from quantum.qobj import Qobj
 
 qobj = Qobj()
 
-print(sbEffectOnSize())
+def testSbEffectOnSize():
+    N_b = qobj.getN_B()
+    N_k = qobj.getN_K()
+    ck = qobj.getCk()
+    res = sbEffectOnSize(N_b, N_k, ck)
+    return res
+#print(testSbEffectOnSize())    
+
 
 #print(optimalBasisVsCk())
 
-#print(ekVsE()) #SAME PROBLEM AS TEST-INTERPOLATE!!!!!
+#print(ekVsE())
 
 def testOBPlotFun():
     ik = 2
@@ -33,3 +41,17 @@ def testOBPlotFun():
 #print(EnergyVsN_G())
 
 #print(sbEffectOnEigenvalues())
+
+
+
+def testTimePlotVaryingSb():
+    N_b = qobj.getN_B()
+    N_k = qobj.getN_K()
+    ck = qobj.getCk()
+    potential = qobj.getPotential()
+    kList = qobj.getKList()
+    res = timePlotVaryingSb(N_b, N_k, ck, potential, kList)
+    return res
+print(testTimePlotVaryingSb())    
+
+
