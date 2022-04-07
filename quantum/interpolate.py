@@ -1,5 +1,6 @@
 import numpy as np
-from quantum.utils import Gvec, kvec
+from quantum.utils import Gvec
+
 
 #eq 16, obtain ek, compare with solveschrodinger
 #should be summing over m
@@ -33,7 +34,6 @@ def calculatek1(OB_bi, potential):
     Nbasis = OB_bi.shape[1]
     Ng = OB_bi.shape[0]
     k1 = np.zeros((Nbasis, Nbasis), dtype=np.complex_)
-    #k1 = np.zeros(np.shape(OB_bi), dtype = np.complex_)
     for i in range(Nbasis):
         for j in range(Nbasis): 
             for m in range(0,Ng):
@@ -44,8 +44,6 @@ def calculatek1(OB_bi, potential):
 def calculateVLoc(OB_bi, potential):
     Nbasis = OB_bi.shape[1]
     Ng = OB_bi.shape[0]
-    #a = potential.parms["lattice"]
-    #x = np.asarray(potential.v(Ncell, Npoints), dtype=np.complex_)
     vloc = np.zeros((Nbasis, Nbasis), dtype=np.complex_)
     for i in range(Nbasis):
         for j in range(Nbasis):    

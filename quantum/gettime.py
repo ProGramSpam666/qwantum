@@ -6,6 +6,7 @@ import numpy as np
 import time
 
 
+
 #obtain time taken to calculate eigenvalues using solveSchrodinger()
 def standardTimeForEk(N_G, N_k, N_b, potential):
     startTimeStandard = time.time()
@@ -17,8 +18,7 @@ def standardTimeForEk(N_G, N_k, N_b, potential):
 
 
 #obtain time taken to calculate eigenvalues using interpolateHamiltonain()
-def optimisedTimeForEk(OB_bi, kList, k0, k1, VLoc, N_b):
-    N = N_b
+def optimisedTimeForEk(OB_bi, kList, k0, k1, VLoc, N):
     startTimeOptimised = time.time()
     interpolateHamiltonian(OB_bi, kList, k0, k1, VLoc, N)
     endTimeOptimised = time.time() 
@@ -28,12 +28,24 @@ def optimisedTimeForEk(OB_bi, kList, k0, k1, VLoc, N_b):
 
 
 #obtaining difference in time taken to calculate eigenvalues from each respective method
+def differenceInTimeForObtainingEkSPECIFIC(N_G, N_k, N_b, potential, OB_bi, kList, k0, k1, VLoc, N):
+    SSTimeForEk = standardTimeForEk(N_G, N_k, N_b, potential)
+    IHTimeForEk = optimisedTimeForEk(OB_bi, kList, k0, k1, VLoc, N)
+    difference = SSTimeForEk - IHTimeForEk
+    print("----solveSchrodinger() Time for obtaining ek----")
+    print(SSTimeForEk)
+    print("----interpolateHamiltonian() Time for obtaining ek----")
+    print(IHTimeForEk)
+    print("----Difference in Time between SS and IH for ek----")
+    print(difference)
+    return
+
+
 def differenceInTimeForObtainingEk(N_G, N_k, N_b, potential, OB_bi, kList, k0, k1, VLoc, N):
     SSTimeForEk = standardTimeForEk(N_G, N_k, N_b, potential)
     IHTimeForEk = optimisedTimeForEk(OB_bi, kList, k0, k1, VLoc, N)
     difference = SSTimeForEk - IHTimeForEk
     return difference
-
 
 
 #obtaining difference in time for varying sb

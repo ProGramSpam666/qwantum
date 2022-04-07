@@ -1,5 +1,7 @@
 from quantum.qobj import Qobj
 
+
+
 class QobjManager:
     data = list[Qobj] # stores Qobj objects
 

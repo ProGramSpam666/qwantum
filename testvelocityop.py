@@ -23,21 +23,20 @@ def testVelocityOperator():
     k1 = qobj.getk1()
     result = kDepVelOperatorOB(N_b, k1, OB_bi, kList, ck)
     return result, k1
-print("---------Quantum Object Method determining Velocity Operator--------")
-print(testVelocityOperator())
+#print("---------Quantum Object Method determining Velocity Operator--------")
+#print(testVelocityOperator())
 
 
 
 def testStandardVelocity():
     N_b = qobj.getN_B()
-    #N_G = qobj.getN_G()
-    kList = qobj.getKList()
+    N_k = qobj.getN_K()
     potential = qobj.getPotential()
     ck = qobj.getCk()
-    result = standardVelocity(N_b, kList, potential, ck)
+    result = standardVelocity(N_k, N_b, potential, ck)
     return result
-#print("---------Standard Velocity------")
-#print(testStandardVelocity())
+print("---------Standard Velocity------")
+print(testStandardVelocity())
 
 
 
