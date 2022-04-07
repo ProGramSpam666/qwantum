@@ -1,3 +1,4 @@
+from numpy import ndarray
 import quantum.potential as pt
 import quantum.schrodinger as schrodinger
 import quantum.optimalbasis as optimalbasis
@@ -6,6 +7,7 @@ import quantum.utils as utils
 import quantum.velocityOp as velocityoperator
 import quantum.gettime as getTime
 import quantum.table as Table
+import quantum.plot as plot
 
 class Qobj:
 
@@ -45,11 +47,11 @@ class Qobj:
     def get__defaultPtType(self):
         return self.__defaultPtType
     def get__defaultLatticeConstant(self):
-        return self.__defaultLatticeConstant
+        return self.__defaultPtParms["lattice"]
     def get__defaultPotentialDepth(self):
-        return self.__defaultPotentialDepth
+        return self.__defaultPtParms["depth"]
     def get__defaultPotentialWidth(self):
-        return self.__defaultPotentialWidth           
+        return self.__defaultPtParms["width"]           
     def getPtParms(self):
         return self.parms["ptParms"]
     def getN_G(self):
@@ -71,13 +73,9 @@ class Qobj:
     def getPotential(self):
         return self.__potential
     def getEk(self):
-        ek, ck = self.solveSchrodinger()
-        del ck
-        return ek
+        return self.__ek
     def getCk(self):
-        ek, ck = self.solveSchrodinger()
-        del ek
-        return ck
+        return self.__ck
     def getOptimalBasis(self):
         return self.__OB
     def getk0(self):
@@ -100,6 +98,8 @@ class Qobj:
         return self.differenceTimeForGettingEk()   
     def getVelocityOperator(self):
         return self.velocityOperator()
+    def getBands(self):
+        return self.__bands
 
 
     # SETTERS
@@ -131,6 +131,12 @@ class Qobj:
         self.__k1 = self.calculatek1()
     def __setVLoc(self):
         self.__vLoc = self.calculateVLoc()
+    def __setEkAndCk(self):
+        ek, ck = self.solveSchrodinger()
+        self.__ek = ek
+        self.__ck = ck
+    def __setBands(self):
+        self.__bands = self.bandStructure()
     def setParms(self, **kwargs):
         for arg in kwargs:
             if arg == "ptParms":
@@ -152,11 +158,13 @@ class Qobj:
                 ptType = kwargs.get("ptType")
                 self.__setPtType(ptType)
         self.__setPotential()
+        self.__setEkAndCk()
         self.__setOptimalBasis()
         self.__setKList()
         self.__setK0()
         self.__setK1()
         self.__setVLoc()
+        
         
 
             
@@ -286,6 +294,13 @@ class Qobj:
             ck = self.getCk()
         )
         return kdvo
+
+    def bandStructure(self)->ndarray:
+        bands = plot.bandStructure(
+            ek=self.getEk(),
+            potential=self.getPotential()
+        )
+        return bands
 
 
 
