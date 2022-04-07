@@ -11,7 +11,7 @@ class QobjTester(unittest.TestCase):
     
     def test_00_get_defaultPtParms(self):
         print("Start get_defaultPtParms test \n")
-        self.assertEqual({ "lattice" : 2, "depth" : 1, "width" :0.1 }, self.qobj.get__defaultPtParms())
+        self.assertEqual({ "lattice" : 1, "depth" : 10, "width" :0.1 }, self.qobj.get__defaultPtParms())
 
     def test_01_get_ptParms(self):
         print("Start get_ptParms test \n")
@@ -20,7 +20,7 @@ class QobjTester(unittest.TestCase):
     def test_02_set_ptParms(self):
         print("Start set_ptParms test \n")
         newPtParms = { "lattice" : 3, "depth" : 2, "width" :2 }
-        self.qobj.setPtParms(newPtParms)
+        self.qobj.setParms(ptParms=newPtParms)
         self.assertEqual(newPtParms, self.qobj.getPtParms()) # check ptParms is equal to newPtParms
     
     def test_03_get_potential(self):
@@ -33,11 +33,11 @@ class QobjTester(unittest.TestCase):
 
     def test_04_getN_G(self):
         print("Start getN_G test  \n")
-        self.assertEqual(8, self.qobj.getN_G())
+        self.assertEqual(10, self.qobj.getN_G())
     
     def test_05_getN_K(self):
         print("Start getN_K test \n")
-        self.assertEqual(100, self.qobj.getN_K())
+        self.assertEqual(25, self.qobj.getN_K())
 
     def test_06_getN_B(self):
         print("Start getN_B test \n")
@@ -46,19 +46,19 @@ class QobjTester(unittest.TestCase):
     def test_07_setN_G(self):
         print("Start setN_G test \n")
         newN_G = self.qobj.getN_G() + 1
-        self.qobj.setN_G(newN_G)
+        self.qobj.setParms(N_G=newN_G)
         self.assertEqual(newN_G, self.qobj.getN_G())
 
     def test_08_setN_K(self):
         print("Start setN_K test \n")
         newN_K = self.qobj.getN_K() + 1
-        self.qobj.setN_K(newN_K)
+        self.qobj.setParms(N_K=newN_K)
         self.assertEqual(newN_K, self.qobj.getN_K())
 
     def test_09_setN_B(self):
         print("Start setN_B test \n")
         newN_B = self.qobj.getN_B() + 1
-        self.qobj.setN_B(newN_B)
+        self.qobj.setParms(N_B=newN_B)
         self.assertEqual(newN_B, self.qobj.getN_B())
 
     def test_10_getCk(self):
@@ -82,7 +82,7 @@ class QobjTester(unittest.TestCase):
     def test_11_setSb(self):
         print("Start setSb test \n")
         newSb = 0.01
-        self.qobj.setSb(newSb)
+        self.qobj.setParms(sb=newSb)
         self.assertEqual(newSb, self.qobj.getSb())
 
     def test_12_restoreDefaults(self):
@@ -127,7 +127,26 @@ class QobjTester(unittest.TestCase):
     def test_15_setPtType(self):
         print("Start setPtType test \n")
         expected = "sech"
-        self.qobj.setPtType(expected)
+        self.qobj.setParms(ptType=expected)
         result = self.qobj.getPtType()
         self.assertEqual(expected, result)
+    
+    def test_16_getLatticeConstant(self):
+        print("Start getLatticeConstant test \n")
+        expected = 1
+        res = self.qobj.getLatticeConstant()
+        self.assertEqual(expected, res)
 
+    def test_17_getPotentialDepth(self):
+        print("Start getPotentialDepth test \n")
+        expected = 10
+        res = self.qobj.getPotentialDepth()
+        self.assertEqual(expected, res)
+
+    def test_18_getPotentialWith(self):
+        print("Start getPotentialWidth test \n")
+        expected = 0.1
+        res = self.qobj.getPotentialWidth()
+        self.assertEqual(expected, res)
+    
+    

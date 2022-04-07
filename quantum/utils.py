@@ -1,6 +1,6 @@
 from math import pi
 import numpy as np
-#from quantum import potential
+from time import time
 
 def Gvec(m, a):
         return 2*pi*m/a
@@ -50,5 +50,25 @@ def phi(N_b, OB_bi, a, potential, Ncell, Npoints):
     for i in range(N_b):
         Unk = Unk + OB_bi[:, i] * OB_biXDep[:, i]
     return Unk
+
+
+def timerPrint(func):
+    # This function prints formatted string showing execution time of the function object passed
+    def wrap_func(*args, **kwargs):
+        t1 = time()
+        result = func(*args, **kwargs)
+        t2 = time()
+        print(f'Function {func.__name__!r} executed in {(t2-t1):.10f}s') # displays execution time to 10 d.p
+        return result
+    return wrap_func
+
+def timerFloat(func):
+    # This function returns float - the execution time of the function object passed
+    def wrap_func(*args, **kwargs)->float:
+        t1 = time()
+        func(*args, **kwargs)
+        t2 = time()
+        return (t2-t1)
+    return wrap_func
 
 
