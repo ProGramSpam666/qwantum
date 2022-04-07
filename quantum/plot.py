@@ -1,10 +1,30 @@
 import numpy as np 
 import matplotlib.pyplot as plt
+from quantum.potential import Potential
 from quantum.utils import kvec, Gvec
 
 
+"""T
+TODO
+band structure array
+"""
+def bandStructure(ek:np.ndarray,potential:Potential)->np.ndarray:
+    a = potential.parms["lattice"]
+    [Nk,Nb] = np.shape(ek)
+    k = np.zeros(Nk)
 
-def plotBand(ek,potential,symbol):
+    for ik in range(Nk):
+        k[ik]=kvec(ik,a,Nk)  
+
+    bands = []
+    for ib in range(Nb):
+        temp = np.array([k,ek[:,ib]])
+        bands.append(temp)
+
+    bands = np.asarray(bands)
+    return bands
+
+def plotBand(ek:np.ndarray, potential: Potential, symbol: str):
     a = potential.parms["lattice"]
     [Nk,Nb] = np.shape(ek)
     #print([Nk, Nb])

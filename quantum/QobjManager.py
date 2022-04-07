@@ -39,7 +39,9 @@ class QobjManager:
     @staticmethod
     def timeDiffSolveSchrodingerInterpolateHamiltonian(qobj: Qobj)->float:
         t1 = QobjManager.timeSolveSchrodinger(qobj)
+        print(t1)
         t2 = QobjManager.timeInterpolateHamiltonian(qobj)
+        print(t2)
         return t1 - t2
 
     
