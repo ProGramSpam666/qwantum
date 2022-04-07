@@ -27,11 +27,8 @@ def standardVelocity(N_k, N_b, potential, ck):
             for ib in range(N_b):
                 for m in range(0, Ng):
                     if (ik == ib):
-                        ck[:, ik, ib] += k
+                        ck[ ik, ib] += k
                     ck[:, ik, ib] += np.conjugate(ck[:, k, ik])*ck[:, k, ib]*Gvec(m- int((Ng-1)/2), a)   
     kth +=1
     return ck
-
-
-
 
