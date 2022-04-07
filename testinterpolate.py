@@ -29,8 +29,8 @@ def testCalculateK1():
     OB_bi = qobj.getOptimalBasis()
     result = calculatek1(OB_bi, potential)
     return result
-#print("------------K1-------------")
-#print(testCalculateK1())
+print("------------K1-------------")
+print(testCalculateK1())
 
 
 #COMPLETE
@@ -66,8 +66,8 @@ def testInterpolateHamiltonian():
 def testInterpolateHamiltonian():
     eigenEnergies = qobj.getInterpolateHamiltonian()
     return eigenEnergies #obtains arrays of eigenenergies for each k point in N_k 
-print("-----Interpolate Hamiltonian--------")    
-print(testInterpolateHamiltonian())  
+#print("-----Interpolate Hamiltonian--------")    
+#print(testInterpolateHamiltonian())  
 
 
 

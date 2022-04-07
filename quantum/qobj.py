@@ -14,7 +14,7 @@ class Qobj:
     __defaultN_G = 10
     __defaultN_K = 25
     __defaultN_B = 5
-    __defaultSb = 0.3
+    __defaultSb = 0.8
     __defaultPtType = "sech"
     
     
@@ -258,7 +258,7 @@ class Qobj:
             k0 = self.getk0(),
             k1 = self.getk1(),
             VLoc = self.getVLoc(),
-            N_b = self.getN_B()
+            N = self.getN_B()
         )
         return ekTimeIH    
 
