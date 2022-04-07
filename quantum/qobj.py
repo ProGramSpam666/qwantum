@@ -11,9 +11,6 @@ class Qobj:
 
     # PRIVATE ATRRIBUTEs
     __defaultPtParms = { "lattice" : 1, "depth" : 10, "width" :0.1 }
-    __defaultLatticeConstant = {"lattice" : 2}
-    __defaultPotentialDepth = {"depth" : 0.3}
-    __defaultPotentialWidth = {"width" : 0.1}
     __defaultN_G = 10
     __defaultN_K = 25
     __defaultN_B = 5
@@ -23,17 +20,15 @@ class Qobj:
     
     # CONSTRUCTOR
     def __init__(self):
-        self.parms = {
-            "ptParms": self.get__defaultPtParms(),
-            "N_G": self.get__defaultN_G(),
-            "N_K": self.get__defaultN_K(),
-            "N_B": self.get__defaultN_B(),
-            "sb": self.get__defaultSb(),
-            "ptType": self.get__defaultPtType(),
-            "a": self.get__defaultLatticeConstant(),
-            "v0": self.get__defaultPotentialDepth(),
-            "a0": self.get__defaultPotentialWidth()
-        }
+        self.parms = {}
+        self.setParms(
+            ptParms = self.get__defaultPtParms(),
+            N_G = self.get__defaultN_G(),
+            N_K = self.get__defaultN_K(),
+            N_B = self.get__defaultN_B(),
+            sb = self.get__defaultSb(),
+            ptType = self.get__defaultPtType()
+        )
     
 
     # GETTERS
@@ -68,13 +63,13 @@ class Qobj:
     def getPtType(self):
         return self.parms["ptType"]
     def getLatticeConstant(self):
-        return self.parms["a"]
+        return self.getPtParms()["lattice"]
     def getPotentialDepth(self):
-        return self.parms["v0"] 
+        return self.getPtParms()["depth"] 
     def getPotentialWidth(self):
-        return self.parms["a0"]           
+        return self.getPtParms()["width"]           
     def getPotential(self):
-        return self.generatePotential(self.getPtType())  
+        return self.__potential
     def getEk(self):
         ek, ck = self.solveSchrodinger()
         del ck
@@ -84,15 +79,15 @@ class Qobj:
         del ek
         return ck
     def getOptimalBasis(self):
-        return self.optimalBasis()
+        return self.__OB
     def getk0(self):
-        return self.calculatek0()   
+        return self.__k0   
     def getk1(self):
-        return self.calculatek1()
+        return self.__k1
     def getVLoc(self):
-        return self.calculateVLoc()         
+        return self.__vLoc         
     def getKList(self):
-        return self.kList()
+        return self.__klist
     def getInterpolateHamiltonian(self):
         return self.interpolateHamiltonian()    
     def getDifferenceInEkTable(self):
@@ -108,22 +103,63 @@ class Qobj:
 
 
     # SETTERS
-    def setPtParms(self, ptParms):
+    def __setPtParms(self, ptParms):
         self.parms["ptParms"] = ptParms 
-    def setN_G(self, N_G):
+    def __setN_G(self, N_G):
         self.parms["N_G"] = N_G
-    def setN_K(self, N_K):
+    def __setN_K(self, N_K):
         self.parms["N_K"] = N_K
-    def setN_B(self, N_B):
+    def __setN_B(self, N_B):
         self.parms["N_B"] = N_B
-    def setSb(self, sb):
+    def __setSb(self, sb):
         self.parms["sb"] = sb
-    def setPtType(self, ptType):
+    def __setPtType(self, ptType):
         typeList = ["sech"]
         if ptType not in typeList:
             raise TypeError("type not in typeList")
         else:
-            self.parms["ptType"] = ptType        
+            self.parms["ptType"] = ptType
+    def __setOptimalBasis(self):
+        self.__OB = self.optimalBasis()
+    def __setKList(self):
+        self.__klist = self.kList()
+    def __setPotential(self):
+        self.__potential = self.generatePotential(self.getPtType())
+    def __setK0(self):
+        self.__k0 = self.calculatek0()
+    def __setK1(self):
+        self.__k1 = self.calculatek1()
+    def __setVLoc(self):
+        self.__vLoc = self.calculateVLoc()
+    def setParms(self, **kwargs):
+        for arg in kwargs:
+            if arg == "ptParms":
+                ptParms = kwargs.get("ptParms")
+                self.__setPtParms(ptParms)
+            if arg == "N_G":
+                N_G = kwargs.get("N_G")
+                self.__setN_G(N_G)
+            if arg == "N_K":    
+                N_K = kwargs.get("N_K")
+                self.__setN_K(N_K)
+            if arg == "N_B":
+                N_B = kwargs.get("N_B")
+                self.__setN_B(N_B)
+            if arg == "sb":
+                sb = kwargs.get("sb")
+                self.__setSb(sb)
+            if arg == "ptType":
+                ptType = kwargs.get("ptType")
+                self.__setPtType(ptType)
+        self.__setPotential()
+        self.__setOptimalBasis()
+        self.__setKList()
+        self.__setK0()
+        self.__setK1()
+        self.__setVLoc()
+        
+
+            
 
 
     # METHODS
