@@ -75,7 +75,7 @@ class QobjManager:
                 plt.plot(band[0], band[1], "r-")
         for interpolatedBands in interpolatedBandsList:
             for band in interpolatedBands:
-                plt.plot(band[0], band[1], "b.")
+                plt.plot(band[0], band[1], "b--")
         plt.show()
 
 
