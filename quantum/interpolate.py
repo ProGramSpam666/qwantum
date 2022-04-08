@@ -1,7 +1,6 @@
 import numpy as np
 from quantum.utils import Gvec
 
-
 #eq 16, obtain ek, compare with solveschrodinger
 #should be summing over m
 #want NbasisxNbasis array
@@ -36,7 +35,7 @@ def calculatek1(OB_bi, potential):
     k1 = np.zeros((Nbasis, Nbasis), dtype=np.complex_)
     for i in range(Nbasis):
         for j in range(Nbasis): 
-            for m in range(0,Ng):
+            for m in range(0, Ng):
                 k1[i, j] += np.conjugate(OB_bi[m, i])*OB_bi[m, j]*Gvec(m- int((Ng-1)/2), a)  
     return 2*k1  
    

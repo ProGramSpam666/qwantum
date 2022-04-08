@@ -1,3 +1,8 @@
+#File to calculate the time differences in determining the time taken to obtain
+#the eigenvalues from each respective aprroach (SS and IH).  The difference in such
+#time is also calculated.
+
+
 from quantum.schrodinger import solveSchrodinger
 from quantum.interpolate import interpolateHamiltonian
 from quantum.optimalbasis import optimalBasis

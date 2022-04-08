@@ -16,7 +16,7 @@ class Qobj:
     __defaultN_G = 10
     __defaultN_K = 25
     __defaultN_B = 5
-    __defaultSb = 0.8
+    __defaultSb = 0.1
     __defaultPtType = "sech"
     
     

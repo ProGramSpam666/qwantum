@@ -1,3 +1,7 @@
+#File given in model to fill the matrix with the hamiltonian which can then be
+#diagonalised to obtain the eigenvalues and corresponding eigenvectors.
+
+
 import numpy as np
 from quantum.utils import kinetic
 

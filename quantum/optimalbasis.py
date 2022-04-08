@@ -1,3 +1,8 @@
+#File to perform the optimal basis algorithm, that is, to take the plane wave
+#coefficients ck as input and perform the gram-Scmidt orthonormalisation algorithm
+#with given threshold sb.
+
+
 import numpy as np
 from math import sqrt
 from quantum.utils import Gvec

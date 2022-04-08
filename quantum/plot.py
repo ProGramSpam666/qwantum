@@ -1,28 +1,29 @@
+#File given from model to obtain plots for the band structure of the material
+#with the eigenvalues determined from each approach (SS and IH).  Also to plot the
+#corresponding wave functions (eigenvectors).
+
+
+
 import numpy as np 
 import matplotlib.pyplot as plt
 from quantum.potential import Potential
 from quantum.utils import kvec, Gvec
 
 
-"""T
-TODO
-band structure array
-"""
+#Band Structure Array
 def bandStructure(ek:np.ndarray,potential:Potential)->np.ndarray:
     a = potential.parms["lattice"]
     [Nk,Nb] = np.shape(ek)
     k = np.zeros(Nk)
-
     for ik in range(Nk):
         k[ik]=kvec(ik,a,Nk)  
-
     bands = []
     for ib in range(Nb):
         temp = np.array([k,ek[:,ib]])
         bands.append(temp)
-
     bands = np.asarray(bands)
     return bands
+
 
 def plotBand(ek:np.ndarray, potential: Potential, symbol: str):
     a = potential.parms["lattice"]

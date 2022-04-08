@@ -1,7 +1,7 @@
 from quantum import potential
 from quantum.experimentalplots import EnergyVsN_G, optimalBasisVsCk, sbEffectOnEigenvalues 
 from quantum.experimentalplots import sbEffectOnSize, ekVsE, timePlotVaryingSb
-from quantum.plot import plotFun, OBPlotFun
+from quantum.plot import plotFun
 from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
 from quantum.qobj import Qobj
 
@@ -13,12 +13,6 @@ def testSbEffectOnSize():
     ck = qobj.getCk()
     res = sbEffectOnSize(N_b, N_k, ck)
     return res
-#print(testSbEffectOnSize())    
-
-
-#print(optimalBasisVsCk())
-
-#print(ekVsE())
 
 def testOBPlotFun():
     ik = 2
@@ -33,14 +27,9 @@ def testOBPlotFun():
     k1 = calculatek1(OB_bi, potential)
     VLoc = calculateVLoc(OB_bi, potential)
     E = interpolateHamiltonian(OB_bi, kList, k0, k1, VLoc, N_b)
-    plotfun = OBPlotFun(ik, E, OB_bi, NCell, NPoints, potential, 'b', shift )
+    plotfun = plotFun(ik, E, OB_bi, NCell, NPoints, potential, 'b', shift )
     return plotfun
 #print(testOBPlotFun())
-
-
-#print(EnergyVsN_G())
-
-#print(sbEffectOnEigenvalues())
 
 
 
