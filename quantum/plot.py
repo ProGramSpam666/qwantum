@@ -6,6 +6,9 @@ from quantum.utils import kvec, Gvec
 
 """T
 TODO
+change to
+getSchrodingerBands
+getInterpolateBands
 band structure array
 """
 def bandStructure(ek:np.ndarray,potential:Potential)->np.ndarray:
