@@ -98,8 +98,6 @@ class Qobj:
         return self.differenceTimeForGettingEk()   
     def getVelocityOperator(self):
         return self.velocityOperator()
-    def getBands(self):
-        return self.__bands
 
 
     # SETTERS
@@ -135,8 +133,6 @@ class Qobj:
         ek, ck = self.solveSchrodinger()
         self.__ek = ek
         self.__ck = ck
-    def __setBands(self):
-        self.__bands = self.bandStructure()
     def setParms(self, **kwargs):
         for arg in kwargs:
             if arg == "ptParms":
@@ -295,9 +291,18 @@ class Qobj:
         )
         return kdvo
 
-    def bandStructure(self)->ndarray:
+    """returns array of bands structure with ek calculated from schrodinger"""
+    def schrodingerBandStructure(self)->ndarray:
         bands = plot.bandStructure(
             ek=self.getEk(),
+            potential=self.getPotential()
+        )
+        return bands
+
+    """"returns array of bands structure with ek calculated from interpolate hamiltonian"""
+    def interpolatedBandStructure(self)->ndarray:
+        bands = plot.bandStructure(
+            ek=self.interpolateHamiltonian(),
             potential=self.getPotential()
         )
         return bands
