@@ -22,7 +22,7 @@ class Qobj:
     
     # CONSTRUCTOR
     def __init__(self):
-        self.parms = {}
+        self.__parms = {}
         self.setParms(
             ptParms = self.get__defaultPtParms(),
             N_G = self.get__defaultN_G(),
@@ -53,17 +53,17 @@ class Qobj:
     def get__defaultPotentialWidth(self):
         return self.__defaultPtParms["width"]           
     def getPtParms(self):
-        return self.parms["ptParms"]
+        return self.__parms["ptParms"]
     def getN_G(self):
-        return self.parms["N_G"]
+        return self.__parms["N_G"]
     def getN_K(self):
-        return self.parms["N_K"]
+        return self.__parms["N_K"]
     def getN_B(self):
-        return self.parms["N_B"]
+        return self.__parms["N_B"]
     def getSb(self):
-        return self.parms["sb"]
+        return self.__parms["sb"]
     def getPtType(self):
-        return self.parms["ptType"]
+        return self.__parms["ptType"]
     def getLatticeConstant(self):
         return self.getPtParms()["lattice"]
     def getPotentialDepth(self):
@@ -98,25 +98,27 @@ class Qobj:
         return self.differenceTimeForGettingEk()   
     def getVelocityOperator(self):
         return self.velocityOperator()
+    def getParms(self):
+        return self.__parms
 
 
     # SETTERS
     def __setPtParms(self, ptParms):
-        self.parms["ptParms"] = ptParms 
+        self.__parms["ptParms"] = ptParms 
     def __setN_G(self, N_G):
-        self.parms["N_G"] = N_G
+        self.__parms["N_G"] = N_G
     def __setN_K(self, N_K):
-        self.parms["N_K"] = N_K
+        self.__parms["N_K"] = N_K
     def __setN_B(self, N_B):
-        self.parms["N_B"] = N_B
+        self.__parms["N_B"] = N_B
     def __setSb(self, sb):
-        self.parms["sb"] = sb
+        self.__parms["sb"] = sb
     def __setPtType(self, ptType):
         typeList = ["sech"]
         if ptType not in typeList:
             raise TypeError("type not in typeList")
         else:
-            self.parms["ptType"] = ptType
+            self.__parms["ptType"] = ptType
     def __setOptimalBasis(self):
         self.__OB = self.optimalBasis()
     def __setKList(self):
