@@ -1,6 +1,8 @@
 import unittest
 
-from numpy import exp
+from numpy import shape
+from quantum.interpolate import interpolateHamiltonian
+from quantum.plot import bandStructure
 from quantum.potential import generateSechPotential
 from quantum.qobj import Qobj
 import quantum.schrodinger as schrodinger
@@ -143,10 +145,37 @@ class QobjTester(unittest.TestCase):
         res = self.qobj.getPotentialDepth()
         self.assertEqual(expected, res)
 
-    def test_18_getPotentialWith(self):
+    def test_18_getPotentialWidth(self):
         print("Start getPotentialWidth test \n")
         expected = 0.1
         res = self.qobj.getPotentialWidth()
         self.assertEqual(expected, res)
+    
+    """"ensures methods returs correct array"""
+    def test_19_schrodingerBandStructure(self):
+        print("Start schrodingerBandStructure test \n")
+        qobj1 = Qobj()
+        res = qobj1.schrodingerBandStructure()
+        ek = qobj1.getEk(),
+        exp = bandStructure(ek[0], qobj1.getPotential())
+        self.assertEqual(res.all(), exp.all())
+
+    def test_20_interpolatedBandStructure(self):
+        print("Start interpolatedBandStructure test \n")
+        qobj1 = Qobj()
+        res = qobj1.interpolatedBandStructure()
+        ih = interpolateHamiltonian(
+            OB_bi=qobj1.getOptimalBasis(),
+            kList=qobj1.getKList(),
+            k0=qobj1.getk0(),
+            k1=qobj1.getk1(),
+            VLoc=qobj1.getVLoc(),
+            N=qobj1.getN_B()
+        )
+        exp = bandStructure(ih, potential=qobj1.getPotential())
+        self.assertEqual(res.all(), exp.all())
+        
+
+
     
     
