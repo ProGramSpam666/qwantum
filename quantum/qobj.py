@@ -14,7 +14,7 @@ class Qobj:
     # PRIVATE ATRRIBUTEs
     __defaultPtParms = { "lattice" : 1, "depth" : 10, "width" :0.1 }
     __defaultN_G = 10
-    __defaultN_K = 25
+    __defaultN_K = 50
     __defaultN_B = 5
     __defaultSb = 0.3
     __defaultPtType = "sech"

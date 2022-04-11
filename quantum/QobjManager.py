@@ -2,6 +2,7 @@ from numpy import ndarray, shape
 from quantum.qobj import Qobj
 from quantum.utils import timerFloat
 import matplotlib.pyplot as plt
+import quantum.qobjPlot as qplt
 
 class QobjManager:
 
@@ -44,9 +45,7 @@ class QobjManager:
     @staticmethod
     def timeDiffSolveSchrodingerInterpolateHamiltonian(qobj: Qobj)->float:
         t1 = QobjManager.timeSolveSchrodinger(qobj)
-        print(t1)
         t2 = QobjManager.timeInterpolateHamiltonian(qobj)
-        print(t2)
         return t1 - t2
 
     """Returns list containg band structure arrays for each qobj in data - calculated with ek from solve schrodinger"""
@@ -65,7 +64,7 @@ class QobjManager:
             bands.append(qobj.interpolatedBandStructure())
         return bands
 
-    def plotBands(self):
+    def plotDataBands(self):
         schrodingerBandsList: list = self.schrodingerBands()
         interpolatedBandsList: list = self.interpolatedBands()
         for schrodingerBands in schrodingerBandsList:
@@ -74,7 +73,34 @@ class QobjManager:
         for interpolatedBands in interpolatedBandsList:
             for band in interpolatedBands:
                 plt.plot(band[0], band[1], "b.")
+        plt.xlabel("")
+        plt.savefig("pltDataBands.png")
         plt.show()
+
+
+    @staticmethod
+    def plotTimeDiffAgaistSb(qobjList: list[Qobj])->None:
+        sbList = []
+        timeList = []
+        for qobj in qobjList:
+            sb = qobj.getSb()
+            time = QobjManager.timeDiffSolveSchrodingerInterpolateHamiltonian(qobj)
+            sbList.append(sb)
+            timeList.append(time)
+        plt.plot(timeList, sbList)
+        plt.show()
+
+    def plotDataTimeDiffAgainstSb(self)->None:
+        qobjList = self.getQobjList()
+        QobjManager.plotTimeDiffAgaistSb(qobjList)
+
+    def plotSbAgainstOptimalBasisSize(self)->None:
+        qobjList = self.getQobjList()
+        qplt.plotSbAgainstOptimalBasisSize(qobjList)
+        
+
+
+
 
 
 
