@@ -1,5 +1,6 @@
 from quantum.QobjManager import QobjManager
 from quantum.qobj import Qobj
+import numpy as np
 
 manager = QobjManager()
 
