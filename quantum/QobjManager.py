@@ -4,7 +4,6 @@ from quantum.utils import timerFloat
 import matplotlib.pyplot as plt
 
 
-
 class QobjManager:
 
     # CONSTRUCTOR

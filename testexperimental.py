@@ -1,6 +1,6 @@
 from quantum import potential
-from quantum.experimentalplots import EnergyVsN_G, optimalBasisVsCk, sbEffectOnEigenvalues 
-from quantum.experimentalplots import sbEffectOnSize, ekVsE, timePlotVaryingSb
+from quantum.experimentalplots import EnergyVsN_G, optimalBasisVsCk, sbEffectOnPrecision 
+from quantum.experimentalplots import sbEffectOnSize, ekVsE, timePlotVaryingSb, sbEffectOnEigenvalues
 from quantum.plot import plotFun
 from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
 from quantum.qobj import Qobj
@@ -13,6 +13,7 @@ def testSbEffectOnSize():
     ck = qobj.getCk()
     res = sbEffectOnSize(N_b, N_k, ck)
     return res
+#print(testSbEffectOnSize())    
 
 def testOBPlotFun():
     ik = 2
@@ -41,6 +42,17 @@ def testTimePlotVaryingSb():
     kList = qobj.getKList()
     res = timePlotVaryingSb(N_b, N_k, ck, potential, kList)
     return res
-print(testTimePlotVaryingSb())    
+#print(testTimePlotVaryingSb())    
+
+#sb, N_G, N_k, N_b, potential, N
+def testSbEffectOnPrecision():
+    N_G = qobj.getN_G()
+    N_k = qobj.getN_K()
+    N_b = qobj.getN_B()
+    potential = qobj.getPotential()
+    N = N_b
+    res = sbEffectOnPrecision( N_G, N_k, N_b, potential, N)
+    return res
+print(testSbEffectOnPrecision())
 
 

@@ -7,6 +7,7 @@ import numpy as np
 from math import sqrt
 from quantum.utils import Gvec
 
+
 #function to perform gram schmidt orthonormalization algorithm
 def optimalBasis(sb, N_b, N_k, ck):     
     OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)

@@ -17,9 +17,9 @@ def differenceInEigenvalues(sb, N_G, N_k, N_b, potential, N):
         kList.append(kvec(i,a,N_k))   
     eigenEnergies = interpolateHamiltonian(OB_bi, kList, k0, k1, VLoc, N)
     difference = ek - eigenEnergies - ek[0,0] + eigenEnergies[0,0]
-    return difference
+    maxValue = np.amax(difference)
+    return maxValue
  
-
 def differenceInVelocity():
     return 
 

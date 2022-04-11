@@ -8,17 +8,19 @@ from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1
 from quantum.schrodinger import solveSchrodinger
 from quantum.gettime import differenceInTimeForObtainingEk
 import time
+from quantum.table import differenceInEigenvalues
 
 
 def sbEffectOnSize(N_b, N_k, ck):
     myListOb = []
     myListSb = []
     sbValues = np.linspace(0,1,250)
-    for s_b in sbValues:
+    for s_b in (sbValues):
         getOptimalBasis = optimalBasis(s_b, N_b, N_k, ck) 
         sizeOb = getOptimalBasis.size
         myListOb.append(sizeOb)
         myListSb.append(s_b)
+    #print(myListOb)    
     myresultOb = np.array(myListOb)
     myresultSb = np.array(myListSb)
     plt.xlabel("Size of Optimal Basis")
@@ -120,4 +122,19 @@ def timePlotVaryingSb(N_b, N_k, ck, potential, kList):
     plt.show()
 
 
+def sbEffectOnPrecision(N_G, N_k, N_b, potential, N):
+    sbList = []
+    maxEigList = []
+    sbValues = np.linspace(0, 0.9, 20)
+    for sb in sbValues:
+        difference = differenceInEigenvalues(sb, N_G, N_k, N_b, potential, N)
+        sbList.append(sb)
+        maxEigList.append(difference)
+    sbArray = np.array(sbList)
+    eigArray = np.array(maxEigList)
+    plt.xlabel("Maximum difference between eigenvalues obtained comparing SS & IH")
+    plt.ylabel("sb Value")
+    plt.plot(eigArray, sbArray, 'b')
+    plt.show()
+    
 

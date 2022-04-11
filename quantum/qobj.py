@@ -12,9 +12,9 @@ import quantum.plot as plot
 class Qobj:
 
     # PRIVATE ATRRIBUTEs
-    __defaultPtParms = { "lattice" : 1, "depth" : 10, "width" :0.1 }
+    __defaultPtParms = { "lattice" : 1, "depth" : 50, "width" :0.2 }
     __defaultN_G = 10
-    __defaultN_K = 25
+    __defaultN_K = 30
     __defaultN_B = 5
     __defaultSb = 0.1
     __defaultPtType = "sech"
