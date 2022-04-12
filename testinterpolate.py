@@ -1,4 +1,4 @@
-from quantum.interpolate import interpolateHamiltonian, calculatek0,calculatek1,calculateVLoc
+from quantum.interpolate import interpolateHamiltonian, interpolateHamiltonianEE, calculatek0,calculatek1,calculateVLoc
 from quantum.qobj import Qobj
 from quantum.utils import kvec
 
@@ -70,6 +70,22 @@ def testInterpolateHamiltonian():
 #print(testInterpolateHamiltonian())  
 
 
+def testInterpolateHamiltonianEE():
+    N_b = qobj.getN_B()
+    potential = qobj.getPotential()
+    OB_bi = qobj.getOptimalBasis()
+    N_k = qobj.getN_K()
+    a = potential.parms["lattice"]
+    k0 = calculatek0(OB_bi, potential)
+    k1 = calculatek1(OB_bi, potential)
+    VLoc = calculateVLoc(OB_bi, potential)
+    kList = []
+    for i in range(N_k):
+        kList.append(kvec(i,a,N_k))
+    ek1, ck1 = interpolateHamiltonianEE(OB_bi, kList,k0, k1, VLoc, N_b)
+    return ek1, ck1
+#print("new ck")    
+#print(testInterpolateHamiltonianEE())
 
 
 

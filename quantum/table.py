@@ -3,6 +3,7 @@ from quantum.schrodinger import solveSchrodinger
 from quantum.optimalbasis import optimalBasis
 from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
 from quantum.utils import kvec
+from quantum.velocityOp import standardVelocity, interpolatedVelocity
 
 #obtaining array giving difference in Eigenvalues from both respective methods
 def differenceInEigenvalues(sb, N_G, N_k, N_b, potential, N):
@@ -20,6 +21,12 @@ def differenceInEigenvalues(sb, N_G, N_k, N_b, potential, N):
     maxValue = np.amax(difference)
     return maxValue
  
-def differenceInVelocity():
-    return 
+def differenceInVelocity(N_G, N_k, N_b, potential, OBck, k1):
+    ek, ck = solveSchrodinger(N_G,N_k,N_b,potential)
+    del ek
+    stanVel = standardVelocity(potential, ck)
+    interVel = interpolatedVelocity(potential, OBck, k1)
+    difference = stanVel - interVel #- stanVel[0, 0, 0] + interVel[0, 0, 0]
+    return difference
+
 

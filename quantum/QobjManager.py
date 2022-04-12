@@ -73,8 +73,9 @@ class QobjManager:
                 plt.plot(band[0], band[1], "r-")
         for interpolatedBands in interpolatedBandsList:
             for band in interpolatedBands:
-                plt.plot(band[0], band[1], "b.")
-        plt.xlabel("")
+                plt.plot(band[0], band[1], "b--")
+        plt.xlabel("Brillouin Zone")
+        plt.ylabel("Energy (ev)")
         plt.savefig("pltDataBands.png")
         plt.show()
 

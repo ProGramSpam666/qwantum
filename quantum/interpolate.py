@@ -70,3 +70,25 @@ def interpolateHamiltonian(OB_bi, kList, k0, k1, VLoc, N):
         ik +=1
     return E #allowed Eigenenergies
 
+
+def interpolateHamiltonianEE(OB_bi, kList, k0, k1, VLoc, N):
+    Nbasis = OB_bi.shape[1]
+    E = np.zeros((len(kList), N))
+    C = np.zeros((len(kList), N, Nbasis), dtype = np.complex_)
+    ik = 0
+    for k in(kList):
+        Hk = np.zeros((Nbasis, Nbasis), dtype = np.complex_)
+        for i in range(Nbasis):
+            for j in range(Nbasis):
+                Hk[i,j] = 0.5*k0[i,j] + VLoc[i,j]
+                if (i == j):
+                    Hk[i ,j] += 0.5*(k**2)
+                Hk[i,j] += 0.5*(k*k1[i,j])
+        ek2, ck2 = np.linalg.eigh(Hk)    
+        E[ik,0:N] = ek2[0:N]
+        C[ik, 0:N, 0:Nbasis] = ck2[0:N, 0:Nbasis]
+        ik +=1
+    return E, C
+    
+
+

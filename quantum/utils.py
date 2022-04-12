@@ -5,13 +5,11 @@ from time import time
 def Gvec(m, a):
         return 2*pi*m/a
    
-
 def kgrid(a,N,Nk):
     k = np.zeros(N)
     for ik in range(N):
         k[ik]=kvec(ik,a,Nk)
     return k
-
 
 def kvec(i,a,N):
         return -pi/a + i*2*pi/a/(N-1)
@@ -20,13 +18,19 @@ def kvec(i,a,N):
 def kinetic(i,m,a,N):
         return 0.5*(kvec(i,a,N) - Gvec(m,a))**2 
 
-
 def kList(N_k, potential):
         a = potential.parms["lattice"]
         kList = []
         for i in range(N_k):
             kList.append(kvec(i,a,N_k))
         return kList
+
+def kListNEW(N_kPrime, potential):
+    a = potential.parms["lattice"]
+    kList = []
+    for i in range(N_kPrime):
+        kList.append(kvec(i,a,N_kPrime))
+    return kList
 
 
 def OB_bix(OB_bi, a, potential, Ncell, Npoints):

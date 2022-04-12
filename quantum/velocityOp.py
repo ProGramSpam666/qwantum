@@ -1,34 +1,32 @@
 import numpy as np
-from quantum.utils import Gvec
+from quantum.utils import Gvec, kvec
 
 
-#k-dependent velocity operator in terms of the optimal Basis
-def kDepVelOperatorOB(N_b, k1, OB_bi, kList, ck):
-    Nbasis = OB_bi.shape[1]
-    vknew = np.zeros((Nbasis, Nbasis), dtype = np.complex_)
-    ik = 0
-    for k in(kList):
-        for i in range(N_b):
-            for j in range(N_b):
-                if (i==j):
-                    vknew[i, j] += k*np.dot(ck[k, i], ck[k, j])
-                vknew[i, j] += np.conjugate(OB_bi[k, i])*(OB_bi[k, j]*k1[i,j])
-    ik +=1
-    return 0.5*vknew 
-
-
-#velcity in standard basis
-def standardVelocity(N_k, N_b, potential, ck):
-    Ng = ck.shape[0]
+#velocity in standard basis
+def standardVelocity(potential, ck):
+    [N_G, N_k, N_b] = np.shape(ck)
     a = potential.parms["lattice"]
-    kth = 0
+    velocity = np.zeros((N_k, N_b, N_b), dtype = np.complex_)
     for k in range(N_k):
-        for ik in range(N_b):
-            for ib in range(N_b):
-                for m in range(0, Ng):
-                    if (ik == ib):
-                        ck[ ik, ib] += k
-                    ck[:, ik, ib] += np.conjugate(ck[:, k, ik])*ck[:, k, ib]*Gvec(m- int((Ng-1)/2), a)   
-    kth +=1
+        for ib1 in range(N_b):
+            for ib2 in range(N_b):
+                if (ib1 == ib2):
+                    velocity[k, ib1 , ib2] += k
+                for m in range(N_G):
+                    velocity[k, ib1, ib2] += np.conjugate(ck[m, k, ib1])*ck[m, k, ib2]*Gvec(m- int((N_G-1)/2), a)   
     return ck
 
+#velocity in optimal Basis
+def interpolatedVelocity(potential, OBck, k1):
+    [N_k, N_b, Nbasis] = np.shape(OBck)
+    a = potential.parms["lattice"]
+    velocity = np.zeros((N_k, N_b, N_b), dtype = np.complex_)
+    for k in range(N_k):
+        for ib1 in range(N_b):
+            for ib2 in range(N_b):
+                if (ib1 == ib2):
+                    velocity[k, ib1, ib2] += kvec(k, a, N_k)
+                for m in range(Nbasis):
+                    for n in range(Nbasis):
+                        velocity[k, ib1, ib2] += 0.5*np.conjugate(OBck[k, ib1, m])*OBck[k, ib2, n]*k1[m, n] 
+    return velocity

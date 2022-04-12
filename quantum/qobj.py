@@ -12,13 +12,13 @@ import quantum.plot as plot
 class Qobj:
 
     # PRIVATE ATRRIBUTEs
-    __defaultPtParms = { "lattice" : 1, "depth" : 50, "width" :0.2 }
-    __defaultN_G = 10
-    __defaultN_K = 50
-    __defaultN_B = 5
-    __defaultSb = 0.1
-    __defaultPtType = "sech"
-    
+    __defaultPtParms = { "lattice" : 1, "depth" : 50, "width" :0.2 } #lattice and potential paramaters
+    __defaultN_G = 10 #Number of plane waves in basis (fixed)
+    __defaultN_K = 50 #Number of k-points
+    __defaultN_KPrime = 20 #Number of k-points interpolated approach
+    __defaultN_B = 5 #Number of Bands to run over
+    __defaultSb = 0.1 #Threshold Parameter
+    __defaultPtType = "sech" #Potential function
     
     # CONSTRUCTOR
     def __init__(self):
@@ -27,12 +27,12 @@ class Qobj:
             ptParms = self.get__defaultPtParms(),
             N_G = self.get__defaultN_G(),
             N_K = self.get__defaultN_K(),
+            N_KPrime = self.get__defaultN_KPrime(),
             N_B = self.get__defaultN_B(),
             sb = self.get__defaultSb(),
             ptType = self.get__defaultPtType()
         )
     
-
     # GETTERS
     def get__defaultPtParms(self):
         return self.__defaultPtParms
@@ -40,6 +40,8 @@ class Qobj:
         return self.__defaultN_G
     def get__defaultN_K(self):
         return self.__defaultN_K
+    def get__defaultN_KPrime(self):
+        return self.__defaultN_KPrime
     def get__defaultN_B(self):
         return self.__defaultN_B
     def get__defaultSb(self):
@@ -58,6 +60,8 @@ class Qobj:
         return self.__parms["N_G"]
     def getN_K(self):
         return self.__parms["N_K"]
+    def getN_KPrime(self):
+        return self.__parms["N_KPrime"]    
     def getN_B(self):
         return self.__parms["N_B"]
     def getSb(self):
@@ -86,8 +90,16 @@ class Qobj:
         return self.__vLoc         
     def getKList(self):
         return self.__klist
+    def getKListNEW(self):
+        return self.__klistNEW
     def getInterpolateHamiltonian(self):
         return self.interpolateHamiltonian()    
+    def getInterpolateHamiltonianEE(self):
+        return self.interpolateHamiltonianEC()
+    def getOBek(self):
+        return self.__OBek
+    def getOBck(self):
+        return self.__OBck     
     def getDifferenceInEkTable(self):
         return self.differenceEigenvalues()
     def getEkTimeSolveSchrodinger(self):
@@ -96,8 +108,10 @@ class Qobj:
         return self.ekTimeInterpolateHamiltonian() 
     def getDifferenceTimeForEk(self):
         return self.differenceTimeForGettingEk()   
-    def getVelocityOperator(self):
-        return self.velocityOperator()
+    def getStandardVelocityOperator(self):
+        return self.__standardVel
+    def getInterpolatedVelocityOperator(self):
+        return self.__interpolatedVel
     def getParms(self):
         return self.__parms
 
@@ -109,6 +123,8 @@ class Qobj:
         self.__parms["N_G"] = N_G
     def __setN_K(self, N_K):
         self.__parms["N_K"] = N_K
+    def __setN_KPrime(self, N_KPrime):
+        self.__parms["N_KPrime"] = N_KPrime  
     def __setN_B(self, N_B):
         self.__parms["N_B"] = N_B
     def __setSb(self, sb):
@@ -123,6 +139,8 @@ class Qobj:
         self.__OB = self.optimalBasis()
     def __setKList(self):
         self.__klist = self.kList()
+    def __setKListNEW(self):
+        self.__klistNEW= self.kListNEW()
     def __setPotential(self):
         self.__potential = self.generatePotential(self.getPtType())
     def __setK0(self):
@@ -135,6 +153,14 @@ class Qobj:
         ek, ck = self.solveSchrodinger()
         self.__ek = ek
         self.__ck = ck
+    def __setOBekAndOBck(self):
+        OBek, OBck = self.interpolateHamiltonianEC()
+        self.__OBek = OBek
+        self.__OBck = OBck
+    def __setStandardVelocity(self):
+        self.__standardVel = self.standardVelocityOperator()
+    def __setInterpolatedVelocity(self):
+        self.__interpolatedVel = self.interpolatedVelocityOperator()
     def setParms(self, **kwargs):
         for arg in kwargs:
             if arg == "ptParms":
@@ -146,6 +172,9 @@ class Qobj:
             if arg == "N_K":    
                 N_K = kwargs.get("N_K")
                 self.__setN_K(N_K)
+            if arg == "N_KPrime":
+                N_KPrime = kwargs.get("N_KPrime")
+                self.__setN_KPrime(N_KPrime) 
             if arg == "N_B":
                 N_B = kwargs.get("N_B")
                 self.__setN_B(N_B)
@@ -159,15 +188,15 @@ class Qobj:
         self.__setEkAndCk()
         self.__setOptimalBasis()
         self.__setKList()
+        self.__setKListNEW()
         self.__setK0()
         self.__setK1()
         self.__setVLoc()
+        self.__setOBekAndOBck()
+        self.__setStandardVelocity()
+        self.__setInterpolatedVelocity()
         
         
-
-            
-
-
     # METHODS
     def restoreDefaults(self):
         self.__init__()
@@ -224,6 +253,13 @@ class Qobj:
             potential = self.getPotential()
         )
         return klist
+
+    def kListNEW(self):
+        klistNEW = utils.kListNEW(
+            N_kPrime = self.getN_KPrime(),
+            potential = self.getPotential()
+        )
+        return klistNEW   
         
     def interpolateHamiltonian(self):
         interHamil = interpolateHamiltonian.interpolateHamiltonian(
@@ -236,7 +272,17 @@ class Qobj:
         )
         return interHamil   
 
-    
+    def interpolateHamiltonianEC(self):
+        interHamilEC = interpolateHamiltonian.interpolateHamiltonianEE(
+            OB_bi = self.getOptimalBasis(),
+            kList = self.getKList(),
+            k0 = self.getk0(),
+            k1 = self.getk1(),
+            VLoc = self.getVLoc(),
+            N = self.getN_B()
+        )
+        return interHamilEC
+
     def differenceEigenvalues(self):
         differenceEk = Table.differenceInEigenvalues(
             sb  = self.getSb(),
@@ -283,15 +329,20 @@ class Qobj:
         )
         return differenceTime
 
-    def velocityOperator(self):
-        kdvo = velocityoperator.kDepVelOperatorOB(
-            N_b = self.getN_B(),
-            k1 = self.getk1(),
-            OB_bi = self.getOptimalBasis(),
-            kList = self.getKList(),
+    def standardVelocityOperator(self): #SKETCH - FIX
+        standardVel = velocityoperator.standardVelocity(
+            potential = self.getPotential(),
             ck = self.getCk()
         )
-        return kdvo
+        return standardVel
+
+    def interpolatedVelocityOperator(self): #SKETCH - FIX
+        interpolatedVel = velocityoperator.interpolatedVelocity(
+            potential = self.getPotential(),
+            OBck = self.getOBck(),
+            k1 = self.getk1()
+        )
+        return interpolatedVel
 
     """returns array of bands structure with ek calculated from schrodinger"""
     def schrodingerBandStructure(self)->ndarray:
@@ -304,14 +355,7 @@ class Qobj:
     """"returns array of bands structure with ek calculated from interpolate hamiltonian"""
     def interpolatedBandStructure(self)->ndarray:
         bands = plot.bandStructure(
-            ek=self.interpolateHamiltonian(),
+            ek=self.getInterpolateHamiltonian(),
             potential=self.getPotential()
         )
         return bands
-
-
-
-
-
-     
-     

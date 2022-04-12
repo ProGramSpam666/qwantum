@@ -5,5 +5,5 @@ qobj1 = Qobj()
 ek = qobj1.getEk()
 potential = qobj1.getPotential()
 res = bandStructure(ek, potential)
-print(res.shape)
+print(res)
 
