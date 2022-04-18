@@ -16,6 +16,9 @@ from quantum.utils import Gvec
 #m -> 0,....,2N_G +1 where this is = -N_G -> N_G
 
 
+
+"""Function to obtain relevant element representing the kinetic energy
+component of the Hamiltonian with respect to the optimal basis implementation"""
 def calculatek0(OB_bi, potential):
     a = potential.parms["lattice"]
     Nbasis = OB_bi.shape[1]
@@ -24,10 +27,14 @@ def calculatek0(OB_bi, potential):
     for i in range(Nbasis):
         for j in range(Nbasis): 
             for m in range(0, Ng):
-                k0[i, j] += np.conjugate(OB_bi[m, i])*OB_bi[m, j]*Gvec(m- int((Ng-1)/2), a)**2
+                k0[i, j] += np.conjugate(OB_bi[m, i])*OB_bi[m, j]*Gvec(m-int((Ng-1)/2),a)**2
     return k0
 
 
+
+
+"""Function to obtain relevant element representing the additional kinetic energy
+component of the Hamiltonian with respect to the optimal Basis implementation"""
 def calculatek1(OB_bi, potential):
     a = potential.parms["lattice"]
     Nbasis = OB_bi.shape[1]
@@ -40,6 +47,10 @@ def calculatek1(OB_bi, potential):
     return 2*k1  
    
 
+
+
+"""Function to obtain relevant element representing the Potential energy
+component of the Hamiltonian with respect to the optimal Basis implementation"""
 def calculateVLoc(OB_bi, potential):
     Nbasis = OB_bi.shape[1]
     Ng = OB_bi.shape[0]
@@ -52,7 +63,13 @@ def calculateVLoc(OB_bi, potential):
     return vloc
 
 
-#Interpolating and diagonalising
+
+
+"""Function that builds the relevant Hamiltonian with respect to the optimal
+Basis implementation, interpolating over all k-points.  Additionally, the function
+also diagonalizes the relevant Hamiltonian when built.  This function only obtains
+the relevant Eigenvalues when solved.  Function introduced to achieve more
+computationally efficient results"""
 def interpolateHamiltonian(OB_bi, kList, k0, k1, VLoc, N):
     Nbasis = OB_bi.shape[1]
     E = np.zeros((len(kList), N))
@@ -68,9 +85,15 @@ def interpolateHamiltonian(OB_bi, kList, k0, k1, VLoc, N):
         ek2 = np.linalg.eigvalsh(Hk)    
         E[ik,0:N] = ek2[0:N]
         ik +=1
-    return E #allowed Eigenenergies
+    return E 
 
 
+
+
+"""Additional function that builds and diagonalizes the relevant Hamiltonian 
+when built, interpolating over all k-points.  However, this function obtains 
+both the Eigenvalues and Eigenvectors when diagonalized, demonstrating 
+the required set of solutions when solving the Schrodinger Equation"""
 def interpolateHamiltonianEE(OB_bi, kList, k0, k1, VLoc, N):
     Nbasis = OB_bi.shape[1]
     E = np.zeros((len(kList), N))
@@ -89,6 +112,11 @@ def interpolateHamiltonianEE(OB_bi, kList, k0, k1, VLoc, N):
         C[ik, 0:N, 0:Nbasis] = ck2[0:N, 0:Nbasis]
         ik +=1
     return E, C
-    
+
+
+
+
+
+
 
 

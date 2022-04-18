@@ -2,7 +2,10 @@ import numpy as np
 from quantum.utils import Gvec, kvec
 
 
-#velocity in standard basis
+
+
+"""Function that obtains the velocity of the particle with respect to
+the Standard Basis implementation"""
 def standardVelocity(potential, ck):
     [N_G, N_k, N_b] = np.shape(ck)
     a = potential.parms["lattice"]
@@ -16,7 +19,10 @@ def standardVelocity(potential, ck):
                     velocity[k, ib1, ib2] += np.conjugate(ck[m, k, ib1])*ck[m, k, ib2]*Gvec(m- int((N_G-1)/2), a)   
     return ck
 
-#velocity in optimal Basis
+
+
+"""Function that obtains the velocity of the particle with respect to
+the Optimal Basis implementation"""
 def interpolatedVelocity(potential, OBck, k1):
     [N_k, N_b, Nbasis] = np.shape(OBck)
     a = potential.parms["lattice"]
@@ -30,3 +36,9 @@ def interpolatedVelocity(potential, OBck, k1):
                     for n in range(Nbasis):
                         velocity[k, ib1, ib2] += 0.5*np.conjugate(OBck[k, ib1, m])*OBck[k, ib2, n]*k1[m, n] 
     return velocity
+
+
+
+
+
+

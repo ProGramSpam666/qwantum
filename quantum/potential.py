@@ -1,6 +1,9 @@
 import numpy as np
 from math import pi
 
+
+
+"""Class introduced defining  """
 class Potential:
     def __init__(self, name, parms, v, ft):
         self.name = name
@@ -31,10 +34,12 @@ class PotentialFactory:
 
 
 
-# ----------------------  GENERATORS  ------------------------------ 
+""" ----------------------  GENERATORS  ------------------------------ """
+
+
+
+
 ### SECH
-
-
 def sechpotGenerator(parms):
         a = parms["lattice"]
         a0 = parms["width"]
@@ -57,6 +62,8 @@ def sechFTGenerator(parms):
                 Ug=-1/np.cosh(pi**2*a0*m/a)
                 return Ug*v0*pi*a0/a
         return ft #returns Fourier Transform
+
+
 
 
 def generateSechPotential(parms):

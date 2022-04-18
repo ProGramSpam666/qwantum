@@ -1,6 +1,13 @@
 import numpy as np 
 from quantum.matrix import fillmatrix
 
+
+
+
+"""Function that perfoms the relevant diagonalization of the Hamiltonian to obtain
+the desired solutions to the Schrodinger Equation.  This function outputs the 
+relevant Eigenvalue array and the relevant Eigenvector array.  This is all done 
+in regards to the Standard Basis implementation."""
 def solveSchrodinger(N_G,N_k,N_b,potential):
     #iterates k-point by k-point
     #e and c are NOT dependent on ik, however, we alter to make e,c k-dependent

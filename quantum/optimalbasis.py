@@ -1,6 +1,7 @@
-#File to perform the optimal basis algorithm, that is, to take the plane wave
-#coefficients ck as input and perform the gram-Scmidt orthonormalisation algorithm
-#with given threshold sb.
+"""File to perform the optimal basis algorithm, that is, to take the plane wave
+coefficients ck as input and perform the gram-Scmidt orthonormalisation algorithm
+with given threshold sb."""
+
 
 
 import numpy as np
@@ -8,7 +9,11 @@ from math import sqrt
 from quantum.utils import Gvec
 
 
-#function to perform gram schmidt orthonormalization algorithm
+
+
+"""Function that enables the implementation of the optimal Basis.  This Function
+performs the relevant gram schmidt orthonormalizational procedure with a given
+Threshold as input"""
 def optimalBasis(sb, N_b, N_k, ck):     
     OB_bi = np.zeros((np.shape(ck)[0], np.shape(ck)[1] * np.shape(ck)[2]), dtype=np.complex_)
     ckTilda = np.zeros(np.shape(ck), dtype= np.complex_)
@@ -89,8 +94,11 @@ def optimalBasisWithoutInspection(sb ,N_k, N_b, ck):
 
 
 
+
+
+"""Function to be further developed in Future, with respect to optimal Product Basis
+implementation."""
 def optimalProductBasis(sp, N_b, N_k, bi_out):
-    
     BjTilda = np.zeros(np.shape(bi_out)[0], np.shape(bi_out)[1] * np.shape(bi_out)[2], dtype = np.complex_)
     BjTildaPrime = np.zeros(np.shape(bi_out), dtype=np.complex_)
     BjTildaPrimePrime = np.zeros(np.shape(bi_out)[0], np.shape(bi_out)[1] * np.shape(bi_out)[2], dtype = np.complex_)

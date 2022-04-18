@@ -1,3 +1,4 @@
+from cProfile import label
 from numpy import ndarray, shape
 from quantum.qobj import Qobj
 from quantum.utils import timerFloat
@@ -73,7 +74,8 @@ class QobjManager:
                 plt.plot(band[0], band[1], "r-")
         for interpolatedBands in interpolatedBandsList:
             for band in interpolatedBands:
-                plt.plot(band[0], band[1], "b--")
+                plt.plot(band[0], band[1], "b-")
+        #plt.legend('Eigenvalues from solveSchrodinger()','Eigenvalues from interpolatedHamiltonian()')
         plt.xlabel("Brillouin Zone")
         plt.ylabel("Energy (ev)")
         plt.savefig("pltDataBands.png")

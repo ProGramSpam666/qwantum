@@ -5,7 +5,15 @@ from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1
 from quantum.utils import kvec
 from quantum.velocityOp import standardVelocity, interpolatedVelocity
 
-#obtaining array giving difference in Eigenvalues from both respective methods
+
+
+
+"""Function that obtains the relevant maximum differnence in Eigenvalues with respect 
+to the standard Basis implementation (i.e relevant solveSchrodinger() function) and the 
+Optimal Basis implementation (i.e relevant interpolateHamiltonian() functionn).  The
+maximum difference is output as this indicates the greatest possible margin of error when
+comparing Eigenvalues.  Such a function gives an indication of the accuracy of the 
+approximation of the Optimal Basis approach with respect to the Standard Basis approach"""
 def differenceInEigenvalues(sb, N_G, N_k, N_b, potential, N):
     a = potential.parms["lattice"]
     ek, ck = solveSchrodinger(N_G,N_k,N_b,potential)
@@ -21,12 +29,17 @@ def differenceInEigenvalues(sb, N_G, N_k, N_b, potential, N):
     maxValue = np.amax(difference)
     return maxValue
  
-def differenceInVelocity(N_G, N_k, N_b, potential, OBck, k1):
-    ek, ck = solveSchrodinger(N_G,N_k,N_b,potential)
-    del ek
+
+
+
+""""""
+def differenceInVelocity(ck, potential, OBck, k1):
     stanVel = standardVelocity(potential, ck)
+    maxStanVel = np.amax(stanVel)
     interVel = interpolatedVelocity(potential, OBck, k1)
-    difference = stanVel - interVel #- stanVel[0, 0, 0] + interVel[0, 0, 0]
+    maxInterVel = np.amax(interVel)
+    difference = maxStanVel - maxInterVel #- stanVel[0, 0, 0] + interVel[0, 0, 0]
     return difference
+
 
 

@@ -9,6 +9,10 @@ from quantum.qobj import Qobj
 from quantum.interpolate import calculateVLoc
 from quantum.potential import PotentialFactory as pf
 
+
+"""File to run quick tests if required"""
+
+
 qobj = Qobj()
 
 def getOB_bi():

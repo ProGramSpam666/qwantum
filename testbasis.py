@@ -150,18 +150,6 @@ def investigateOptimalBasis(sb, N_G ,N_k, N_b, potential):
     print(ck.size)
     #return bi_out
 
-def effectVaryingSbOnOptimalBasisExp(qobj):
-    myList = []
-    for sb in range(1,100):
-        sb = 1/np.exp(sb)
-        qobj.setSb(sb)
-        getOptimalBasis = qobj.optimalBasis()
-        sizeOb = getOptimalBasis.size
-        myList.append(sizeOb)
-    myresult = np.array(myList)
-    return myresult
 
 
-
-     
 

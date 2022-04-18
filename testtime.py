@@ -3,9 +3,12 @@ from quantum.gettime import standardTimeForEk, optimisedTimeForEk, differenceInT
 from quantum.qobj import Qobj
 import numpy as np
 
+
+
 qobj = Qobj()
 
 
+"""Obtaining input paramters by utilizing Quantum Object Class"""
 N_G = qobj.getN_G()
 N_k = qobj.getN_K()
 N_b = qobj.getN_B()
@@ -20,6 +23,12 @@ ck = qobj.getCk()
 
 
 
+
+"""Function to be run that obtains difference in Computationan time for obtaining
+Eigenvalues with respect to the Standard Basis implementation and the Optimal
+Basis implementation respectively.  Function denoted SPECIFIC as gives time for
+each respective method, can be utilized to determine result when running individual 
+tests"""
 def testTimesForEigenvaluesSPECIFIC():
     resultDifference = differenceInTimeForObtainingEkSPECIFIC(N_G, N_k, N_b, potential, OB_bi, kList, k0, k1, VLoc, N)
     return resultDifference
@@ -27,11 +36,14 @@ print(testTimesForEigenvaluesSPECIFIC())
 
 
 
+
+"""Function to be run to obtain Array demonstrating the relationship for Sb value
+and the difference in Computation time regarding both respective methods"""
 def varyingSbEk():
     differenceList = []
     sbValues = np.linspace(0,1,100)
     for sb in (sbValues):
-        qobj.setSb(sb)
+        qobj.__setSb(sb)
         resultDifference = differenceInTimeForObtainingEk(N_G, N_k, N_b, potential, OB_bi, kList, k0, k1, VLoc, N)
         differenceList.append(resultDifference)
     differenceArray = np.array(differenceList)    
@@ -42,13 +54,13 @@ def varyingSbEk():
 
 
 
-
-
-
-
 #QUANTUM OBJECT IMPLEMENTATION TESTING
 
-#Testing Time to get Eigenvalues using SS
+
+
+
+"""Function to be run to test computation time for obtaining Eigenvalues with respect
+to the standard Basis implementation, i.e, time for solveSchrodinger() function"""
 def testTimeEkSS():
     res = qobj.getEkTimeSolveSchrodinger()
     print("----Time Elapsed using solveSchrodinger()----")
@@ -57,7 +69,10 @@ def testTimeEkSS():
 #print(testTimeEkSS())    
 
 
-#Testing Time to get Eigenvalues using IH
+
+
+"""Function to be run to test computation time for obtaining Eigenvalues with respect
+to the Optimal Basis implementation, i.e, time for interpolateHamiltonian() function"""
 def testTimeEkIH():
     res = qobj.getEkTimeInterpolateHamiltonian()
     print("----Time Elapsed using interpolateHamiltonian()----")
@@ -66,7 +81,11 @@ def testTimeEkIH():
 #print(testTimeEkIH())
 
 
-#Testing difference in time to obtain Eigenvalues between SS and IH
+
+
+
+"""Function to be run to test difference in computation time for obtaining 
+Eigenvalues regarding both respective approaches"""
 def testDifferenceInTimeEk():
     res = qobj.getDifferenceTimeForEk()
     print("----Time difference in obtaining EigenValues----")
@@ -76,7 +95,10 @@ def testDifferenceInTimeEk():
 
 
 
-#Testing difference in Time as sb varies 
+
+
+"""Function that obtains difference in computation time regarding both respective
+approaches as the Threshold value varies"""
 def testDifferenceInTimeVaryingSb():
     res = differenceInTimeVaryingSb(N_b, N_k, ck, potential, kList)
     return res

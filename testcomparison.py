@@ -10,7 +10,11 @@ import time
 
 qobj = Qobj()
 
-#-------------------COMPARING TO STANDARD EIGENVALUES EK---------------
+
+
+"""Function to be run to obtain the Band Structure with respect to the 
+Standard Basis implementation, that is, with the eigenvalues obtained 
+from the relevant solveSchrodinger() function"""
 def testCorrespondingSchrodinger():
     potential = qobj.getPotential()
     ek = qobj.getEk()
@@ -20,7 +24,11 @@ print("------Ek Schrodinger-------")
 print(testCorrespondingSchrodinger())
 
 
-#----------------TESTING OPTIMISED EK AND PLOTTING NEW BAND----------
+
+
+"""Function to be run to obtain the Band Structure with respect to the
+Optimal Basis implementation, that is, with the eigenvalues obtained
+from the relevant interpolateHamiltonian() function"""
 def NEWtestInterpolateHamiltonian():
     latticeptl1 = qobj.getPotential()
     a = latticeptl1.parms["lattice"]

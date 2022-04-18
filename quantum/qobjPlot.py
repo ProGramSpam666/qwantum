@@ -4,10 +4,15 @@ from quantum.qobj import Qobj
 import os
 import matplotlib.pyplot as plt
 
+
+
 script_dir = os.path.dirname(__file__)
 plots_dir = os.path.join(script_dir, "plots/")
 if not os.path.isdir(plots_dir):
     os.makedirs(plots_dir)
+
+
+
 
 def plotSbAgainstOptimalBasisSize(qobjList: list[Qobj])->None:
     sb = np.zeros(len(qobjList))

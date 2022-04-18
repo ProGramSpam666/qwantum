@@ -9,17 +9,23 @@ import quantum.gettime as getTime
 import quantum.table as Table
 import quantum.plot as plot
 
+
+
+
 class Qobj:
 
     # PRIVATE ATRRIBUTEs
-    __defaultPtParms = { "lattice" : 1, "depth" : 50, "width" :0.2 } #lattice and potential paramaters
+    __defaultPtParms = { "lattice" : 1, "depth" : 10, "width" :0.1} #lattice and potential paramaters
     __defaultN_G = 10 #Number of plane waves in basis (fixed)
-    __defaultN_K = 50 #Number of k-points
-    __defaultN_KPrime = 20 #Number of k-points interpolated approach
+    __defaultN_K = 15 #Number of k-points
+    __defaultN_KPrime = 15 #Number of k-points interpolated approach
     __defaultN_B = 5 #Number of Bands to run over
-    __defaultSb = 0.1 #Threshold Parameter
+    __defaultSb =0.001 #Threshold Parameter
     __defaultPtType = "sech" #Potential function
     
+
+
+
     # CONSTRUCTOR
     def __init__(self):
         self.__parms = {}
@@ -33,6 +39,9 @@ class Qobj:
             ptType = self.get__defaultPtType()
         )
     
+
+
+
     # GETTERS
     def get__defaultPtParms(self):
         return self.__defaultPtParms
@@ -116,6 +125,13 @@ class Qobj:
         return self.__parms
 
 
+
+
+
+
+
+
+
     # SETTERS
     def __setPtParms(self, ptParms):
         self.__parms["ptParms"] = ptParms 
@@ -197,6 +213,13 @@ class Qobj:
         self.__setInterpolatedVelocity()
         
         
+
+
+
+
+
+
+
     # METHODS
     def restoreDefaults(self):
         self.__init__()
@@ -264,7 +287,7 @@ class Qobj:
     def interpolateHamiltonian(self):
         interHamil = interpolateHamiltonian.interpolateHamiltonian(
             OB_bi = self.getOptimalBasis(),
-            kList = self.getKList(),
+            kList = self.getKListNEW(),
             k0 = self.getk0(),
             k1 = self.getk1(),
             VLoc = self.getVLoc(),
@@ -344,7 +367,8 @@ class Qobj:
         )
         return interpolatedVel
 
-    """returns array of bands structure with ek calculated from schrodinger"""
+    """Function that returns array of bands structure with ek calculated from 
+    solveSchrodinger()"""
     def schrodingerBandStructure(self)->ndarray:
         bands = plot.bandStructure(
             ek=self.getEk(),
@@ -352,10 +376,15 @@ class Qobj:
         )
         return bands
 
-    """"returns array of bands structure with ek calculated from interpolate hamiltonian"""
+    """"Function thatreturns array of bands structure with ek calculated from
+    interpolatehamiltonian()"""
     def interpolatedBandStructure(self)->ndarray:
         bands = plot.bandStructure(
             ek=self.getInterpolateHamiltonian(),
             potential=self.getPotential()
         )
         return bands
+
+
+
+

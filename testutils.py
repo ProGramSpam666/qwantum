@@ -1,11 +1,12 @@
 from quantum.qobj import Qobj
 from quantum.utils import OB_bix, phi
-
-
+import matplotlib.pyplot as plt
 
 qobj = Qobj()
 
-#OB_bi, a, potential, Ncell, Npoints
+
+
+"""Function to be run that"""
 def testOB_bix():
     OB_bi = qobj.getOptimalBasis()
     potential = qobj.getPotential()
@@ -14,9 +15,11 @@ def testOB_bix():
     Npoints = 10
     OB_bixresult = OB_bix(OB_bi, a, potential, Ncell, Npoints)
     return OB_bixresult
-print(testOB_bix())
+#print(testOB_bix())
 
 
+
+"""Function to be run that"""
 def testPhi():
     N_b = qobj.getN_B()
     OB_bi = qobj.getOptimalBasis()
