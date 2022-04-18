@@ -111,10 +111,6 @@ def sbEffectOnEigenvalues(N_b, N_k, ck, OB_bi, kList, k0, k1, VLoc, N):
     
 
 
-def differenceInEigenvaluesVsSb():
-    return 
-
-
 
 #IMPROVED BELOW
 """Function demonstrating the relationship between the time taken to obtain 
@@ -184,32 +180,80 @@ def kpointsVsTimeSS(N_G, N_b, potential):
         timeList.append(result)
     NKArray = np.array(NKList)
     timeArray = np.array(timeList) 
-    plt.xlabel("Computation time to obtain solutions for SS")
-    plt.ylabel("Number of k-points (N_k) being considered")   
-    plt.plot(timeArray, NKArray, 'r')
+    plt.ylabel("Computation time to obtain solutions for SS")
+    plt.xlabel("Number of k-points (N_k) being considered")   
+    plt.plot(NKArray, timeArray, 'r')
     #plt.show()
+
+
+
+
+
+
+"""Function that obtains two arrays equivalent to the plot demonstrating the
+relationship between the number of k-points being considered and the computational
+cost of obtaining solutions to the Schrodinger Equation with respect to the 
+Standard Basis implementation"""
+def kpointsVsTimeSSArray(N_G, N_b, potential):
+    NKValues = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]
+    timeList = []
+    NKList = []
+    for NK in NKValues:
+        result = standardTimeForEk(N_G, NK, N_b, potential)
+        NKList.append(NK)
+        timeList.append(result)
+    NKArray = np.array(NKList)
+    timeArray = np.array(timeList) 
+    return NKArray, timeArray
+
 
 
 
 """Function that takes the plot demonstrating the relationship between the number of 
 k-points being considered and the computational cost of obtaining solutions
 with respect to the standard Basis implementation, and repeats this plot 100
-times to obtain an average for such a relationship, as the underlying plot
+times to obtain an repeated for such a relationship, as the underlying plot
 will vary slightly each time it is ran"""
-def averagePlotSS(N_G, N_b, potential):
+def repeatedPlotSS(N_G, N_b, potential):
     i = 0
     for i in range(0, 100):
-        average = kpointsVsTimeSS(N_G, N_b, potential)
+        repeated = kpointsVsTimeSS(N_G, N_b, potential)
         i += 1
     plt.show()    
-    return average
+    return repeated
+
+
+
+
+"""Function that plots the relationship between the number of k-points being 
+considered and the computational cost of obtaining such solutions with respect
+to the Standard Basis implementation.  The function outputs the line of best fit 
+from the plot obtained"""
+def averagePlotSSLineOfBestFit(N_G, N_b, potential):
+    i = 0
+    for i in range(0, 100):
+        NKArray, timeArray = kpointsVsTimeSSArray(N_G, N_b, potential)
+        #plt.plot(timeArray, NKArray, 'b')
+        if i == 99:
+            a, b = np.polyfit(NKArray, timeArray, 1)
+            plt.plot(NKArray, a*NKArray+b, 'r')
+            i += 1  
+    plt.ylabel("Computation time to obtain solutions for IH")
+    plt.xlabel("Number of k-points (N_k) being considered")   
+    plt.show()    
+    return 
+
+
+
+
 
 
 
 """Function that demonstrates the relationship between the number of k-points being 
 considered and the computational cost of obtaining solutions to the Schrodinger 
-Equation with respect to the Optimal Basis implementation"""
-def kpointsVsTimeIHEENEW(OB_bi, k0, k1, VLoc, N, potential):
+Equation with respect to the Optimal Basis implementation.  Function will obtain a 
+plot of such a relationship"""
+def kpointsVsTimeIHEE(OB_bi, k0, k1, VLoc, N, potential):
     NKValues = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]
     timeList = []
     NKList = []
@@ -219,10 +263,34 @@ def kpointsVsTimeIHEENEW(OB_bi, k0, k1, VLoc, N, potential):
         timeList.append(result)
     NKArray = np.array(NKList)
     timeArray = np.array(timeList) 
-    plt.xlabel("Computation time to obtain solutions for IH")
-    plt.ylabel("Number of k-points (N_k) being considered")   
-    plt.plot(timeArray, NKArray, 'b')
+    plt.ylabel("Computation time to obtain solutions for IH")
+    plt.xlabel("Number of k-points (N_k) being considered")   
+    plt.plot(NKArray, timeArray, 'b')
     #plt.show()
+
+
+
+
+
+"""Function that returns two Arrays equivalent to the plot that demonstrates 
+the relationship between the computational cost of obtaining solutions to the 
+Schrodinger Equation with respect to the Optimal Basis implementation.  Outputs
+Array of N_K points and Array for computation time.  This function is utilized
+to obtain a line of best fit when the underlying relationship is obtained 
+several times"""
+def kpointsVsTimeIHEEArray(OB_bi, k0, k1, VLoc, N, potential):
+    NKValues = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]
+    timeList = []
+    NKList = []
+    for NK in NKValues:
+        result = optimisedTimeForEkEENEW(OB_bi, k0, k1, VLoc, N, potential, NK)
+        NKList.append(NK)
+        timeList.append(result)
+    NKArray = np.array(NKList)
+    timeArray = np.array(timeList) 
+    return NKArray, timeArray
+
+
 
 
 
@@ -231,13 +299,13 @@ of k-points being considered and the computational cost of obtaining solutions
 with respect to the Optimal Basis implementation, and repeats the plot 100 times
 to achieve an average of such a relationsip, as the underlying plot will vary
 each time it is ran"""
-def averagePlotIHEE(OB_bi, k0, k1, VLoc, N, potential):
+def repeatedPlotIHEE(OB_bi, k0, k1, VLoc, N, potential):
     i = 0
     for i in range(0, 100):
-        average = kpointsVsTimeIHEENEW(OB_bi, k0, k1, VLoc, N, potential)
+        repeated = kpointsVsTimeIHEE(OB_bi, k0, k1, VLoc, N, potential)
         i += 1
     plt.show()    
-    return average
+    return repeated
 
 
 
@@ -248,14 +316,14 @@ cost of achieving the results"""
 def averagePlotIHEELineOfBestFit(OB_bi, k0, k1, VLoc, N, potential):
     i = 0
     for i in range(0, 100):
-        NKArray, timeArray = kpointsVsTimeIHEENEW(OB_bi, k0, k1, VLoc, N, potential)
-        plt.plot(timeArray, NKArray, 'b')
+        NKArray, timeArray = kpointsVsTimeIHEEArray(OB_bi, k0, k1, VLoc, N, potential)
+        #plt.plot(timeArray, NKArray, 'b')
         if i == 99:
-            a, b = np.polyfit(timeArray, NKArray, 1)
-            plt.plot(timeArray, a*timeArray+b, 'y')
+            a, b = np.polyfit(NKArray, timeArray, 1)
+            plt.plot(NKArray, a*NKArray+b, 'y')
             i += 1  
-    plt.xlabel("Computation time to obtain solutions for IH")
-    plt.ylabel("Number of k-points (N_k) being considered")   
+    plt.ylabel("Computation time to obtain solutions for IH")
+    plt.xlabel("Number of k-points (N_k) being considered")   
     plt.show()    
     return 
 

@@ -1,7 +1,7 @@
 from quantum import potential
-from quantum.experimentalplots import EnergyVsN_G, averagePlotIHEE, optimalBasisVsCk, sbEffectOnPrecision 
+from quantum.experimentalplots import EnergyVsN_G, repeatedPlotIHEE, averagePlotIHEELineOfBestFit, optimalBasisVsCk, sbEffectOnPrecision 
 from quantum.experimentalplots import sbEffectOnSize, ekVsE, timePlotVaryingSb, sbEffectOnEigenvalues
-from quantum.experimentalplots import kpointsVsTimeSS, kpointsVsTimeIHEENEW, averagePlotSS
+from quantum.experimentalplots import kpointsVsTimeSS, kpointsVsTimeIHEE, repeatedPlotSS, averagePlotSSLineOfBestFit
 from quantum.plot import plotFun
 from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
 from quantum.qobj import Qobj
@@ -102,13 +102,28 @@ def testkpointsVsTimeSS():
 """Function to be run that plots the above function 100 times, as the above function
 result will vary each time it is ran, to achieve accurate results such a test is 
 required"""
-def testAveragePlotSS():
+def testRepeatedPlotSS():
     N_G = qobj.getN_G()
     N_b = qobj.getN_B()
     potential = qobj.getPotential()
-    result = averagePlotSS(N_G, N_b, potential)
+    result = repeatedPlotSS(N_G, N_b, potential)
     return result 
 #print(testAveragePlotSS())
+
+
+
+
+"""Function to be run to obtain the line of Best Fit of the plot demonstrating
+the relationship between the number of k-points being considered and the 
+computation time of obtaining results with respect to the Standard Basis 
+implementation that has been ran 100 times"""
+def testAveragePlotSSLineOfBestFit():
+    N_G = qobj.getN_G()
+    N_b = qobj.getN_B()
+    potential = qobj.getPotential()
+    result = averagePlotSSLineOfBestFit(N_G, N_b, potential)
+    return result
+#print(testAveragePlotSSLineOfBestFit())    
 
 
 
@@ -116,7 +131,7 @@ def testAveragePlotSS():
 """Function to be run to obtain the plot demonstrating the relationship of the
 number of k-points to be interated over and the computation time of obtaining 
 solutions with respect to the Optimal Basis implementation"""
-def testkpointsVsTimeIHEENEW():
+def testkpointsVsTimeIHEE():
     N_b = qobj.getN_B()
     OB_bi = qobj.getOptimalBasis()
     k0 = qobj.getk0()
@@ -124,9 +139,9 @@ def testkpointsVsTimeIHEENEW():
     VLoc = qobj.getVLoc()
     N = N_b
     potential = qobj.getPotential()
-    result = kpointsVsTimeIHEENEW(OB_bi, k0, k1, VLoc, N, potential)
+    result = kpointsVsTimeIHEE(OB_bi, k0, k1, VLoc, N, potential)
     return result
-#print(testkpointsVsTimeIHEENEW())    
+#print(testkpointsVsTimeIHEE())    
 
 
 
@@ -135,7 +150,7 @@ def testkpointsVsTimeIHEENEW():
 runs 100 times demonstrating the relationship between the number of k-points
 to be iterated over and the computation time of obtaining such solutions
 with respect to the Optimal Basis approach"""
-def testAveragePlotIHEE():
+def testRepeatedPlotIHEE():
     N_b = qobj.getN_B()
     OB_bi = qobj.getOptimalBasis()
     k0 = qobj.getk0()
@@ -143,12 +158,28 @@ def testAveragePlotIHEE():
     VLoc = qobj.getVLoc()
     N = N_b
     potential = qobj.getPotential()
-    result = averagePlotIHEE(OB_bi, k0, k1, VLoc, N, potential)
+    result = repeatedPlotIHEE(OB_bi, k0, k1, VLoc, N, potential)
     return result 
-print(testAveragePlotIHEE())
+#print(testAveragePlotIHEE())
 
 
 
+
+
+"""Function to be run to obtain the line of best fit from plotting the relationship
+between the number of k-points being considered and the computational cost of 
+obtaining solutions with respect to the Optimal Basis implementation"""
+def testAveragePlotIHEELineOfBestFit():
+    N_b = qobj.getN_B()
+    OB_bi = qobj.getOptimalBasis()
+    k0 = qobj.getk0()
+    k1 = qobj.getk1()
+    VLoc = qobj.getVLoc()
+    N = N_b
+    potential = qobj.getPotential()
+    result = averagePlotIHEELineOfBestFit(OB_bi, k0, k1, VLoc, N, potential)
+    return result
+print(testAveragePlotIHEELineOfBestFit())    
 
 
 

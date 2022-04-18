@@ -1,5 +1,6 @@
 """File given in model to fill the matrix with the hamiltonian which can then be
-diagonalised to obtain the eigenvalues and corresponding eigenvectors."""
+diagonalised to obtain the eigenvalues and corresponding eigenvectors.  This is
+done with respect to the Standard Basis implementation"""
 
 
 import numpy as np
