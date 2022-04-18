@@ -233,10 +233,10 @@ def averagePlotSSLineOfBestFit(N_G, N_b, potential):
     i = 0
     for i in range(0, 100):
         NKArray, timeArray = kpointsVsTimeSSArray(N_G, N_b, potential)
-        #plt.plot(timeArray, NKArray, 'b')
+        plt.plot(NKArray, timeArray, 'r')
         if i == 99:
             a, b = np.polyfit(NKArray, timeArray, 1)
-            plt.plot(NKArray, a*NKArray+b, 'r')
+            plt.plot(NKArray, a*NKArray+b, 'y')
             i += 1  
     plt.ylabel("Computation time to obtain solutions for IH")
     plt.xlabel("Number of k-points (N_k) being considered")   
@@ -317,7 +317,7 @@ def averagePlotIHEELineOfBestFit(OB_bi, k0, k1, VLoc, N, potential):
     i = 0
     for i in range(0, 100):
         NKArray, timeArray = kpointsVsTimeIHEEArray(OB_bi, k0, k1, VLoc, N, potential)
-        #plt.plot(timeArray, NKArray, 'b')
+        plt.plot(NKArray, timeArray, 'b')
         if i == 99:
             a, b = np.polyfit(NKArray, timeArray, 1)
             plt.plot(NKArray, a*NKArray+b, 'y')

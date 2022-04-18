@@ -124,7 +124,7 @@ def testAveragePlotSSLineOfBestFit():
     potential = qobj.getPotential()
     result = averagePlotSSLineOfBestFit(N_G, N_b, potential)
     return result
-#print(testAveragePlotSSLineOfBestFit())    
+print(testAveragePlotSSLineOfBestFit())    
 
 
 
@@ -198,7 +198,7 @@ def testRespectiveLOBF():
     N = N_b
     result = respectiveLOBF(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N)
     return result 
-print(testRespectiveLOBF())
+#print(testRespectiveLOBF())
 
 
 
