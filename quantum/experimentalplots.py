@@ -238,7 +238,7 @@ def averagePlotSSLineOfBestFit(N_G, N_b, potential):
             a, b = np.polyfit(NKArray, timeArray, 1)
             plt.plot(NKArray, a*NKArray+b, 'y')
             i += 1  
-    plt.ylabel("Computation time to obtain solutions for IH")
+    plt.ylabel("Computation time to obtain solutions for SS")
     plt.xlabel("Number of k-points (N_k) being considered")   
     plt.show()    
     return 
