@@ -330,5 +330,26 @@ def averagePlotIHEELineOfBestFit(OB_bi, k0, k1, VLoc, N, potential):
 
 
 
+"""Function to obtain plot giving the Line of Best Fit of relationship between 
+computation time to obtain results and the number of k-points being considered
+with respect to the Standard Basis implementation, and the line of Best fit of
+the relationship between computation time to obtain results and the number of
+k-points being considered with respect to the Optimal Basis implementation"""
+def respectiveLOBF(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N):
+    i = 0
+    for i in range(0, 100):
+        NKArraySS, timeArraySS = kpointsVsTimeSSArray(N_G, N_b, potential)
+        NKArrayIH, timeArrayIH = kpointsVsTimeIHEEArray(OB_bi, k0, k1, VLoc, N, potential)
+        if i == 99:
+            a1, b1 = np.polyfit(NKArraySS, timeArraySS, 1)
+            a2, b2 = np.polyfit(NKArrayIH, timeArrayIH, 1)
+            plt.plot(NKArraySS, a1*NKArraySS+b1, 'r')
+            plt.plot(NKArrayIH, a2*NKArrayIH+b2, 'y')
+            i += 1  
+    plt.ylabel("Computation time to obtain solutions")
+    plt.xlabel("Number of k-points (N_k) being considered")
+    plt.legend(['Standard Basis', 'Optimal Basis'])   
+    plt.show()
+
 
 

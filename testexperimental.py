@@ -2,6 +2,7 @@ from quantum import potential
 from quantum.experimentalplots import EnergyVsN_G, repeatedPlotIHEE, averagePlotIHEELineOfBestFit, optimalBasisVsCk, sbEffectOnPrecision 
 from quantum.experimentalplots import sbEffectOnSize, ekVsE, timePlotVaryingSb, sbEffectOnEigenvalues
 from quantum.experimentalplots import kpointsVsTimeSS, kpointsVsTimeIHEE, repeatedPlotSS, averagePlotSSLineOfBestFit
+from quantum.experimentalplots import respectiveLOBF
 from quantum.plot import plotFun
 from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
 from quantum.qobj import Qobj
@@ -179,7 +180,26 @@ def testAveragePlotIHEELineOfBestFit():
     potential = qobj.getPotential()
     result = averagePlotIHEELineOfBestFit(OB_bi, k0, k1, VLoc, N, potential)
     return result
-print(testAveragePlotIHEELineOfBestFit())    
+#print(testAveragePlotIHEELineOfBestFit())    
+
+
+
+"""Function to be run to obtain line of Best Fit for relationship between
+k-points and computation time for Standard Basis, and line of Best Fit for 
+relationship between k-points and computation time for Optimal Basis"""
+def testRespectiveLOBF():
+    N_G = qobj.getN_G()
+    N_b = qobj.getN_B()
+    potential = qobj.getPotential()
+    OB_bi = qobj.getOptimalBasis()
+    k0 = qobj.getk0()
+    k1 = qobj.getk1()
+    VLoc = qobj.getVLoc()
+    N = N_b
+    result = respectiveLOBF(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N)
+    return result 
+print(testRespectiveLOBF())
+
 
 
 
