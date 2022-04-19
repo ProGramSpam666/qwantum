@@ -1,11 +1,15 @@
 """File designated for experimental plots to obtain."""
 
+
+
+
 import numpy as np
 from quantum.optimalbasis import optimalBasis
 import matplotlib.pyplot as plt
 from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
 from quantum.schrodinger import solveSchrodinger
 from quantum.gettime import differenceInTimeForObtainingEk, standardTimeForEk, optimisedTimeForEk, optimisedTimeForEkEE, optimisedTimeForEkEENEW
+from quantum.gettime import optimisedTimeForEkNEW
 import time
 from quantum.table import differenceInEigenvalues
 from quantum.utils import kvec
@@ -274,10 +278,10 @@ def kpointsVsTimeIHEE(OB_bi, k0, k1, VLoc, N, potential):
 
 """Function that returns two Arrays equivalent to the plot that demonstrates 
 the relationship between the computational cost of obtaining solutions to the 
-Schrodinger Equation with respect to the Optimal Basis implementation.  Outputs
-Array of N_K points and Array for computation time.  This function is utilized
-to obtain a line of best fit when the underlying relationship is obtained 
-several times"""
+Schrodinger Equation with respect to the Optimal Basis implementation for 
+interpolateHamiltonianEE().  Outputs Array of N_K points and Array for computation time.  
+This function is utilized to obtain a line of best fit when the underlying relationship 
+is obtained several times"""
 def kpointsVsTimeIHEEArray(OB_bi, k0, k1, VLoc, N, potential):
     NKValues = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]
     timeList = []
@@ -344,12 +348,61 @@ def respectiveLOBF(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N):
             a1, b1 = np.polyfit(NKArraySS, timeArraySS, 1)
             a2, b2 = np.polyfit(NKArrayIH, timeArrayIH, 1)
             plt.plot(NKArraySS, a1*NKArraySS+b1, 'r')
-            plt.plot(NKArrayIH, a2*NKArrayIH+b2, 'y')
+            plt.plot(NKArrayIH, a2*NKArrayIH+b2, 'b')
             i += 1  
     plt.ylabel("Computation time to obtain solutions")
     plt.xlabel("Number of k-points (N_k) being considered")
     plt.legend(['Standard Basis', 'Optimal Basis'])   
     plt.show()
+
+
+
+
+"""Function that returns two Arrays equivalent to the plot that demonstrates 
+the relationship between the computational cost of obtaining solutions to the 
+Schrodinger Equation with respect to the Optimal Basis implementation for 
+interpolateHamiltonian().  Outputs Array of N_K points and Array for computation time.  
+This function is utilized to obtain a line of best fit when the underlying relationship 
+is obtained several times"""
+def kpointsVsTimeIHArray(OB_bi, k0, k1, VLoc, N, potential):
+    NKValues = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]
+    timeList = []
+    NKList = []
+    for NK in NKValues:
+        result = optimisedTimeForEkNEW(OB_bi, k0, k1, VLoc, N, potential, NK)
+        NKList.append(NK)
+        timeList.append(result)
+    NKArray = np.array(NKList)
+    timeArray = np.array(timeList)
+    return NKArray, timeArray
+
+
+
+
+
+"""Function to obtain the plot demonstrating the line of Best Fit with respect 
+to the relationship between the number of k-points and the computation time for 
+obtaining solutions for interpolateHamiltonian(), and the line of Best Fit with 
+respect to the relationship between the number of k-points and the computation time
+for obtaining solutions for interpolateHamiltonianEE()"""
+def comparingInterpolates(OB_bi, k0, k1, VLoc, N, potential):
+    i = 0
+    for i in range(0, 100):
+        NKArrayIH, timeArrayIH = kpointsVsTimeIHArray(OB_bi, k0, k1, VLoc, N, potential)
+        NKArrayIHEE, timeArrayIHEE = kpointsVsTimeIHEEArray(OB_bi, k0, k1, VLoc, N, potential)
+        if i == 99:
+            a1, b1 = np.polyfit(NKArrayIH, timeArrayIH, 1)
+            a2, b2 = np.polyfit(NKArrayIHEE, timeArrayIHEE, 1)
+            plt.plot(NKArrayIH, a1*NKArrayIH+b1, 'darkorange')
+            plt.plot(NKArrayIHEE, a2*NKArrayIHEE+b2, 'darkviolet')
+            i += 1  
+    plt.ylabel("Computation time to obtain solutions")
+    plt.xlabel("Number of k-points (N_k) being considered")
+    plt.legend(['interpolateHamiltonian()', 'interpolateHamiltonianEE()'])   
+    plt.show()
+
+
+
 
 
 

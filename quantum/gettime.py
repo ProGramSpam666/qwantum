@@ -38,6 +38,22 @@ def optimisedTimeForEk(OB_bi, kList, k0, k1, VLoc, N):
     
 
 
+"""Function to perform the same task as the function above, however is altered such
+that kList is now not included as a paramter, which gives rise to greater
+Flexability when plotting such time against other parameters """
+def optimisedTimeForEkNEW(OB_bi, k0, k1, VLoc, N, potential, N_k):
+    a = potential.parms["lattice"]
+    kList = []
+    for i in range(N_k):
+        kList.append(kvec(i,a,N_k))
+    startTimeOptimised = time.time()
+    interpolateHamiltonian(OB_bi, kList, k0, k1, VLoc, N)
+    endTimeOptimised = time.time() 
+    timeElapsed = endTimeOptimised - startTimeOptimised
+    return timeElapsed
+
+
+
 
 """Function to obtain the time taken to obtain the solutions of the Schrodinger 
 Equation (this time both Eigenvalues and Eigenvectors) with respect to the 

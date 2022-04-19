@@ -18,12 +18,11 @@ class Qobj:
     __defaultPtParms = { "lattice" : 1, "depth" : 10, "width" :0.1} #lattice and potential paramaters
     __defaultN_G = 10 #Number of plane waves in basis (fixed)
     __defaultN_K = 15 #Number of k-points
-    __defaultN_KPrime = 15 #Number of k-points interpolated approach
+    __defaultN_KPrime = 15 #Number of k-points interpolated OB
     __defaultN_B = 5 #Number of Bands to run over
     __defaultSb =0.001 #Threshold Parameter
     __defaultPtType = "sech" #Potential function
     
-
 
 
     # CONSTRUCTOR

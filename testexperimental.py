@@ -2,7 +2,7 @@ from quantum import potential
 from quantum.experimentalplots import EnergyVsN_G, repeatedPlotIHEE, averagePlotIHEELineOfBestFit, optimalBasisVsCk, sbEffectOnPrecision 
 from quantum.experimentalplots import sbEffectOnSize, ekVsE, timePlotVaryingSb, sbEffectOnEigenvalues
 from quantum.experimentalplots import kpointsVsTimeSS, kpointsVsTimeIHEE, repeatedPlotSS, averagePlotSSLineOfBestFit
-from quantum.experimentalplots import respectiveLOBF
+from quantum.experimentalplots import respectiveLOBF, comparingInterpolates
 from quantum.plot import plotFun
 from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
 from quantum.qobj import Qobj
@@ -124,7 +124,7 @@ def testAveragePlotSSLineOfBestFit():
     potential = qobj.getPotential()
     result = averagePlotSSLineOfBestFit(N_G, N_b, potential)
     return result
-print(testAveragePlotSSLineOfBestFit())    
+#print(testAveragePlotSSLineOfBestFit())    
 
 
 
@@ -202,5 +202,16 @@ def testRespectiveLOBF():
 
 
 
+def testComparingInterpolates():
+    N_b = qobj.getN_B()
+    potential = qobj.getPotential()
+    OB_bi = qobj.getOptimalBasis()
+    k0 = qobj.getk0()
+    k1 = qobj.getk1()
+    VLoc = qobj.getVLoc()
+    N = N_b
+    result = comparingInterpolates(OB_bi, k0, k1, VLoc, N, potential)
+    return result 
+print(testComparingInterpolates())
 
 
