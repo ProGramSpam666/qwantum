@@ -1,30 +1,22 @@
 import numpy as np
+import math
 
 
 
 """Function to obtain the Dielectric Function with respect to the Standard Basis
 Implementation approach"""
-def standardDielectricFunc(N_k, N_b, bi_out, ek, q, w):
-    constant = 1 - 4/np.pi
+def dielectricFunc( N_b, ek, damp, w, velocity, numberOccupied):
+    N_k = velocity.shape[0]
+    constant = 4/np.pi
+    z = w + 1j*damp
+    sum = 0
     for k in range(N_k):
-        for n in range(N_b):
-            for nprime in range(N_b):
-                frac1 = bi_out / (ek[n, k] - ek[nprime, k])**2
-    return frac1
-
-
-
-"""Function to obtain the Dielectric Function with respect to the Optimal Basis
-Implementation approach"""
-def optimalDielectricFunc(N_k, OB_bi):
-    Nbasis = OB_bi.shape[1]
-    constant = 1 - 4/np.pi
-    for k in range(N_k):
-        for n in range(Nbasis):
-            for nprime in range(Nbasis):
-                yip = 2
-    return yip
-
+        for n in range(numberOccupied):
+            for nprime in range(numberOccupied +1, N_b):
+                frac1 = velocity[k, n, nprime]*np.conjugate(velocity[k, n, nprime]) / (ek[k, nprime] - ek[k, n])**2
+                frac2 =  1 / (z - (ek[k, nprime] - ek[k, n]))
+                sum += frac1*frac2
+    return 1 - constant*sum
 
 
 

@@ -6,8 +6,6 @@ from quantum.utils import kvec
 from quantum.velocityOp import standardVelocity, interpolatedVelocity
 
 
-
-
 """Function that obtains the relevant maximum differnence in Eigenvalues with respect 
 to the standard Basis implementation (i.e relevant solveSchrodinger() function) and the 
 Optimal Basis implementation (i.e relevant interpolateHamiltonian() functionn).  The
@@ -26,20 +24,21 @@ def differenceInEigenvalues(sb, N_G, N_k, N_b, potential, N):
         kList.append(kvec(i,a,N_k))   
     eigenEnergies = interpolateHamiltonian(OB_bi, kList, k0, k1, VLoc, N)
     difference = ek - eigenEnergies - ek[0,0] + eigenEnergies[0,0]
-    maxValue = np.amax(difference)
-    return maxValue
+    maxDifference = np.amax(difference)
+    return maxDifference
  
 
 
 
-""""""
+"""Function to obtain the relevant difference in Velocity with respect to the 
+Standard Basis implementation (i.e relevant standardVelocity() function) and the
+Optimal Basis implementation (i.e relevant interpolatedVelocity() function)."""
 def differenceInVelocity(ck, potential, OBck, k1):
     stanVel = standardVelocity(potential, ck)
-    maxStanVel = np.amax(stanVel)
     interVel = interpolatedVelocity(potential, OBck, k1)
-    maxInterVel = np.amax(interVel)
-    difference = maxStanVel - maxInterVel #- stanVel[0, 0, 0] + interVel[0, 0, 0]
-    return difference
+    difference = stanVel - interVel - stanVel[0, 0, 0] + interVel[0, 0, 0]
+    maxDifference = np.abs(difference).max() #Greatest magnitude
+    return maxDifference
 
 
 

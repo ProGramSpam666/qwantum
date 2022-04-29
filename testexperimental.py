@@ -2,7 +2,8 @@ from quantum import potential
 from quantum.experimentalplots import EnergyVsN_G, repeatedPlotIHEE, averagePlotIHEELineOfBestFit, optimalBasisVsCk, sbEffectOnPrecision 
 from quantum.experimentalplots import sbEffectOnSize, ekVsE, timePlotVaryingSb, sbEffectOnEigenvalues
 from quantum.experimentalplots import kpointsVsTimeSS, kpointsVsTimeIHEE, repeatedPlotSS, averagePlotSSLineOfBestFit
-from quantum.experimentalplots import respectiveLOBF, comparingInterpolates
+from quantum.experimentalplots import respectiveLOBF, comparingInterpolates, thresholdVsMaxDiffEigenvalue, respectiveLOBFDifference
+from quantum.experimentalplots import differenceInCompVaryingKPoints
 from quantum.plot import plotFun
 from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
 from quantum.qobj import Qobj
@@ -202,6 +203,28 @@ def testRespectiveLOBF():
 
 
 
+def testRespectiveLOBFDifference():
+    N_G = qobj.getN_G()
+    N_b = qobj.getN_B()
+    potential = qobj.getPotential()
+    OB_bi = qobj.getOptimalBasis()
+    k0 = qobj.getk0()
+    k1 = qobj.getk1()
+    VLoc = qobj.getVLoc()
+    N = N_b
+    result = respectiveLOBFDifference(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N)
+    return result 
+print(testRespectiveLOBFDifference())
+
+
+
+
+
+
+
+"""Function to be run that compares the computational cost with respect to the number
+of k-points being interpolated over for interpolateHamiltonin() and 
+interpolateHamiltonianEE() respectively"""
 def testComparingInterpolates():
     N_b = qobj.getN_B()
     potential = qobj.getPotential()
@@ -212,6 +235,48 @@ def testComparingInterpolates():
     N = N_b
     result = comparingInterpolates(OB_bi, k0, k1, VLoc, N, potential)
     return result 
-print(testComparingInterpolates())
+#print(testComparingInterpolates())
+
+
+
+
+
+
+"""NEW"""
+def testThresholdVsMaxDiffEigenvalue():
+    N_G = qobj.getN_G()
+    N_k = qobj.getN_K()
+    N_b = qobj.getN_B()
+    potential = qobj.getPotential()
+    N = N_b
+    result = thresholdVsMaxDiffEigenvalue(N_G, N_k, N_b, potential, N)
+    return result 
+#print(testThresholdVsMaxDiffEigenvalue())
+
+
+
+
+
+"""Function to be run to"""
+def testDifferenceInCompVaryingKPoints():
+    N_G = qobj.getN_G()
+    N_b = qobj.getN_B()
+    potential = qobj.getPotential()
+    OB_bi = qobj.getOptimalBasis()
+    k0 = qobj.getk0()
+    k1 = qobj.getk1()
+    VLoc = qobj.getVLoc()
+    N = N_b
+    result = differenceInCompVaryingKPoints(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N)
+    return result 
+#print(testDifferenceInCompVaryingKPoints())
+
+
+
+
+
+
+
+
 
 

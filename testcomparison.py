@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from quantum.schrodinger import solveSchrodinger
 from quantum.optimalbasis import optimalBasis
 from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
-from quantum.utils import kvec
+from quantum.utils import kvec, timerPrint
 import time
 
 
@@ -15,6 +15,7 @@ qobj = Qobj()
 """Function to be run to obtain the Band Structure with respect to the 
 Standard Basis implementation, that is, with the eigenvalues obtained 
 from the relevant solveSchrodinger() function"""
+@timerPrint
 def testCorrespondingSchrodinger():
     potential = qobj.getPotential()
     ek = qobj.getEk()
@@ -29,6 +30,7 @@ print(testCorrespondingSchrodinger())
 """Function to be run to obtain the Band Structure with respect to the
 Optimal Basis implementation, that is, with the eigenvalues obtained
 from the relevant interpolateHamiltonian() function"""
+@timerPrint
 def NEWtestInterpolateHamiltonian():
     latticeptl1 = qobj.getPotential()
     a = latticeptl1.parms["lattice"]

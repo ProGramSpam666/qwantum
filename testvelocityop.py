@@ -20,24 +20,24 @@ Basis implementation"""
 def testStandardVelocity():
     potential = qobj.getPotential()
     ck = qobj.getCk()
-    result = standardVelocity( potential, ck)
+    result = standardVelocity(potential, ck)
     print("---------Standard Velocity------")
     return result
-#print(testStandardVelocity())
+print(testStandardVelocity())
 
 
 
 
 """Function to be run that obtains the Velocity Operator with respect to the Optimal
 Basis implementation"""
-def testInterpoaltedVelocity():
+def testInterpolatedVelocity():
     k1 = qobj.getk1()
     OBck = qobj.getOBck()
     potential = qobj.getPotential()
     result = interpolatedVelocity(potential, OBck, k1)
     print("---------Interpolated Velocity------")
     return result
-#print(testStandardVelocity())
+print(testInterpolatedVelocity())
 
 
 #TEST COMPARISON QUANTUM OBJECT APPROACH

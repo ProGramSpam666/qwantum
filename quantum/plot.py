@@ -1,4 +1,4 @@
-"""File that contains all relevant significant plotting requirements"""
+"""File that contains all relevant plots"""
 
 
 
@@ -25,7 +25,6 @@ def bandStructure(ek:np.ndarray,potential:Potential)->np.ndarray:
         bands.append(temp)
     bands = np.asarray(bands)
     return bands
-
 
 
 

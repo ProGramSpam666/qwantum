@@ -14,10 +14,10 @@ def standardVelocity(potential, ck):
         for ib1 in range(N_b):
             for ib2 in range(N_b):
                 if (ib1 == ib2):
-                    velocity[k, ib1 , ib2] += k
+                    velocity[k, ib1 , ib2] = kvec(k, a, N_k)
                 for m in range(N_G):
                     velocity[k, ib1, ib2] += np.conjugate(ck[m, k, ib1])*ck[m, k, ib2]*Gvec(m- int((N_G-1)/2), a)   
-    return ck
+    return velocity
 
 
 
@@ -31,14 +31,11 @@ def interpolatedVelocity(potential, OBck, k1):
         for ib1 in range(N_b):
             for ib2 in range(N_b):
                 if (ib1 == ib2):
-                    velocity[k, ib1, ib2] += kvec(k, a, N_k)
+                    velocity[k, ib1, ib2] = kvec(k, a, N_k)
                 for m in range(Nbasis):
                     for n in range(Nbasis):
                         velocity[k, ib1, ib2] += 0.5*np.conjugate(OBck[k, ib1, m])*OBck[k, ib2, n]*k1[m, n] 
     return velocity
-
-
-
 
 
 

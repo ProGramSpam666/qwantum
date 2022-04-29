@@ -1,20 +1,45 @@
 import numpy as np
 from quantum.dielectric import dielectricFunc
+from quantum.velocityOp import standardVelocity, interpolatedVelocity
 from quantum.qobj import Qobj
 
 qobj = Qobj()
 
-#parameters = N_k, N_b, bi_out, ek, q, w
+
+
+
 def testDielectricFunc():
-    N_k = qobj.getN_K()
+    numberOccupied = 1
     N_b = qobj.getN_B()
-    OB_bi = qobj.getOptimalBasis()
     ek = qobj.getEk()
-    q = 2
-    w = 3
-    result = dielectricFunc(N_k, N_b, OB_bi, ek, q, w)
+    w = 10 + 1j*0.001
+    potential = qobj.getPotential()
+    ck = qobj.getCk()
+    stanvel = standardVelocity(potential, ck)
+    result = dielectricFunc( N_b, ek, w, stanvel, numberOccupied )
+    print("-------Standard Dielectric Function----------")
     return result
-print("-------Dielectric Function----------")
 print(testDielectricFunc())
+
+
+
+
+def testOptimalDielectricFunc():
+    numberOccupied = 1
+    N_b = qobj.getN_B()
+    Eigen, Eigenvec = qobj.interpolateHamiltonianEC()
+    w = 10 + 1j*0.001
+    potential = qobj.getPotential()
+    k1 = qobj.getk1()
+    interpolatedVel = interpolatedVelocity(potential, Eigenvec, k1)
+    result = dielectricFunc(N_b, Eigen, w, interpolatedVel, numberOccupied )
+    print("-------Optimal Dielectric Function------")
+    return result
+print(testOptimalDielectricFunc())
+
+
+
+
+
 
 

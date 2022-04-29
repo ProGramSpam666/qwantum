@@ -187,7 +187,7 @@ def kpointsVsTimeSS(N_G, N_b, potential):
     plt.ylabel("Computation time to obtain solutions for SS")
     plt.xlabel("Number of k-points (N_k) being considered")   
     plt.plot(NKArray, timeArray, 'r')
-    #plt.show()
+    plt.show()
 
 
 
@@ -349,11 +349,43 @@ def respectiveLOBF(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N):
             a2, b2 = np.polyfit(NKArrayIH, timeArrayIH, 1)
             plt.plot(NKArraySS, a1*NKArraySS+b1, 'r')
             plt.plot(NKArrayIH, a2*NKArrayIH+b2, 'b')
+            differenceX = NKArraySS
+            differenceY = a1*NKArraySS+b1 - a2*NKArrayIH+b2
+            plt.plot(differenceX, differenceY, 'g')
             i += 1  
     plt.ylabel("Computation time to obtain solutions")
     plt.xlabel("Number of k-points (N_k) being considered")
     plt.legend(['Standard Basis', 'Optimal Basis'])   
     plt.show()
+
+
+
+
+
+
+
+"""NEWWWWWWWWWW"""
+def respectiveLOBFDifference(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N):
+    i = 0
+    for i in range(0, 100):
+        NKArraySS, timeArraySS = kpointsVsTimeSSArray(N_G, N_b, potential)
+        NKArrayIH, timeArrayIH = kpointsVsTimeIHEEArray(OB_bi, k0, k1, VLoc, N, potential)
+        if i == 99:
+            a1, b1 = np.polyfit(NKArraySS, timeArraySS, 1)
+            a2, b2 = np.polyfit(NKArrayIH, timeArrayIH, 1)
+            differenceX = NKArraySS
+            differenceY = a1*NKArraySS+b1 - a2*NKArrayIH+b2
+            differencePercent = (differenceY/a1*NKArraySS+b1)/100
+            plt.plot(differenceX, differencePercent, 'y')
+            i += 1  
+    plt.ylabel("Percentage difference ( between Green and red)")
+    plt.xlabel("Number of k-points (N_k) being considered")
+    #plt.legend()   
+    plt.show()
+
+
+
+
 
 
 
@@ -400,6 +432,80 @@ def comparingInterpolates(OB_bi, k0, k1, VLoc, N, potential):
     plt.xlabel("Number of k-points (N_k) being considered")
     plt.legend(['interpolateHamiltonian()', 'interpolateHamiltonianEE()'])   
     plt.show()
+
+
+
+
+"""Function to perform convergence test on the effect the Threshold has on the 
+maximum difference in Eigenvalues obtained"""
+def thresholdVsMaxDiffEigenvalue(N_G, N_k, N_b, potential, N):
+    sbList = []
+    differenceList = []
+    #sbValues = [0.1, 0.01, 0.001, 0.0001, 0.00001]
+    sbValues = np.linspace(0.0001, 0.2, 100)
+    for sb in sbValues:
+        differenceEig = differenceInEigenvalues(sb, N_G, N_k, N_b, potential, N)
+        differenceList.append(differenceEig)
+        sbList.append(sb)
+    sbArray = np.array(sbList)
+    differenceArray = np.array(differenceList)
+    plt.xlabel("Threshold value")
+    plt.ylabel("Maximum difference in Eigenvalues obtained from respective Approaches")
+    plt.plot(sbArray, differenceArray, 'b')
+    plt.show()        
+    #return 
+
+
+
+
+"""Function to compare computational cost of obtaining solutions for the standard basis
+implementation for large k-values with computational cost of obtaining solutions for the
+optimal basis implementation"""
+def differenceInCompVaryingKPoints(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N):
+    NKValuesStandard = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]
+    NKValuesOptimal = [100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000,2100,2200]
+    #NKValuesOptimal = [50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800]
+    standardTimeList = []
+    standardNKList = []
+    optimalTimeList = []
+    optimalNKList = []
+    i = 0
+    for i in range(0,100):
+        for NKS in NKValuesStandard:
+            timeResultStandard = standardTimeForEk(N_G, NKS, N_b, potential)
+            standardTimeList.append(timeResultStandard)
+            standardNKList.append(NKS)
+        standardTimeArray = np.array(standardTimeList)
+        standardNKArray = np.array(standardNKList)
+        #plt.plot(standardNKArray, standardTimeArray, 'r')
+        for NKO in NKValuesOptimal:
+            timeResultOptimal = optimisedTimeForEkEENEW(OB_bi, k0, k1, VLoc, N, potential, NKO)
+            optimalTimeList.append(timeResultOptimal)
+            optimalNKList.append(NKO)
+        optimalTimeArray = np.array(optimalTimeList) 
+        optimalNKArray = np.array(optimalNKList)
+        #plt.plot(optimalNKArray, optimalTimeArray, 'b')
+        if i == 99:
+            fig, ax1 = plt.subplots()
+            del fig
+            ax2 = ax1.twinx()
+            aS, bS = np.polyfit(standardTimeArray,standardNKArray , 1)
+            aO, bO = np.polyfit(optimalTimeArray, optimalNKArray, 1)
+            ax1.plot(standardTimeArray, aS*standardTimeArray+bS, 'r')
+            ax2.plot(optimalTimeArray, aO*optimalTimeArray+bO, 'b')
+        i += 1
+    ax1.set_xlabel('Computation time to obtain solutions (seconds)')
+    ax1.set_ylabel('k-points considered in Standard Basis implementation')
+    ax2.set_ylabel('k-points considered in Optimal Basis implementation')
+    plt.show()   
+   
+
+
+
+
+
+
+
 
 
 

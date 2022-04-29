@@ -15,12 +15,12 @@ import quantum.plot as plot
 class Qobj:
 
     # PRIVATE ATRRIBUTEs
-    __defaultPtParms = { "lattice" : 1, "depth" : 10, "width" :0.1} #lattice and potential paramaters
+    __defaultPtParms = { "lattice" : 1, "depth" : 80, "width" :0.1} #lattice and potential paramaters
     __defaultN_G = 10 #Number of plane waves in basis (fixed)
-    __defaultN_K = 15 #Number of k-points
-    __defaultN_KPrime = 15 #Number of k-points interpolated OB
-    __defaultN_B = 5 #Number of Bands to run over
-    __defaultSb =0.001 #Threshold Parameter
+    __defaultN_K = 500 #Number of k-points
+    __defaultN_KPrime = 25 #Number of k-points interpolated OB
+    __defaultN_B = 8 #Number of Bands to run over
+    __defaultSb =0.001#Threshold Parameter
     __defaultPtType = "sech" #Potential function
     
 
@@ -295,15 +295,15 @@ class Qobj:
         return interHamil   
 
     def interpolateHamiltonianEC(self):
-        interHamilEC = interpolateHamiltonian.interpolateHamiltonianEE(
+        interHamilE, interHamilC = interpolateHamiltonian.interpolateHamiltonianEE(
             OB_bi = self.getOptimalBasis(),
-            kList = self.getKList(),
+            kList = self.getKListNEW(),
             k0 = self.getk0(),
             k1 = self.getk1(),
             VLoc = self.getVLoc(),
             N = self.getN_B()
         )
-        return interHamilEC
+        return interHamilE, interHamilC
 
     def differenceEigenvalues(self):
         differenceEk = Table.differenceInEigenvalues(

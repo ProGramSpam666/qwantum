@@ -24,6 +24,7 @@ def getOrder(sb, N_b, N_k, ck, potential, kList):
     nArray = np.array(listN)
     return nArray, timeArray
     
+    
 def getOrderPlot(N_b, N_k, ck, potential, kList):
     sbValues = np.linspace(0, 0.3, 20)
     for sb in sbValues:
