@@ -3,7 +3,6 @@ from quantum import optimalbasis
 from quantum.schrodinger import solveSchrodinger
 from quantum.optimalbasis import optimalBasisGetOBBI
 from quantum import potential as pt
-from testbasis import effectVaryingSbOnOptimalBasisExp
 import numpy as np
 from quantum.qobj import Qobj
 from quantum.interpolate import calculateVLoc
@@ -25,6 +24,16 @@ def getOB_bi():
     obbi = optimalBasisGetOBBI(0.001, 5, 100, ck)
     sizevalue = obbi.size
     return sizevalue
+
+
+
+
+
+
+
+
+
+
 
 
 

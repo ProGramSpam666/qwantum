@@ -5,7 +5,7 @@ import math
 
 """Function to obtain the Dielectric Function with respect to the Standard Basis
 Implementation approach"""
-def dielectricFunc( N_b, ek, damp, w, velocity, numberOccupied):
+def dielectricFunc(N_b, ek, damp, w, velocity, numberOccupied):
     N_k = velocity.shape[0]
     constant = 4/np.pi
     z = w + 1j*damp

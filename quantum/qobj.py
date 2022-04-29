@@ -1,3 +1,4 @@
+import numpy as np
 from numpy import ndarray
 import quantum.potential as pt
 import quantum.schrodinger as schrodinger
@@ -8,6 +9,8 @@ import quantum.velocityOp as velocityoperator
 import quantum.gettime as getTime
 import quantum.table as Table
 import quantum.plot as plot
+import quantum.dielectric as dielectric
+import quantum.dielectricplot as dielectricplot
 
 
 
@@ -15,13 +18,18 @@ import quantum.plot as plot
 class Qobj:
 
     # PRIVATE ATRRIBUTEs
-    __defaultPtParms = { "lattice" : 1, "depth" : 80, "width" :0.1} #lattice and potential paramaters
-    __defaultN_G = 10 #Number of plane waves in basis (fixed)
-    __defaultN_K = 500 #Number of k-points
-    __defaultN_KPrime = 25 #Number of k-points interpolated OB
-    __defaultN_B = 8 #Number of Bands to run over
-    __defaultSb =0.001#Threshold Parameter
-    __defaultPtType = "sech" #Potential function
+    __defaultPtParms = { "lattice" : 1, "depth" : 80, "width" :0.1}   #lattice and potential paramaters
+    __defaultN_G = 10   #Number of plane waves in basis (fixed)
+    __defaultN_K = 500   #Number of k-points
+    __defaultN_KPrime = 100   #Number of k-points interpolated OB
+    __defaultN_B = 8   #Number of Bands to run over
+    __defaultSb =0.001   #Threshold Parameter
+    __defaultPtType = "sech"   #Potential function
+    
+    __defaultDamp = 0.1
+    __defaultW = 10
+    __defaultNumberOccupied = 2
+    __defaultEnergyRange = np.linspace(0,180,200)
     
 
 
@@ -35,7 +43,12 @@ class Qobj:
             N_KPrime = self.get__defaultN_KPrime(),
             N_B = self.get__defaultN_B(),
             sb = self.get__defaultSb(),
-            ptType = self.get__defaultPtType()
+            ptType = self.get__defaultPtType(),
+            Damp = self.get__defaultDamp(),
+            W = self.get__defaultW(),
+            NumOcc = self.get__defaultNumberOccupied(),
+            energyRangeDielectric = self.get__defaultEnergyRange()
+
         )
     
 
@@ -61,7 +74,17 @@ class Qobj:
     def get__defaultPotentialDepth(self):
         return self.__defaultPtParms["depth"]
     def get__defaultPotentialWidth(self):
-        return self.__defaultPtParms["width"]           
+        return self.__defaultPtParms["width"] 
+    def get__defaultDamp(self):
+        return self.__defaultDamp   
+    def get__defaultW(self):
+        return self.__defaultW   
+    def get__defaultNumberOccupied(self):
+        return self.__defaultNumberOccupied    
+    def get__defaultEnergyRange(self):
+        return self.__defaultEnergyRange
+
+
     def getPtParms(self):
         return self.__parms["ptParms"]
     def getN_G(self):
@@ -81,7 +104,17 @@ class Qobj:
     def getPotentialDepth(self):
         return self.getPtParms()["depth"] 
     def getPotentialWidth(self):
-        return self.getPtParms()["width"]           
+        return self.getPtParms()["width"] 
+    def getDamp(self):
+        return self.__parms["Damp"]
+    def getW(self):
+        return self.__parms["W"]  
+    def getNumberOccupied(self):
+        return self.__parms["NumOcc"]    
+    def getEnergyRange(self):
+        return self.__parms["energyRangeDielectric"]    
+
+
     def getPotential(self):
         return self.__potential
     def getEk(self):
@@ -122,6 +155,19 @@ class Qobj:
         return self.__interpolatedVel
     def getParms(self):
         return self.__parms
+    def getStandardDielectric(self):
+        return self.standardDielectricFunction() 
+    def getOptimalDielectric(self):
+        return self.optimalDielectricFunction()
+    def getStandardImaginaryDielectricPlot(self):
+        return self.standardImaginaryDielectricPlot
+    def getStandardRealDielectricPlot(self):
+        return
+    def getOptimalImaginaryDielectricPlot(self):
+        return
+    def getOptimalRealDielectricPlot(self):
+        return 
+
 
 
 
@@ -144,12 +190,24 @@ class Qobj:
         self.__parms["N_B"] = N_B
     def __setSb(self, sb):
         self.__parms["sb"] = sb
+    def __setDamp(self, Damp):
+        self.__parms["Damp"] = Damp  
+    def __setW(self, W):
+        self.__parms["W"] = W
+    def __setNumOcc(self, NumOcc):
+        self.__parms["NumOcc"] = NumOcc
+    def __setenergyRangeDielectric(self, energyRangeDielectric):
+        self.__parms["energyRangeDielectric"] = energyRangeDielectric
+
+
     def __setPtType(self, ptType):
         typeList = ["sech"]
         if ptType not in typeList:
             raise TypeError("type not in typeList")
         else:
             self.__parms["ptType"] = ptType
+    
+
     def __setOptimalBasis(self):
         self.__OB = self.optimalBasis()
     def __setKList(self):
@@ -196,9 +254,23 @@ class Qobj:
             if arg == "sb":
                 sb = kwargs.get("sb")
                 self.__setSb(sb)
+            if arg == "Damp":
+                Damp = kwargs.get("Damp")
+                self.__setDamp(Damp) 
+            if arg == "W":
+                W = kwargs.get("W")
+                self.__setW(W)   
+            if arg == "NumOcc":
+                NumOcc = kwargs.get("NumOcc")
+                self.__setNumOcc(NumOcc)
+            if arg == "energyRangeDielectric":
+                energyRangeDielectric = kwargs.get("energyRange")
+                self.__setenergyRangeDielectric(energyRangeDielectric)    
             if arg == "ptType":
                 ptType = kwargs.get("ptType")
-                self.__setPtType(ptType)
+                self.__setPtType(ptType)    
+
+
         self.__setPotential()
         self.__setEkAndCk()
         self.__setOptimalBasis()
@@ -383,6 +455,84 @@ class Qobj:
             potential=self.getPotential()
         )
         return bands
+
+
+    def standardDielectricFunction(self):
+        dielectricFun = dielectric.dielectricFunc(
+            N_b = self.getN_B(),
+            ek = self.getEk(),
+            damp = self.getDamp(),
+            w = self.getW(),
+            velocity = self.getStandardVelocityOperator(),
+            numberOccupied = self.getNumberOccupied()
+        )    
+        return dielectricFun
+
+
+    def optimalDielectricFunction(self):
+        dielectricFun = dielectric.dielectricFunc(
+            N_b = self.getN_B(),
+            ek = self.getOBek(),
+            damp = self.getDamp(),
+            w = self.getW(),
+            velocity = self.getInterpolatedVelocityOperator(),
+            numberOccupied = self.getNumberOccupied()
+        )    
+        return dielectricFun
+
+
+    def standardImaginaryDielectricPlot(self):
+        dielectricP = dielectricplot.dielectricPlotImaginaryArray(
+            N_b = self.getN_B(),
+            ek = self.getEk(),
+            damp = self.getDamp(),
+            energyRange = self.getEnergyRange(),
+            velocity = self.getStandardVelocityOperator(),
+            numberOccupied = self.getNumberOccupied()
+        )
+        return dielectricP
+
+
+    def optimalImaginaryDielectricPlot(self):
+        dielectricP = dielectricplot.dielectricPlotImaginaryArray(
+            N_b = self.getN_B(),
+            ek = self.getOBek(),
+            damp = self.getDamp(),
+            energyRange = self.getEnergyRange(),
+            velocity = self.getInterpolatedVelocityOperator(),
+            numberOccupied = self.getNumberOccupied()
+        )
+        return dielectricP
+
+
+    def standardRealDielectricPlot(self):
+        dielectricP = dielectricplot.dielectricPlotRealArray(
+            N_b = self.getN_B(),
+            ek = self.getEk(),
+            damp = self.getDamp(),
+            energyRange = self.getEnergyRange(),
+            velocity = self.getStandardVelocityOperator(),
+            numberOccupied = self.getNumberOccupied()
+        )
+        return dielectricP
+
+
+    def optimalRealDielectricPlot(self):
+        dielectricP = dielectricplot.dielectricPlotRealArray(
+            N_b = self.getN_B(),
+            ek = self.getOBek(),
+            damp = self.getDamp(),
+            energyRange = self.getEnergyRange(),
+            velocity = self.getInterpolatedVelocityOperator(),
+            numberOccupied = self.getNumberOccupied()
+        )
+        return dielectricP
+
+
+
+
+
+
 
 
 

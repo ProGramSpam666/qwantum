@@ -81,6 +81,43 @@ class QobjManager:
         plt.savefig("pltDataBands.png")
         plt.show()
 
+    def plotStandardImaginaryDielectric(self):
+        wlist = list()
+        qobjList = self.getQobjList()
+        for qobj in qobjList:
+            wlist.append(qobj.standardImaginaryDielectricPlot())
+        return wlist    
+
+    def plotOptimalImaginaryDielectric(self):
+        wlist = list()
+        qobjList = self.getQobjList()
+        for qobj in qobjList:
+            wlist.append(qobj.optimalImaginaryDielectricPlot())
+        return wlist
+
+    def plotStandardOptimalDielectricFunction(self):
+        standardImaginaryDielectricList: list = self.plotStandardImaginaryDielectric()
+        optimalImaginaryDielectricList: list = self.plotOptimalImaginaryDielectric()
+        for plotStandardImaginaryDielectric in standardImaginaryDielectricList:
+            for wlist in plotStandardImaginaryDielectric:
+                plt.plot(wlist[0], wlist[1], "r")
+        for plotOptimalImaginaryDielectric in optimalImaginaryDielectricList:
+            for wlist in plotOptimalImaginaryDielectric:
+                plt.plot(wlist[0], wlist[1], "b")
+        plt.show()        
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @staticmethod
     def plotTimeDiffAgaistSb(qobjList: list[Qobj])->None:
@@ -101,6 +138,11 @@ class QobjManager:
     def plotSbAgainstOptimalBasisSize(self)->None:
         qobjList = self.getQobjList()
         qplt.plotSbAgainstOptimalBasisSize(qobjList)
+
+
+
+
+
         
 
 

@@ -12,11 +12,12 @@ def testDielectricFunc():
     numberOccupied = 1
     N_b = qobj.getN_B()
     ek = qobj.getEk()
-    w = 10 + 1j*0.001
+    damp = 0.001
+    w = 10 + 1j*damp
     potential = qobj.getPotential()
     ck = qobj.getCk()
     stanvel = standardVelocity(potential, ck)
-    result = dielectricFunc( N_b, ek, w, stanvel, numberOccupied )
+    result = dielectricFunc( N_b, ek, damp, w, stanvel, numberOccupied )
     print("-------Standard Dielectric Function----------")
     return result
 print(testDielectricFunc())
