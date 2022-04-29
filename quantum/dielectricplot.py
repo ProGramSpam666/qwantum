@@ -3,6 +3,9 @@ from quantum.dielectric import dielectricFunc
 import matplotlib.pyplot as plt
 
 
+
+"""Function to obtain the relevant plot of the Imaginary part of the Dielectric Function
+vs Energy"""
 def dielectricPlotImaginary(N_b, ek, damp, energyRange, velocity, numberOccupied):
     wlist  = [] 
     for w in energyRange:
@@ -52,6 +55,17 @@ def dielectricPlotRealArray(N_b, ek, damp, energyRange, velocity, numberOccupied
     result = np.array(energyRange, wlist)
     plotting = np.asarray(result)
     return plotting        
+
+
+
+
+
+
+
+
+
+
+
 
 
 

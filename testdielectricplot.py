@@ -20,7 +20,7 @@ def testStandardDielectricPlotImaginary():
     stanvel = standardVelocity(potential, ck)
     dielectricPlotImaginary(N_b, ek, damp, energyRange, stanvel, numberOccupied)
     return 
-print(testStandardDielectricPlotImaginary())
+#print(testStandardDielectricPlotImaginary())
 
 
 
@@ -51,7 +51,7 @@ def testOptimalDielectricPlotImaginary():
     velocity = interpolatedVelocity(potential, OBck, k1)
     dielectricPlotImaginary(N_b, E, damp, energyRange, velocity, numberOccupied)
     return 
-#print(testOptimalDielectricPlotImaginary())  
+print(testOptimalDielectricPlotImaginary())  
 
 
 
