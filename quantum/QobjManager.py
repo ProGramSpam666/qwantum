@@ -100,10 +100,10 @@ class QobjManager:
         optimalImaginaryDielectricList: list = self.plotOptimalImaginaryDielectric()
         for plotStandardImaginaryDielectric in standardImaginaryDielectricList:
             for wlist in plotStandardImaginaryDielectric:
-                plt.plot(wlist[0], wlist[1], "r")
+                plt.plot(wlist[0], "r")
         for plotOptimalImaginaryDielectric in optimalImaginaryDielectricList:
             for wlist in plotOptimalImaginaryDielectric:
-                plt.plot(wlist[0], wlist[1], "b")
+                plt.plot(wlist[0], "b")
         plt.show()        
 
 

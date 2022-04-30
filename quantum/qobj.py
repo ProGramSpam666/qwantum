@@ -1,4 +1,3 @@
-import numpy as np
 from numpy import ndarray
 import quantum.potential as pt
 import quantum.schrodinger as schrodinger
@@ -30,9 +29,9 @@ class Qobj:
     __defaultDamp = 0.1   #
     __defaultW = 10   #
     __defaultNumberOccupied = 2   #
-    __defaultBottomEnergy = 0   #EnergyRangeParameter - 
-    __defaultEnergyOfTopBand = 175   #EnergyRangeParamater - 
-    __defaultNumSample = 200   #EnergyRangeParameter - 
+    __defaultBottomEnergy = 0   #EnergyRangeParameter - bottom energy of Band Structure (relevant for Dielectric)
+    __defaultEnergyOfTopBand = 175   #EnergyRangeParamater - Energy of Top Band being run over (relevant for Dielectric)
+    __defaultNumSample = 200   #EnergyRangeParameter - Number of points to be discretized in sample (relevant for Dielectric)
     
 
 
