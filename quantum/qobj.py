@@ -18,6 +18,7 @@ import quantum.dielectricplot as dielectricplot
 class Qobj:
 
     # PRIVATE ATRRIBUTEs
+
     __defaultPtParms = { "lattice" : 1, "depth" : 80, "width" :0.1}   #lattice and potential paramaters
     __defaultN_G = 10   #Number of plane waves in basis (fixed)
     __defaultN_K = 500   #Number of k-points
@@ -26,10 +27,12 @@ class Qobj:
     __defaultSb =0.001   #Threshold Parameter
     __defaultPtType = "sech"   #Potential function
     
-    __defaultDamp = 0.1
-    __defaultW = 10
-    __defaultNumberOccupied = 2
-    __defaultEnergyRange = np.linspace(0,180,200)
+    __defaultDamp = 0.1   #
+    __defaultW = 10   #
+    __defaultNumberOccupied = 2   #
+    __defaultBottomEnergy = 0   #EnergyRangeParameter - 
+    __defaultEnergyOfTopBand = 175   #EnergyRangeParamater - 
+    __defaultNumSample = 200   #EnergyRangeParameter - 
     
 
 
@@ -47,7 +50,9 @@ class Qobj:
             Damp = self.get__defaultDamp(),
             W = self.get__defaultW(),
             NumOcc = self.get__defaultNumberOccupied(),
-            energyRangeDielectric = self.get__defaultEnergyRange()
+            BottomEnergy = self.get__defaultBottomEnergy(),
+            EnergyOfTopBand = self.get__defaultEnergyOfTopBand(),
+            NumSample = self.get__defaultNumSample()
 
         )
     
@@ -81,8 +86,12 @@ class Qobj:
         return self.__defaultW   
     def get__defaultNumberOccupied(self):
         return self.__defaultNumberOccupied    
-    def get__defaultEnergyRange(self):
-        return self.__defaultEnergyRange
+    def get__defaultBottomEnergy(self):
+        return self.__defaultBottomEnergy
+    def get__defaultEnergyOfTopBand(self):
+        return self.__defaultEnergyOfTopBand
+    def get__defaultNumSample(self):
+        return self.__defaultNumSample    
 
 
     def getPtParms(self):
@@ -110,9 +119,13 @@ class Qobj:
     def getW(self):
         return self.__parms["W"]  
     def getNumberOccupied(self):
-        return self.__parms["NumOcc"]    
-    def getEnergyRange(self):
-        return self.__parms["energyRangeDielectric"]    
+        return self.__parms["NumOcc"]        
+    def getBottomEnergy(self):
+        return self.__parms["BottomEnergy"]
+    def getEnergyOfTopBand(self):
+        return self.__parms["EnergyOfTopBand"]  
+    def getNumSample(self):
+        return self.__parms["NumSample"]    
 
 
     def getPotential(self):
@@ -159,6 +172,11 @@ class Qobj:
         return self.standardDielectricFunction() 
     def getOptimalDielectric(self):
         return self.optimalDielectricFunction()
+    def getEnergyRangeFunc(self):
+        return self.__energyRangeFunc
+
+
+
     def getStandardImaginaryDielectricPlot(self):
         return self.standardImaginaryDielectricPlot
     def getStandardRealDielectricPlot(self):
@@ -167,10 +185,6 @@ class Qobj:
         return
     def getOptimalRealDielectricPlot(self):
         return 
-
-
-
-
 
 
 
@@ -196,8 +210,12 @@ class Qobj:
         self.__parms["W"] = W
     def __setNumOcc(self, NumOcc):
         self.__parms["NumOcc"] = NumOcc
-    def __setenergyRangeDielectric(self, energyRangeDielectric):
-        self.__parms["energyRangeDielectric"] = energyRangeDielectric
+    def __setBottomEnergy(self, BottomEnergy):
+        self.__parms["BottomEnergy"] = BottomEnergy
+    def __setEnergyOfTopBand(self, EnergyOfTopBand):
+        self.__parms["EnergyOfTopBand"] = EnergyOfTopBand  
+    def __setNumSample(self, NumSample):
+        self.__parms["NumSample"] = NumSample      
 
 
     def __setPtType(self, ptType):
@@ -214,6 +232,8 @@ class Qobj:
         self.__klist = self.kList()
     def __setKListNEW(self):
         self.__klistNEW= self.kListNEW()
+    def __setEnergyRangeFunc(self):
+        self.__energyRangeFunc = self.energyRangeFunc()    
     def __setPotential(self):
         self.__potential = self.generatePotential(self.getPtType())
     def __setK0(self):
@@ -262,10 +282,16 @@ class Qobj:
                 self.__setW(W)   
             if arg == "NumOcc":
                 NumOcc = kwargs.get("NumOcc")
-                self.__setNumOcc(NumOcc)
-            if arg == "energyRangeDielectric":
-                energyRangeDielectric = kwargs.get("energyRange")
-                self.__setenergyRangeDielectric(energyRangeDielectric)    
+                self.__setNumOcc(NumOcc)  
+            if arg == "BottomEnergy":
+                BottomEnergy = kwargs.get("BottomEnergy")
+                self.__setBottomEnergy(BottomEnergy)      
+            if arg == "EnergyOfTopBand":
+                EnergyOfTopBand = kwargs.get("EnergyOfTopBand")
+                self.__setEnergyOfTopBand(EnergyOfTopBand)
+            if arg == "NumSample":
+                NumSample = kwargs.get("NumSample")
+                self.__setNumSample(NumSample)    
             if arg == "ptType":
                 ptType = kwargs.get("ptType")
                 self.__setPtType(ptType)    
@@ -282,6 +308,7 @@ class Qobj:
         self.__setOBekAndOBck()
         self.__setStandardVelocity()
         self.__setInterpolatedVelocity()
+        self.__setEnergyRangeFunc()
         
         
 
@@ -354,7 +381,15 @@ class Qobj:
             potential = self.getPotential()
         )
         return klistNEW   
-        
+
+    def energyRangeFunc(self):
+        energyRange = utils.energyRangeFunc(
+            bottomEnergy = self.getBottomEnergy(),
+            energyOfTopBand = self.getEnergyOfTopBand(),
+            numSample = self.getNumSample()
+        )  
+        return energyRange
+
     def interpolateHamiltonian(self):
         interHamil = interpolateHamiltonian.interpolateHamiltonian(
             OB_bi = self.getOptimalBasis(),
@@ -423,14 +458,14 @@ class Qobj:
         )
         return differenceTime
 
-    def standardVelocityOperator(self): #SKETCH - FIX
+    def standardVelocityOperator(self):   #CHECK
         standardVel = velocityoperator.standardVelocity(
             potential = self.getPotential(),
             ck = self.getCk()
         )
         return standardVel
 
-    def interpolatedVelocityOperator(self): #SKETCH - FIX
+    def interpolatedVelocityOperator(self):   #CHECK
         interpolatedVel = velocityoperator.interpolatedVelocity(
             potential = self.getPotential(),
             OBck = self.getOBck(),
@@ -481,12 +516,14 @@ class Qobj:
         return dielectricFun
 
 
+
+
     def standardImaginaryDielectricPlot(self):
         dielectricP = dielectricplot.dielectricPlotImaginaryArray(
             N_b = self.getN_B(),
             ek = self.getEk(),
             damp = self.getDamp(),
-            energyRange = self.getEnergyRange(),
+            energyRange = self.getEnergyRangeFunc(),
             velocity = self.getStandardVelocityOperator(),
             numberOccupied = self.getNumberOccupied()
         )
@@ -498,7 +535,7 @@ class Qobj:
             N_b = self.getN_B(),
             ek = self.getOBek(),
             damp = self.getDamp(),
-            energyRange = self.getEnergyRange(),
+            energyRange = self.getEnergyRangeFunc(),
             velocity = self.getInterpolatedVelocityOperator(),
             numberOccupied = self.getNumberOccupied()
         )
@@ -510,7 +547,7 @@ class Qobj:
             N_b = self.getN_B(),
             ek = self.getEk(),
             damp = self.getDamp(),
-            energyRange = self.getEnergyRange(),
+            energyRange = self.getEnergyRangeFunc(),
             velocity = self.getStandardVelocityOperator(),
             numberOccupied = self.getNumberOccupied()
         )
@@ -522,7 +559,7 @@ class Qobj:
             N_b = self.getN_B(),
             ek = self.getOBek(),
             damp = self.getDamp(),
-            energyRange = self.getEnergyRange(),
+            energyRange = self.getEnergyRangeFunc(),
             velocity = self.getInterpolatedVelocityOperator(),
             numberOccupied = self.getNumberOccupied()
         )

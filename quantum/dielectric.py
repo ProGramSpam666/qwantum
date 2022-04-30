@@ -2,7 +2,6 @@ import numpy as np
 import math
 
 
-
 """Function to obtain the Dielectric Function with respect to the Standard Basis
 Implementation approach"""
 def dielectricFunc(N_b, ek, damp, w, velocity, numberOccupied):

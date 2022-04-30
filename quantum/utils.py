@@ -107,5 +107,13 @@ def timerFloat(func):
     return wrap_func
 
 
+
+def energyRangeFunc(bottomEnergy, energyOfTopBand, numSample):
+    result = np.linspace(bottomEnergy, energyOfTopBand, numSample)
+    return result
+
+
+
+
     
 

@@ -1,74 +1,103 @@
 import numpy as np
-from quantum.dielectricplot import dielectricPlotImaginary
+from quantum.dielectricplot import dielectricPlotImaginary, dielectricPlotImaginaryArray, dielectricPlotRealArray
 from quantum.dielectricplot import dielectricPlotReal
+from quantum.utils import timerPrint
 from quantum.velocityOp import standardVelocity, interpolatedVelocity
 from quantum.dielectric import dielectricFunc
+import matplotlib.pyplot as plt
 from quantum.qobj import Qobj
 
 
 qobj = Qobj()
 
 
+
+
+
+#STANDARD DIELECTRIC FUNCTION PLOT USING STANDARD BASIS IMPLEMENTATION
+
+@timerPrint
 def testStandardDielectricPlotImaginary():
-    numberOccupied = 2
+    numberOccupied = qobj.getNumberOccupied()
     N_b = qobj.getN_B()
-    energyRange = np.linspace(0,180,200)
-    potential = qobj.getPotential()
-    ck = qobj.getCk()
+    energyRange = qobj.getEnergyRangeFunc()
     ek = qobj.getEk()
-    damp = 0.1
-    stanvel = standardVelocity(potential, ck)
-    dielectricPlotImaginary(N_b, ek, damp, energyRange, stanvel, numberOccupied)
+    damp = qobj.getDamp()
+    stanvel = qobj.getStandardVelocityOperator()
+    wlist = dielectricPlotImaginaryArray(N_b, ek, damp, energyRange, stanvel, numberOccupied)
+    plt.xlabel("Energy")
+    plt.ylabel("Imaginary part of Dielectric Function")
+    plt.title("Complex Dielectric Function with Standard Basis")
+    plt.plot(energyRange, wlist, 'b')
+    plt.show()  
     return 
 #print(testStandardDielectricPlotImaginary())
 
-
-
+@timerPrint
 def testStandardDielectricPlotReal():
-    numberOccupied = 2
+    numberOccupied = qobj.getNumberOccupied()
     N_b = qobj.getN_B()
-    energyRange = np.linspace(0,180,200)
-    potential = qobj.getPotential()
-    ck = qobj.getCk()
+    energyRange = qobj.getEnergyRangeFunc()
     ek = qobj.getEk()
-    damp = 0.1
-    stanvel = standardVelocity(potential, ck)
-    dielectricPlotReal(N_b, ek, damp, energyRange, stanvel, numberOccupied)
+    damp = qobj.getDamp()
+    stanvel = qobj.getStandardVelocityOperator()
+    wlist = dielectricPlotRealArray(N_b, ek, damp, energyRange, stanvel, numberOccupied)
+    plt.xlabel("Energy")
+    plt.ylabel("Real part of Dielectric Function")
+    plt.title("Real Dielectric Function with Standard Basis")
+    plt.plot(energyRange, wlist, 'r')
+    plt.show() 
     return
 #print(testStandardDielectricPlotReal())
 
 
 
 
+
+
+
+
+#OPTIMAL DIELECTRIC FUNCTION USING OPTIMAL BASIS IMPLEMENTATION
+
+@timerPrint
 def testOptimalDielectricPlotImaginary():
-    numberOccupied = 2
+    numberOccupied = qobj.getNumberOccupied()
     N_b = qobj.getN_B()
-    energyRange = np.linspace(0,180,200)
-    potential = qobj.getPotential()
-    k1 = qobj.getk1()
+    energyRange = qobj.getEnergyRangeFunc()
     E, OBck = qobj.getInterpolateHamiltonianEE()
-    damp = 0.1
-    velocity = interpolatedVelocity(potential, OBck, k1)
-    dielectricPlotImaginary(N_b, E, damp, energyRange, velocity, numberOccupied)
+    del OBck
+    damp = qobj.getDamp()
+    velocity = qobj.getInterpolatedVelocityOperator()
+    wlist = dielectricPlotImaginaryArray(N_b, E, damp, energyRange, velocity, numberOccupied)
+    plt.xlabel("Energy")
+    plt.ylabel("Imaginary part of Dielectric Function")
+    plt.title("Complex Dielectric Function with Optimal Basis")
+    plt.plot(energyRange, wlist, 'b')
+    plt.show() 
     return 
-print(testOptimalDielectricPlotImaginary())  
+#print(testOptimalDielectricPlotImaginary())  
 
-
-
-
-
+@timerPrint
 def testOptimalDielectricPlotReal():
-    numberOccupied = 2
+    numberOccupied = qobj.getNumberOccupied()
     N_b = qobj.getN_B()
-    energyRange = np.linspace(0,180,200)
-    potential = qobj.getPotential()
-    k1 = qobj.getk1()
+    energyRange = qobj.getEnergyRangeFunc()
     E, OBck = qobj.getInterpolateHamiltonianEE()
-    damp = 0.1
-    velocity = interpolatedVelocity(potential, OBck, k1)
-    dielectricPlotReal(N_b, E, damp, energyRange, velocity, numberOccupied)
+    del OBck
+    damp = qobj.getDamp()
+    velocity = qobj.getInterpolatedVelocityOperator()
+    wlist = dielectricPlotRealArray(N_b, E, damp, energyRange, velocity, numberOccupied)
+    plt.xlabel("Energy")
+    plt.ylabel("Real part of Dielectric Function")
+    plt.title("Real Dielectric Function with Optimal Basis")
+    plt.plot(energyRange, wlist, 'r')
+    plt.show() 
     return 
-#print(testOptimalDielectricPlotReal())
+print(testOptimalDielectricPlotReal())
+
+
+
+
 
 
 
