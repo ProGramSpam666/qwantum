@@ -22,6 +22,8 @@ def testBandsTogether():
 def testImaginaryDielectricComparison():
     manager.addQobj(qobj1)
     manager.addQobj(qobj2)
+    qobj1.setParms(sb = 0.1)
+    qobj2.setParms(sb = 0.001)
     manager.plotStandardOptimalDielectricFunction()
     return 
 print(testImaginaryDielectricComparison())

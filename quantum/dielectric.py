@@ -1,5 +1,4 @@
 import numpy as np
-import math
 
 
 """Function to obtain the Dielectric Function with respect to the Standard Basis
@@ -12,7 +11,7 @@ def dielectricFunc(N_b, ek, damp, w, velocity, numberOccupied):
     for k in range(N_k):
         for n in range(numberOccupied):
             for nprime in range(numberOccupied +1, N_b):
-                frac1 = velocity[k, n, nprime]*np.conjugate(velocity[k, n, nprime]) / (ek[k, nprime] - ek[k, n])**2
+                frac1 = velocity[k, n, nprime]*np.conjugate(velocity[k, n, nprime])/(ek[k, nprime] - ek[k, n])**2
                 frac2 =  1 / (z - (ek[k, nprime] - ek[k, n]))
                 sum += frac1*frac2
     return 1 - constant*sum

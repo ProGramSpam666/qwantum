@@ -31,7 +31,7 @@ def testStandardDielectricPlotImaginary():
     plt.plot(energyRange, wlist, 'b')
     plt.show()  
     return 
-#print(testStandardDielectricPlotImaginary())
+print(testStandardDielectricPlotImaginary())
 
 @timerPrint
 def testStandardDielectricPlotReal():
@@ -48,7 +48,7 @@ def testStandardDielectricPlotReal():
     plt.plot(energyRange, wlist, 'r')
     plt.show() 
     return
-#print(testStandardDielectricPlotReal())
+print(testStandardDielectricPlotReal())
 
 
 
@@ -75,7 +75,7 @@ def testOptimalDielectricPlotImaginary():
     plt.plot(energyRange, wlist, 'b')
     plt.show() 
     return 
-#print(testOptimalDielectricPlotImaginary())  
+print(testOptimalDielectricPlotImaginary())  
 
 @timerPrint
 def testOptimalDielectricPlotReal():

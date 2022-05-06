@@ -57,8 +57,8 @@ def calculateVLoc(OB_bi, potential):
     vloc = np.zeros((Nbasis, Nbasis), dtype=np.complex_)
     for i in range(Nbasis):
         for j in range(Nbasis):    
-            for m in range(0, Ng): #m for G
-                for n in range(0, Ng): #n for G'
+            for m in range(0, Ng):
+                for n in range(0, Ng):
                     vloc[i, j] += np.conjugate(OB_bi[m, i])*OB_bi[n, j]*potential.ft(m-n)
     return vloc
 
@@ -112,6 +112,9 @@ def interpolateHamiltonianEE(OB_bi, kList, k0, k1, VLoc, N):
         C[ik, 0:N, 0:Nbasis] = ck2[0:N, 0:Nbasis]
         ik +=1
     return E, C
+
+
+
 
 
 

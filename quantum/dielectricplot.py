@@ -38,6 +38,7 @@ def dielectricPlotImaginaryArray(N_b, ek, damp, energyRange, velocity, numberOcc
 
 #REAL DIELECTRIC FUNCTION
 
+
 """Function to obtain the relevant plot of the Real part of the Dielectric Function
 vs Energy"""
 def dielectricPlotReal(N_b, ek, damp, energyRange, velocity, numberOccupied):
@@ -63,16 +64,7 @@ def dielectricPlotRealArray(N_b, ek, damp, energyRange, velocity, numberOccupied
 
 
 
-
-
-
-
-
-
-
-
-
-
+#COMBINING PLOTS - STANDARD BASIS
 
 
 

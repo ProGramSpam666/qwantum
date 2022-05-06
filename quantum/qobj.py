@@ -12,26 +12,24 @@ import quantum.dielectric as dielectric
 import quantum.dielectricplot as dielectricplot
 
 
-
-
 class Qobj:
 
     # PRIVATE ATRRIBUTEs
 
-    __defaultPtParms = { "lattice" : 1, "depth" : 80, "width" :0.1}   #lattice and potential paramaters
-    __defaultN_G = 10   #Number of plane waves in basis (fixed)
+    __defaultPtParms = { "lattice" : 2, "depth" : 10, "width" :0.1}   #lattice and potential paramaters
+    __defaultN_G = 10   #Number of plane waves in basis (fixed for given precision)
     __defaultN_K = 500   #Number of k-points
     __defaultN_KPrime = 100   #Number of k-points interpolated OB
     __defaultN_B = 8   #Number of Bands to run over
-    __defaultSb =0.001   #Threshold Parameter
+    __defaultSb =0.8   #Threshold Parameter
     __defaultPtType = "sech"   #Potential function
     
-    __defaultDamp = 0.1   #
-    __defaultW = 10   #
-    __defaultNumberOccupied = 2   #
-    __defaultBottomEnergy = 0   #EnergyRangeParameter - bottom energy of Band Structure (relevant for Dielectric)
-    __defaultEnergyOfTopBand = 175   #EnergyRangeParamater - Energy of Top Band being run over (relevant for Dielectric)
-    __defaultNumSample = 200   #EnergyRangeParameter - Number of points to be discretized in sample (relevant for Dielectric)
+    __defaultDamp = 10   #relevant damping of such frequency regarding incident beam (relevant for Dielectric Plot)
+    __defaultW = 10   #relevant frequency being considered for incident beam (relevant for Dielectric Plot)
+    __defaultNumberOccupied = 2   #Fermi Distribution (relevant for Dielectric Plot)
+    __defaultBottomEnergy = 0   #EnergyRangeParameter - bottom energy of Band Structure (relevant for Dielectric Plot)
+    __defaultEnergyOfTopBand = 175   #EnergyRangeParamater - Energy of Top Band being run over (relevant for Dielectric Plot)
+    __defaultNumSample = 200   #EnergyRangeParameter - Number of points to be discretized in sample (relevant for Dielectric Plot)
     
 
 
@@ -167,6 +165,7 @@ class Qobj:
         return self.__interpolatedVel
     def getParms(self):
         return self.__parms
+
     def getStandardDielectric(self):
         return self.standardDielectricFunction() 
     def getOptimalDielectric(self):
@@ -174,16 +173,23 @@ class Qobj:
     def getEnergyRangeFunc(self):
         return self.__energyRangeFunc
 
-
-
     def getStandardImaginaryDielectricPlot(self):
-        return self.standardImaginaryDielectricPlot
+        return self.standardImaginaryDielectricPlot()
     def getStandardRealDielectricPlot(self):
-        return
+        return self.standardRealDielectricPlot()
     def getOptimalImaginaryDielectricPlot(self):
-        return
+        return self.optimalImaginaryDielectricPlot()
     def getOptimalRealDielectricPlot(self):
-        return 
+        return self.optimalRealDielectricPlot()
+
+    def getStandardImaginaryDielectricPlotArray(self):
+        return self.standardImaginaryDielectricPlotArray()
+    def getStandardRealDielectricPlotArray(self):
+        return self.standardRealDielectricPlotArray()
+    def getOptimalImaginaryDielectricPlotArray(self):
+        return self.optimalImaginaryDielectricPlotArray()
+    def getOptimalRealDielectricPlotArray(self):
+        return self.optimalRealDielectricPlotArray()
 
 
 
@@ -318,6 +324,8 @@ class Qobj:
 
 
     # METHODS
+
+
     def restoreDefaults(self):
         self.__init__()
 
@@ -515,10 +523,8 @@ class Qobj:
         return dielectricFun
 
 
-
-
     def standardImaginaryDielectricPlot(self):
-        dielectricP = dielectricplot.dielectricPlotImaginaryArray(
+        dielectricP = dielectricplot.dielectricPlotImaginary(
             N_b = self.getN_B(),
             ek = self.getEk(),
             damp = self.getDamp(),
@@ -530,7 +536,7 @@ class Qobj:
 
 
     def optimalImaginaryDielectricPlot(self):
-        dielectricP = dielectricplot.dielectricPlotImaginaryArray(
+        dielectricP = dielectricplot.dielectricPlotImaginary(
             N_b = self.getN_B(),
             ek = self.getOBek(),
             damp = self.getDamp(),
@@ -542,7 +548,7 @@ class Qobj:
 
 
     def standardRealDielectricPlot(self):
-        dielectricP = dielectricplot.dielectricPlotRealArray(
+        dielectricP = dielectricplot.dielectricPlotReal(
             N_b = self.getN_B(),
             ek = self.getEk(),
             damp = self.getDamp(),
@@ -554,7 +560,7 @@ class Qobj:
 
 
     def optimalRealDielectricPlot(self):
-        dielectricP = dielectricplot.dielectricPlotRealArray(
+        dielectricP = dielectricplot.dielectricPlotReal(
             N_b = self.getN_B(),
             ek = self.getOBek(),
             damp = self.getDamp(),
@@ -563,6 +569,62 @@ class Qobj:
             numberOccupied = self.getNumberOccupied()
         )
         return dielectricP
+
+
+
+    def standardImaginaryDielectricPlotArray(self):
+        dielectricP = dielectricplot.dielectricPlotImaginaryArray(
+            N_b = self.getN_B(),
+            ek = self.getEk(),
+            damp = self.getDamp(),
+            energyRange = self.getEnergyRangeFunc(),
+            velocity = self.getStandardVelocityOperator(),
+            numberOccupied = self.getNumberOccupied()
+        )
+        return dielectricP
+
+
+    def optimalImaginaryDielectricPlotArray(self):
+        dielectricP = dielectricplot.dielectricPlotImaginaryArray(
+            N_b = self.getN_B(),
+            ek = self.getOBek(),
+            damp = self.getDamp(),
+            energyRange = self.getEnergyRangeFunc(),
+            velocity = self.getInterpolatedVelocityOperator(),
+            numberOccupied = self.getNumberOccupied()
+        )
+        return dielectricP    
+
+
+    def standardRealDielectricPlotArray(self):
+        dielectricP = dielectricplot.dielectricPlotRealArray(
+            N_b = self.getN_B(),
+            ek = self.getEk(),
+            damp = self.getDamp(),
+            energyRange = self.getEnergyRangeFunc(),
+            velocity = self.getStandardVelocityOperator(),
+            numberOccupied = self.getNumberOccupied()
+        )
+        return dielectricP   
+
+
+    def optimalRealDielectricPlotArray(self):
+        dielectricP = dielectricplot.dielectricPlotRealArray(
+            N_b = self.getN_B(),
+            ek = self.getOBek(),
+            damp = self.getDamp(),
+            energyRange = self.getEnergyRangeFunc(),
+            velocity = self.getInterpolatedVelocityOperator(),
+            numberOccupied = self.getNumberOccupied()
+        )
+        return dielectricP     
+
+
+
+
+
+
+
 
 
 

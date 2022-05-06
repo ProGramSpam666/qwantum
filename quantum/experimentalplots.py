@@ -506,9 +506,3 @@ def differenceInCompVaryingKPoints(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N):
 
 
 
-
-
-
-
-
-

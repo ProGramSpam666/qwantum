@@ -108,6 +108,8 @@ def timerFloat(func):
 
 
 
+"""Function to obtain the energy range being considered for the relevant implementation
+of the dielectric plot being investigated"""
 def energyRangeFunc(bottomEnergy, energyOfTopBand, numSample):
     result = np.linspace(bottomEnergy, energyOfTopBand, numSample)
     return result
