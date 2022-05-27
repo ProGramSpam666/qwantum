@@ -6,7 +6,7 @@ from quantum.schrodinger import solveSchrodinger
 from quantum.optimalbasis import optimalBasis
 from quantum.table import differenceInVelocity
 from quantum import potential as pt
-from quantum.utils import kvec
+from quantum.utils import kvec, timerFloat, timerPrint
 
 
 
@@ -23,7 +23,7 @@ def testStandardVelocity():
     result = standardVelocity(potential, ck)
     print("---------Standard Velocity------")
     return result
-print(testStandardVelocity())
+#print(testStandardVelocity())
 
 
 
@@ -37,23 +37,22 @@ def testInterpolatedVelocity():
     result = interpolatedVelocity(potential, OBck, k1)
     print("---------Interpolated Velocity------")
     return result
-print(testInterpolatedVelocity())
-
-
-#TEST COMPARISON QUANTUM OBJECT APPROACH
+#print(testInterpolatedVelocity())
 
 
 
 
-"""FIX"""
+
+
+
 def testStanVelQ():
     result = qobj.getStandardVelocityOperator()
     print("--STANDARD Velocity--")
     return result
-#print(testStanVelQ)
+print(testStanVelQ())
 
 
-"""FIX"""
+@timerPrint
 def testInterVelQ():
     result = qobj.getInterpolatedVelocityOperator()
     print("--INTERPOALTED Velocity--")

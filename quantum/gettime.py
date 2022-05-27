@@ -8,6 +8,7 @@ from quantum.interpolate import interpolateHamiltonian, interpolateHamiltonianEE
 from quantum.optimalbasis import optimalBasis
 from quantum.interpolate import calculatek0, calculatek1, calculateVLoc
 from quantum.utils import kvec
+from quantum.dielectric import dielectricFunc
 import numpy as np
 import time
 
@@ -147,4 +148,36 @@ def differenceInTimeVaryingSb(N_b, N_k, ck, potential, kList):
 
 
 
+
+def timeStandardDielectric(N_b, ek, damp, w, velocity, numberOccupied):
+    starttime = time.time()
+    dielectricFunc(N_b, ek, damp, w, velocity, numberOccupied)
+    endtime = time.time()
+    timeElapsed = endtime - starttime
+    return timeElapsed
+
+
+
+
+def timeOptimalDielectric(N_b, OBek, damp, w, OBvelocity, numberOccupied):
+    starttime = time.time()
+    dielectricFunc(N_b, OBek, damp, w, OBvelocity, numberOccupied)
+    endtime = time.time()
+    timeElapsed = endtime - starttime
+    return timeElapsed
+
+
+
+
+def differenceTimeDielectric(N_b, ek, OBek, damp, w, velocity, OBvelocity, numberOccupied):
+    timeStandard = timeStandardDielectric(N_b, ek, damp, w, velocity, numberOccupied)
+    timeOptimal = timeOptimalDielectric(N_b, OBek, damp, w, OBvelocity, numberOccupied)
+    timeDifference = timeStandard - timeOptimal
+    return timeDifference
+
+
+
     
+
+
+

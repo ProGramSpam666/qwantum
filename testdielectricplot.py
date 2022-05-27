@@ -64,11 +64,12 @@ def testOptimalDielectricPlotImaginary():
     numberOccupied = qobj.getNumberOccupied()
     N_b = qobj.getN_B()
     energyRange = qobj.getEnergyRangeFunc()
+    OBek = qobj.getOBek()
     E, OBck = qobj.getInterpolateHamiltonianEE()
     del OBck
     damp = qobj.getDamp()
     velocity = qobj.getInterpolatedVelocityOperator()
-    wlist = dielectricPlotImaginaryArray(N_b, E, damp, energyRange, velocity, numberOccupied)
+    wlist = dielectricPlotImaginaryArray(N_b, OBek, damp, energyRange, velocity, numberOccupied)
     plt.xlabel("Energy")
     plt.ylabel("Imaginary part of Dielectric Function")
     plt.title("Complex Dielectric Function with Optimal Basis")
@@ -77,16 +78,18 @@ def testOptimalDielectricPlotImaginary():
     return 
 print(testOptimalDielectricPlotImaginary())  
 
+
 @timerPrint
 def testOptimalDielectricPlotReal():
     numberOccupied = qobj.getNumberOccupied()
     N_b = qobj.getN_B()
     energyRange = qobj.getEnergyRangeFunc()
+    OBek = qobj.getOBek()
     E, OBck = qobj.getInterpolateHamiltonianEE()
     del OBck
     damp = qobj.getDamp()
     velocity = qobj.getInterpolatedVelocityOperator()
-    wlist = dielectricPlotRealArray(N_b, E, damp, energyRange, velocity, numberOccupied)
+    wlist = dielectricPlotRealArray(N_b, OBek, damp, energyRange, velocity, numberOccupied)
     plt.xlabel("Energy")
     plt.ylabel("Real part of Dielectric Function")
     plt.title("Real Dielectric Function with Optimal Basis")

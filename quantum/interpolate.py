@@ -116,10 +116,3 @@ def interpolateHamiltonianEE(OB_bi, kList, k0, k1, VLoc, N):
 
 
 
-
-
-
-
-
-
-

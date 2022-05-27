@@ -1,12 +1,11 @@
 import numpy as np
 
 
-"""Function to obtain the Dielectric Function with respect to the Standard Basis
-Implementation approach"""
+"""Function to obtain the Dielectric Function of relevant material"""
 def dielectricFunc(N_b, ek, damp, w, velocity, numberOccupied):
     N_k = velocity.shape[0]
     constant = 4/np.pi
-    z = w + 1j*damp
+    z = w + (1j*damp)
     sum = 0
     for k in range(N_k):
         for n in range(numberOccupied):

@@ -101,18 +101,24 @@ class QobjManager:
             wlist.append(qobj.optimalImaginaryDielectricPlotArray())
         return wlist
 
+
+    
+
+
+
+
     def plotStandardOptimalDielectricFunction(self):
         qobjList = self.getQobjList()
         for qobj in qobjList:
             energy = qobj.getEnergyRangeFunc()
-        standardImaginaryDielectricList: list = self.plotStandardImaginaryDielectric()
-        optimalImaginaryDielectricList: list = self.plotOptimalImaginaryDielectric()
-        for plotStandardImaginaryDielectric in standardImaginaryDielectricList:
-            for wlist in plotStandardImaginaryDielectric:
-                plt.plot(energy, wlist,    "r")
-        for plotOptimalImaginaryDielectric in optimalImaginaryDielectricList:
-            for wlist in plotOptimalImaginaryDielectric:
-                plt.plot(energy, wlist, "b")
+            standardImaginaryDielectricList: list = self.plotStandardImaginaryDielectric()
+            optimalImaginaryDielectricList: list = self.plotOptimalImaginaryDielectric()
+            for plotStandardImaginaryDielectric in standardImaginaryDielectricList:
+                for wlist in plotStandardImaginaryDielectric:
+                    plt.plot(energy, wlist,    "r")
+            for plotOptimalImaginaryDielectric in optimalImaginaryDielectricList:
+                for wlist in plotOptimalImaginaryDielectric:
+                    plt.plot(energy, wlist, "b")
         plt.show()        
 
 

@@ -16,17 +16,18 @@ class Qobj:
 
     # PRIVATE ATRRIBUTEs
 
-    __defaultPtParms = { "lattice" : 2, "depth" : 10, "width" :0.1}   #lattice and potential paramaters
+    __defaultPtParms = { "lattice" :1, "depth" : 10, "width" :0.1}   #lattice and potential paramaters
     __defaultN_G = 10   #Number of plane waves in basis (fixed for given precision)
     __defaultN_K = 500   #Number of k-points
-    __defaultN_KPrime = 100   #Number of k-points interpolated OB
-    __defaultN_B = 8   #Number of Bands to run over
-    __defaultSb =0.8   #Threshold Parameter
+    __defaultN_KPrime = 200   #Number of k-points interpolated OB
+    __defaultN_B = 6   #Number of Bands to run over
+    __defaultSb =0.5   #Threshold Parameter
     __defaultPtType = "sech"   #Potential function
     
-    __defaultDamp = 10   #relevant damping of such frequency regarding incident beam (relevant for Dielectric Plot)
+
+    __defaultDamp = 0.1   #relevant damping of such frequency regarding incident beam (relevant for Dielectric Plot)
     __defaultW = 10   #relevant frequency being considered for incident beam (relevant for Dielectric Plot)
-    __defaultNumberOccupied = 2   #Fermi Distribution (relevant for Dielectric Plot)
+    __defaultNumberOccupied = 1   #Fermi Distribution (relevant for Dielectric Plot)
     __defaultBottomEnergy = 0   #EnergyRangeParameter - bottom energy of Band Structure (relevant for Dielectric Plot)
     __defaultEnergyOfTopBand = 175   #EnergyRangeParamater - Energy of Top Band being run over (relevant for Dielectric Plot)
     __defaultNumSample = 200   #EnergyRangeParameter - Number of points to be discretized in sample (relevant for Dielectric Plot)

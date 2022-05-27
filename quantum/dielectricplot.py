@@ -20,6 +20,8 @@ def dielectricPlotImaginary(N_b, ek, damp, energyRange, velocity, numberOccupied
     plt.show()    
     return 
 
+
+
 """Function to obtain the relevant array for the resulting plot of the Imaginary part
 of the Dielectric Function vs Energy"""
 def dielectricPlotImaginaryArray(N_b, ek, damp, energyRange, velocity, numberOccupied):
@@ -52,6 +54,8 @@ def dielectricPlotReal(N_b, ek, damp, energyRange, velocity, numberOccupied):
     plt.show()    
     return 
 
+
+
 """Function to obtain the relevant array for the plot of the Real part of the 
 Dielectric Function vs Energy"""
 def dielectricPlotRealArray(N_b, ek, damp, energyRange, velocity, numberOccupied):
@@ -61,12 +65,4 @@ def dielectricPlotRealArray(N_b, ek, damp, energyRange, velocity, numberOccupied
         wlist.append(res.real)  
     resultReal = np.asarray(wlist)
     return resultReal
-
-
-
-#COMBINING PLOTS - STANDARD BASIS
-
-
-
-
 

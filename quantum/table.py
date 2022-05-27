@@ -4,6 +4,8 @@ from quantum.optimalbasis import optimalBasis
 from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
 from quantum.utils import kvec
 from quantum.velocityOp import standardVelocity, interpolatedVelocity
+from quantum.dielectricplot import dielectricPlotImaginaryArray, dielectricPlotRealArray
+from quantum.dielectric import dielectricFunc
 
 
 """Function that obtains the relevant maximum differnence in Eigenvalues with respect 
@@ -38,6 +40,33 @@ def differenceInVelocity(ck, potential, OBck, k1):
     interVel = interpolatedVelocity(potential, OBck, k1)
     difference = stanVel - interVel - stanVel[0, 0, 0] + interVel[0, 0, 0]
     maxDifference = np.abs(difference).max() #Greatest magnitude
+    return maxDifference
+
+
+
+
+"""Function to obtain the maximum difference in values obtained for the complex
+dielectric function with respect to the standard basis compared to the complex dielectric
+function with respect to the optimal basis.  The maximum difference is returned as this
+gives an indication of the greatest possible error when the given input paramters are tested"""
+def differenceInDielectricPlotImaginary(N_b,ek,OBek,damp,energyRange,stanVelocity,optimVelocity,numberOccupied):
+    standard = dielectricPlotImaginaryArray(N_b, ek, damp, energyRange, stanVelocity, numberOccupied)
+    optimal = dielectricPlotImaginaryArray(N_b, OBek, damp, energyRange, optimVelocity, numberOccupied)
+    difference = standard - optimal - standard[0] + optimal[0]
+    maxDifference = np.amax(difference)
+    return maxDifference
+
+
+
+"""Function to obtain the maximum difference in values obtained for the real
+dielectric function with respect to the standard basis compared to the real dielectric
+function with respect to the optimal basis.  The maximum difference is returned as this
+gives an indication of the greatest possible error when the given input parameters are tested"""
+def differenceInDielectricPlotReal(N_b,ek,OBek,damp,energyRange,stanVelocity,optimVelocity,numberOccupied):
+    standard = dielectricPlotRealArray(N_b, ek, damp, energyRange, stanVelocity, numberOccupied)
+    optimal = dielectricPlotRealArray(N_b, OBek, damp, energyRange, optimVelocity, numberOccupied)
+    difference = standard - optimal - standard[0] + optimal[0]
+    maxDifference = np.amax(difference)
     return maxDifference
 
 

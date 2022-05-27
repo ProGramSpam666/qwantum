@@ -15,7 +15,7 @@ def testBandsTogether():
     qobj2.setParms(N_B = 6)
     manager.plotDataBands()
     return 
-#print(testBandsTogether())
+print(testBandsTogether())
 
 
 
@@ -26,7 +26,7 @@ def testImaginaryDielectricComparison():
     qobj2.setParms(sb = 0.001)
     manager.plotStandardOptimalDielectricFunction()
     return 
-print(testImaginaryDielectricComparison())
+#print(testImaginaryDielectricComparison())
 
 
 

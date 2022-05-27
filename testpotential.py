@@ -11,6 +11,11 @@ ptparms = { "lattice" : 2, "depth" : 0.2, "width" : 0.1 }
 ptl = pf.createPotential("sech", ptparms)
 x, U = ptl.v(2, 2000)
 plt.plot(x,U)
+plt.xlabel("Length of Lattice")
+plt.ylabel("Potential Depth")
+
+
+
 Ur=np.zeros(len(x))
 a = ptl.parms["lattice"]
 for m in range(-5,5): 

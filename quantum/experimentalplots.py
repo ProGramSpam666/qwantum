@@ -6,10 +6,11 @@
 import numpy as np
 from quantum.optimalbasis import optimalBasis
 import matplotlib.pyplot as plt
-from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
+from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc, interpolateHamiltonianEE
 from quantum.schrodinger import solveSchrodinger
 from quantum.gettime import differenceInTimeForObtainingEk, standardTimeForEk, optimisedTimeForEk, optimisedTimeForEkEE, optimisedTimeForEkEENEW
-from quantum.gettime import optimisedTimeForEkNEW
+from quantum.gettime import optimisedTimeForEkNEW, timeOptimalDielectric, timeStandardDielectric
+from quantum.velocityOp import standardVelocity, interpolatedVelocity
 import time
 from quantum.table import differenceInEigenvalues
 from quantum.utils import kvec
@@ -364,7 +365,7 @@ def respectiveLOBF(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N):
 
 
 
-"""NEWWWWWWWWWW"""
+""""""
 def respectiveLOBFDifference(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N):
     i = 0
     for i in range(0, 100):
@@ -382,7 +383,6 @@ def respectiveLOBFDifference(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N):
     plt.xlabel("Number of k-points (N_k) being considered")
     #plt.legend()   
     plt.show()
-
 
 
 
@@ -464,7 +464,6 @@ optimal basis implementation"""
 def differenceInCompVaryingKPoints(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N):
     NKValuesStandard = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]
     NKValuesOptimal = [100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000,2100,2200]
-    #NKValuesOptimal = [50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800]
     standardTimeList = []
     standardNKList = []
     optimalTimeList = []
@@ -499,6 +498,127 @@ def differenceInCompVaryingKPoints(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N):
     ax2.set_ylabel('k-points considered in Optimal Basis implementation')
     plt.show()   
    
+
+
+
+
+"""Function to obtain the relationship between the computation time to obtain the dielectric function
+with regards to the standard basis implementation against the number of k-points being
+considerd.  Function outputs arrays for both computation time and number of k-points
+being considered"""
+def standardDielectricTimeNKRelationship(N_G, N_b, potential, damp, w, numberOccupied):
+    NKValues = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]
+    NKList = []
+    timeList = []
+    for NK in NKValues:
+        ek, ck = solveSchrodinger(N_G,NK,N_b,potential)
+        stanVel = standardVelocity(potential, ck)
+        timeD = timeStandardDielectric(N_b, ek, damp, w, stanVel, numberOccupied)
+        NKList.append(NK)
+        timeList.append(timeD)
+    NKArray = np.array(NKList)
+    timeArray = np.array(timeList)
+    return NKArray, timeArray
+
+
+
+
+"""Function to obtain the relationship between the computation time to obtain the dielectric
+function with regards to the optimal basis implementation against the number of k-points
+being considerd.  Function outputs arrays for both the computation time and the number
+of k-points being considered"""
+def optimalDielectricTimeNKRelationship(N_G, N_b, potential, sb, N, damp, w, numberOccupied):
+    NKValues = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]
+    NKList = []
+    timeList = []
+    for NK in NKValues:
+        ek, ck = solveSchrodinger(N_G,NK,N_b,potential)
+        del ek
+        OB_bi = optimalBasis(sb, N_b, NK, ck)
+        k0 = calculatek0(OB_bi, potential)
+        k1 = calculatek1(OB_bi, potential)
+        VLoc = calculateVLoc(OB_bi, potential)
+        a = potential.parms["lattice"]
+        kList = []
+        for i in range(NK):
+            kList.append(kvec(i,a,NK))
+        OBek, OBck = interpolateHamiltonianEE(OB_bi, kList, k0, k1, VLoc, N)
+        interVel = interpolatedVelocity(potential, OBck, k1)
+        timeD = timeOptimalDielectric(N_b, OBek, damp, w, interVel, numberOccupied)
+        NKList.append(NK)
+        timeList.append(timeD)
+    NKArray = np.array(NKList)
+    timeArray = np.array(timeList)
+    return NKArray, timeArray    
+
+        
+
+
+"""Function that plots the relationship between the computation time to obtain the 
+dielectric function with regards to the standard basis implementation against the number of
+k-points being considered.  This plot is then repeated 100 times, and an average line of
+best fit of all plots is obtained"""
+def averagePlotStandardDielectricLineOfBestFit(N_G, N_b, potential, damp, w, numberOccupied):
+    i = 0
+    for i in range(0, 100):
+        NKArray, timeArray = standardDielectricTimeNKRelationship(N_G, N_b, potential, damp, w, numberOccupied)
+        plt.plot(NKArray, timeArray, 'b')
+        if i == 99:
+            a, b = np.polyfit(NKArray, timeArray, 1)
+            plt.plot(NKArray, a*NKArray+b, 'y')
+            i += 1  
+    plt.ylabel("Computation time to obtain Dielectric Standard Basis")
+    plt.xlabel("Number of k-points (N_k) being considered")   
+    plt.show()    
+    return 
+
+
+
+
+
+"""Function that plots the relationship between the computation time to obtain the 
+dielectric function with regards to the optimal basis implementation against the number of
+k-points being considered.  This plot is then repeated 100 times, and an average line of
+best fit of all plots is obtained"""
+def averagePlotOptimalDielectricLineOfBestFit(N_G, N_b, potential, sb, N, damp, w, numberOccupied):
+    i = 0
+    for i in range(0, 100):
+        NKArray, timeArray = optimalDielectricTimeNKRelationship(N_G, N_b, potential, sb, N, damp, w, numberOccupied)
+        plt.plot(NKArray, timeArray, 'b')
+        if i == 99:
+            a, b = np.polyfit(NKArray, timeArray, 1)
+            plt.plot(NKArray, a*NKArray+b, 'y')
+            i += 1  
+    plt.ylabel("Computation time to obtain Dielectric Optimal Basis")
+    plt.xlabel("Number of k-points (N_k) being considered")   
+    plt.show()    
+    return 
+
+
+
+
+
+"""Function that plots the average line of best fit regarding the standard basis for the
+relationship between the computation time to obtain the dielectric function against
+the number of k-points being considered, with the average line of best fit regarding
+the optimal basis for the relationship between the computation time to obtain the dielectric
+function against the number of k-points being considered, so a direct comparison can be made"""
+def comparingDielectrics(N_G, N_b, potential, damp, w, numberOccupied, sb, N):
+    i = 0
+    for i in range(0, 100):
+        NKArrayS, timeArrayS = standardDielectricTimeNKRelationship(N_G, N_b, potential, damp, w, numberOccupied)
+        NKArrayO, timeArrayO = optimalDielectricTimeNKRelationship(N_G, N_b, potential, sb, N, damp, w, numberOccupied)
+        if i == 99:
+            a1, b1 = np.polyfit(NKArrayS, timeArrayS, 1)
+            a2, b2 = np.polyfit(NKArrayO, timeArrayO, 1)
+            plt.plot(NKArrayS, a1*NKArrayS+b1, 'purple')
+            plt.plot(NKArrayO, a2*NKArrayO+b2, 'green')
+            plt.ylim(0,0.0025)
+            i += 1  
+    plt.ylabel("Computation time to obtain Dielectric Function")
+    plt.xlabel("Number of k-points (N_k) being considered")
+    plt.legend(['Standard Basis Dielectric', 'Optimal Basis Dielectric'])   
+    plt.show()
 
 
 

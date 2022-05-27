@@ -8,6 +8,8 @@ from quantum.qobj import Qobj
 from quantum.interpolate import calculateVLoc
 from quantum.potential import PotentialFactory as pf
 from quantum.utils import energyRangeFunc, timerPrint
+from quantum.experimentalplots import standardDielectricTimeNKRelationship
+from quantum.experimentalplots import averagePlotStandardDielectricLineOfBestFit
 
 
 """File to run quick tests if required"""
@@ -31,6 +33,10 @@ def funcOptimal():
     res = qobj.getOptimalImaginaryDielectricPlot()
     return res
 #print(funcOptimal())    
+
+
+res = qobj.getStandardVelocityOperator()
+print(res)
 
 
 

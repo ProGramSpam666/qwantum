@@ -1,5 +1,6 @@
 from quantum.qobj import Qobj
 from quantum.table import differenceInEigenvalues, differenceInVelocity
+from quantum.table import differenceInDielectricPlotImaginary, differenceInDielectricPlotReal
 
 
 
@@ -34,7 +35,43 @@ def testDifferenceVelocity():
     k1 = qobj.getk1()
     result = differenceInVelocity(ck, potential, OBck, k1)
     return result
-print(testDifferenceVelocity()) 
+#print(testDifferenceVelocity()) 
+
+
+
+
+
+def testDifferenceInDielectricPlotImaginary():
+    N_b = qobj.getN_B()
+    ek = qobj.getEk()
+    OBek = qobj.getOBek()
+    damp = qobj.getDamp()
+    energyRange = qobj.getEnergyRangeFunc()
+    stanV = qobj.getStandardVelocityOperator()
+    opV = qobj.getInterpolatedVelocityOperator()
+    numO = qobj.getNumberOccupied()
+    res = differenceInDielectricPlotImaginary(N_b, ek, OBek, damp, energyRange, stanV, opV, numO)
+    return res
+print(testDifferenceInDielectricPlotImaginary())
+
+
+
+
+
+def testDifferenceInDielectricPlotReal():
+    N_b = qobj.getN_B()
+    ek = qobj.getEk()
+    OBek = qobj.getOBek()
+    damp = qobj.getDamp()
+    energyRange = qobj.getEnergyRangeFunc()
+    stanV = qobj.getStandardVelocityOperator()
+    opV = qobj.getInterpolatedVelocityOperator()
+    numO = qobj.getNumberOccupied()
+    res = differenceInDielectricPlotReal(N_b, ek, OBek, damp, energyRange, stanV, opV, numO)
+    return res
+#print(testDifferenceInDielectricPlotReal())
+
+
 
 
 

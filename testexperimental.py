@@ -3,7 +3,8 @@ from quantum.experimentalplots import EnergyVsN_G, repeatedPlotIHEE, averagePlot
 from quantum.experimentalplots import sbEffectOnSize, ekVsE, timePlotVaryingSb, sbEffectOnEigenvalues
 from quantum.experimentalplots import kpointsVsTimeSS, kpointsVsTimeIHEE, repeatedPlotSS, averagePlotSSLineOfBestFit
 from quantum.experimentalplots import respectiveLOBF, comparingInterpolates, thresholdVsMaxDiffEigenvalue, respectiveLOBFDifference
-from quantum.experimentalplots import differenceInCompVaryingKPoints
+from quantum.experimentalplots import differenceInCompVaryingKPoints, averagePlotStandardDielectricLineOfBestFit
+from quantum.experimentalplots import averagePlotOptimalDielectricLineOfBestFit, comparingDielectrics
 from quantum.plot import plotFun
 from quantum.interpolate import interpolateHamiltonian, calculatek0, calculatek1, calculateVLoc
 from quantum.qobj import Qobj
@@ -203,6 +204,8 @@ def testRespectiveLOBF():
 
 
 
+
+""""""
 def testRespectiveLOBFDifference():
     N_G = qobj.getN_G()
     N_b = qobj.getN_B()
@@ -214,7 +217,7 @@ def testRespectiveLOBFDifference():
     N = N_b
     result = respectiveLOBFDifference(N_G, N_b, potential, OB_bi, k0, k1, VLoc, N)
     return result 
-print(testRespectiveLOBFDifference())
+#print(testRespectiveLOBFDifference())
 
 
 
@@ -273,6 +276,54 @@ def testDifferenceInCompVaryingKPoints():
 
 
 
+
+
+""""""
+def testStandardDielectricTimeNKRelationship():
+    N_G = qobj.getN_G()
+    N_b = qobj.getN_B()
+    potential = qobj.getPotential()
+    damp = qobj.getDamp()
+    w = qobj.getW()
+    numOcc = qobj.getNumberOccupied()
+    res = averagePlotStandardDielectricLineOfBestFit(N_G, N_b, potential, damp, w, numOcc)
+    return res
+#print(testStandardDielectricTimeNKRelationship())    
+
+
+
+
+""""""
+def testOptimalDielectricTimeNKRelationship():
+    N_G = qobj.getN_G()
+    N_b = qobj.getN_B()
+    potential = qobj.getPotential()
+    sb = qobj.getSb()
+    kList = qobj.kList()
+    N = qobj.getN_B()
+    damp = qobj.getDamp()
+    w = qobj.getW()
+    numOcc = qobj.getNumberOccupied()
+    res = averagePlotOptimalDielectricLineOfBestFit(N_G, N_b, potential, sb, kList, N, damp, w, numOcc)
+    return res
+#print(testOptimalDielectricTimeNKRelationship())
+
+
+
+
+""""""
+def testCompareDielectrics():
+    N_G = qobj.getN_G()
+    N_b = qobj.getN_B()
+    potential = qobj.getPotential()
+    damp = qobj.getDamp()
+    w = qobj.getW()
+    numOcc = qobj.getNumberOccupied()
+    sb = qobj.getSb()
+    N = qobj.getN_B()
+    res = comparingDielectrics(N_G, N_b, potential, damp, w, numOcc, sb, N)
+    return res
+print(testCompareDielectrics())
 
 
 

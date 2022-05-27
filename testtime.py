@@ -1,5 +1,6 @@
 from quantum.gettime import differenceInTimeVaryingSb
 from quantum.gettime import standardTimeForEk, optimisedTimeForEk, differenceInTimeForObtainingEkSPECIFIC, differenceInTimeForObtainingEk
+from quantum.gettime import timeOptimalDielectric, timeStandardDielectric
 from quantum.qobj import Qobj
 import numpy as np
 
@@ -32,7 +33,7 @@ tests"""
 def testTimesForEigenvaluesSPECIFIC():
     resultDifference = differenceInTimeForObtainingEkSPECIFIC(N_G, N_k, N_b, potential, OB_bi, kList, k0, k1, VLoc, N)
     return resultDifference
-print(testTimesForEigenvaluesSPECIFIC())    
+#print(testTimesForEigenvaluesSPECIFIC())    
 
 
 
@@ -103,6 +104,40 @@ def testDifferenceInTimeVaryingSb():
     res = differenceInTimeVaryingSb(N_b, N_k, ck, potential, kList)
     return res
 #print(testDifferenceInTimeVaryingSb())
+
+
+
+def testTimeStandardDielectric():
+    N_b = qobj.getN_B()
+    ek = qobj.getEk()
+    damp = qobj.getDamp()
+    w = qobj.getW()
+    stanV = qobj.getStandardVelocityOperator()
+    numOcc = qobj.getNumberOccupied()
+    res = timeStandardDielectric(N_b, ek, damp, w, stanV, numOcc)
+    return res
+print(testTimeStandardDielectric())    
+
+
+
+
+
+#N_b, OBek, damp, w, OBvelocity, numberOccupied
+def testTimeOptimalDielectric():
+    N_b = qobj.getN_B()
+    OBek = qobj.getOBek()
+    damp = qobj.getDamp()
+    w = qobj.getW()
+    OBV = qobj.getInterpolatedVelocityOperator()
+    numOcc = qobj.getNumberOccupied()
+    res = timeOptimalDielectric(N_b, OBek, damp, w, OBV, numOcc)
+    return res
+print(testTimeOptimalDielectric())    
+
+
+
+
+
 
 
 
